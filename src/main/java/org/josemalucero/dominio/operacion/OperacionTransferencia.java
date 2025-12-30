@@ -12,20 +12,26 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     protected final CuentaRegular cuentaDestino;
     BigDecimal saldoAnteriorCuentaOrigen;
     BigDecimal saldoAnteriorCuentaDestino;
+
     public OperacionTransferencia (CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto) {
 
         super( cuentaOrigen, monto);
         this.cuentaDestino = cuentaDestino;
+
     }
 
     @Override
     public void ejecutar() {
-        saldoAnteriorCuentaOrigen = cuentaRegular.getBalance();
-        saldoAnteriorCuentaDestino = cuentaDestino.getBalance();
+        registrarEstadoPrevio();
         cuentaRegular.tranfiere(monto);
         cuentaDestino.recibeTransferencia(monto);
 
 
+    }
+
+    protected void registrarEstadoPrevio(){
+        saldoAnteriorCuentaOrigen = cuentaRegular.getBalance();
+        saldoAnteriorCuentaDestino = cuentaDestino.getBalance();
     }
 
     @Override

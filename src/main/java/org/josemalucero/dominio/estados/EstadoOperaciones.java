@@ -1,15 +1,14 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
-import org.josemalucero.dominio.operacion.OperacionConsulta;
-import org.josemalucero.dominio.operacion.OperacionDeposito;
-import org.josemalucero.dominio.operacion.OperacionRetiro;
-import org.josemalucero.dominio.operacion.OperacionTransferencia;
+import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -123,9 +122,19 @@ public class EstadoOperaciones implements EstadoUsuario {
             return;
         } else  {
             System.out.println("La cuenta destino pertenece a: " + usuarioDestino.get().getNombreCompleto());
+
             if (!(usuarioDestino.get().getCuentaRegular() instanceof Transferible)) {
                 System.out.println("La cuenta destino no puede recibir transferencias");
                 return;
+            }
+            int opcion = 0;
+            if(!usuarioDestino.get().getCuentaRegular().getMonedaConvertible().getCodigo().equals(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getCodigo())){
+                System.out.println("La cuenta destino está en una moneda diferente ("+usuarioDestino.get().getCuentaRegular().getMonedaConvertible().getCodigo()+")");
+                String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
+                String titulo = "Seleccione opción para transferencia entre cuentas";
+                int eleccion = seleccionMultipleGenerica(contextoUsuario.getScanner(),titulo, opciones);
+                if(eleccion==-1) return;
+                opcion = eleccion;
             }
             Optional<BigDecimal> cifraVerificada;
             boolean operacionExitosa = false;
@@ -135,6 +144,15 @@ public class EstadoOperaciones implements EstadoUsuario {
                     return;
                 } else {
                     OperacionTransferencia operacionTransferencia = new OperacionTransferencia(contextoUsuario.getUsuarioLogueado().getCuentaRegular(), usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
+                    switch (opcion) {
+                        case 1:
+                            operacionTransferencia = new OperacionTransferenciaMonedaOrigen(contextoUsuario.getUsuarioLogueado().getCuentaRegular(), usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
+                            break;
+                        case 2:
+                            operacionTransferencia = new OperacionTransferenciaMonedaDestino(contextoUsuario.getUsuarioLogueado().getCuentaRegular(), usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
+                            break;
+                    }
+
                     if (operacionTransferencia.preValidar() ){
                         operacionTransferencia.ejecutar();
                         if(operacionTransferencia.posValidar()) {
@@ -175,6 +193,31 @@ public class EstadoOperaciones implements EstadoUsuario {
     private void verHistorial(Usuario usuario) {
         System.out.println("Mostrando historial...");
         // Lógica real aquí
+    }
+
+
+    private int seleccionMultipleGenerica(Scanner scanner,String titulo,String[] opciones){
+
+        while(true) {
+            System.out.println(titulo+" | ESC para salir.");
+            for(int i=0;i<opciones.length;i++){
+                System.out.println((i+1)+". "+opciones[i]);
+            }
+
+            String textoIntroducido = scanner.nextLine();
+            if (textoIntroducido.equalsIgnoreCase("ESC")) return -1;
+            int opcion;
+            try {
+                opcion =  Integer.parseInt(textoIntroducido);
+                if(opcion>0 && opcion<opciones.length+1){
+                    return opcion;
+                } else {
+                    System.out.println("Opción invalida");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Opción invalida");
+            }
+        }
     }
     private Optional<Usuario> manejarEntradaDeNumeroCuenta(Scanner scanner){
         boolean cuentaValida = false;

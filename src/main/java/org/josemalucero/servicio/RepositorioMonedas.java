@@ -17,7 +17,7 @@ public class RepositorioMonedas {
 
     public static void crearMonedasBasicas(){
 
-        MonedaConvertible pesoChileno = new MonedaConvertible("CLP","Peso Chileno", new BigDecimal("0.001"));
+        MonedaConvertible pesoChileno = new MonedaConvertible("CLP","Peso Chileno", new BigDecimal("0.0011"));
         MonedaConvertible pesoArgentino = new MonedaConvertible("ARS","Peso Argentino", new BigDecimal("0.00069"));
         MonedaConvertible euro = new MonedaConvertible("EUR","Euro", new BigDecimal("1.18"));
         MonedaConvertible dolar = new MonedaConvertible("USD","Dólar", new BigDecimal("1.00"));

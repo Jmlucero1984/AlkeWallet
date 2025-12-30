@@ -6,15 +6,15 @@ import org.josemalucero.dominio.moneda.MonedaConvertible;
 public class Cuenta {
     String serialCuenta;
 
-    public Moneda getMoneda() {
-        return moneda;
+    public MonedaConvertible getMonedaConvertible() {
+        return monedaConvertible;
     }
 
-    public void setMoneda(Moneda moneda) {
-        this.moneda = moneda;
+    public void setMoneda(MonedaConvertible monedaConvertible) {
+        this.monedaConvertible = monedaConvertible;
     }
 
-    Moneda moneda;
+    MonedaConvertible monedaConvertible;
 
     public Cuenta() {
 
