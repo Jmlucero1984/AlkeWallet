@@ -13,7 +13,11 @@ public class RepositorioUsuarios {
     }
 
     public static  Optional<Usuario> consultarUsuarioPorCuenta(String cuenta) {
-        return usuariosDB.stream().filter(usuario ->usuario.getCuentaRegular().getSerialCuenta().equals(cuenta) ).findFirst();
+        /* Si no se verifica primero la existencia de la cuenta regular, lanzará un error al tratar de hacer
+        una transferencia, ya que no todos los usuarios inician con cuenta asignada
+        */
+        return usuariosDB.stream().filter(usuario ->usuario.getCuentaRegular()!=null &&
+                usuario.getCuentaRegular().getSerialCuenta().equals(cuenta) ).findFirst();
     }
 
     public static Usuario agregarUsuario(String nombre,String apellido, String clave) {

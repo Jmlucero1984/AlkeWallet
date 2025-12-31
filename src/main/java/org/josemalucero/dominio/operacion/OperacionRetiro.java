@@ -6,7 +6,7 @@ import org.josemalucero.dominio.cuenta.CuentaRegular;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OperacionRetiro extends OperacionDeMonto implements Validable,Reversible{
+public class OperacionRetiro extends OperacionDeMonto implements Validable,Reversible,Registrable{
     BigDecimal saldoAnteriorCuentaOrigen;
     public OperacionRetiro(CuentaRegular cuenta, BigDecimal monto) {
         super( cuenta, monto);
@@ -18,6 +18,12 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
         cuentaRegular.retirar(monto);
 
     }
+
+    @Override
+    public String getNombreOperacion() {
+        return "RETIRO DE CUENTA";
+    }
+
 
     @Override
     public boolean preValidar() {
@@ -44,5 +50,10 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
     @Override
     public void restaurarEstadoAnterior() {
         System.out.println("ROLLBACK");
+    }
+
+    @Override
+    public void registrar(CuentaRegular cuentaRegular) {
+        cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
     }
 }

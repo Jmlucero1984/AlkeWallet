@@ -13,6 +13,11 @@ public class OperacionDeMonto extends Operacion{
     }
 
     @Override
+    public String getNombreOperacion() {
+        return "OPERACION DE MONTO";
+    }
+
+    @Override
     public void ejecutar() {
 
     }

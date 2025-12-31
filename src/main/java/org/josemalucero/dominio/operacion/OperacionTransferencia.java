@@ -8,7 +8,7 @@ import org.josemalucero.dominio.cuenta.Transferible;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OperacionTransferencia extends OperacionDeMonto implements Reversible,Validable{
+public class OperacionTransferencia extends OperacionDeMonto implements Reversible,Validable, Registrable{
     protected final CuentaRegular cuentaDestino;
     BigDecimal saldoAnteriorCuentaOrigen;
     BigDecimal saldoAnteriorCuentaDestino;
@@ -28,6 +28,12 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
 
     }
+
+    @Override
+    public String getNombreOperacion() {
+        return "TRANSFERENCIA";
+    }
+
 
     protected void registrarEstadoPrevio(){
         saldoAnteriorCuentaOrigen = cuentaRegular.getBalance();
@@ -75,5 +81,10 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
         }
 
 
+    }
+    @Override
+    public void registrar(CuentaRegular cuentaRegular) {
+        cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacion()+" desde "+cuentaRegular.getSerialCuenta(),monto,cuentaRegular.getBalance()));
     }
 }

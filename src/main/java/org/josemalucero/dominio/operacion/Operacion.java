@@ -10,9 +10,14 @@ public abstract class Operacion {
     //protected final LocalDateTime fecha;
     protected EstadoOperacion estado;
 
+
     public Operacion(CuentaRegular cuentaRegular) {
         this.cuentaRegular = cuentaRegular;
 
+    }
+
+    public String getNombreOperacion(){
+        return "OPERACION";
     }
 
     public abstract void ejecutar();

@@ -13,6 +13,9 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
         montoEfectivo = convertir(cuentaOrigen.getMonedaConvertible(),cuentaDestino.getMonedaConvertible(),monto);
 
     }
+    public String getNombreOperacion() {
+        return "TRANSFERENCIA A CUENTA DE OTRA MONEDA";
+    }
 
     @Override
     public void ejecutar() {
@@ -65,6 +68,12 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
     @Override
     public void restaurarEstadoAnterior() {
         super.restaurarEstadoAnterior();
+    }
+
+    @Override
+    public void registrar(CuentaRegular cuentaRegular) {
+        cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacion()+" desde "+cuentaRegular.getSerialCuenta(),montoEfectivo,cuentaDestino.getBalance()));
     }
 }
 
