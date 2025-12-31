@@ -13,6 +13,7 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     BigDecimal saldoAnteriorCuentaOrigen;
     BigDecimal saldoAnteriorCuentaDestino;
 
+
     public OperacionTransferencia (CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto) {
 
         super( cuentaOrigen, monto);
@@ -31,8 +32,13 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
     @Override
     public String getNombreOperacion() {
-        return "TRANSFERENCIA";
+        return "TRANSFERENCIA A OTRA CUENTA DE IGUAL MONEDA";
     }
+
+    public String getNombreOperacionReciproca() {
+        return "TRANSFERENCIA DESDE CUENTA DE IGUAL MONEDA";
+    }
+
 
 
     protected void registrarEstadoPrevio(){
@@ -85,6 +91,6 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
-        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacion()+" desde "+cuentaRegular.getSerialCuenta(),monto,cuentaRegular.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",monto,cuentaRegular.getBalance()));
     }
 }

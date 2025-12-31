@@ -23,7 +23,12 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
 
     }
     public String getNombreOperacion() {
-        return "TRANSFERENCIA A CUENTA DE OTRA MONEDA";
+        return "TRANSFERENCIA A CUENTA DE DISTINTA MONEDA";
+    }
+
+    @Override
+    public String getNombreOperacionReciproca() {
+        return "TRANSFERENCIA DESDE CUENTA DE DISTINTA MONEDA";
     }
 
     public BigDecimal getMontoEfectivo(){
@@ -74,7 +79,7 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),montoEfectivo,cuentaRegular.getBalance()));
-        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacion()+" desde "+cuentaRegular.getSerialCuenta(),monto,cuentaDestino.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",monto,cuentaDestino.getBalance()));
     }
 }
 

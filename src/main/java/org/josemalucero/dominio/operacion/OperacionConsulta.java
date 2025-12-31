@@ -12,7 +12,7 @@ public class OperacionConsulta extends Operacion{
 
     @Override
     public void ejecutar() {
-        System.out.println("EL SALDO DEL CUENTA EN "+cuentaRegular.getMonedaConvertible().getNombre()+" ES :");
+        System.out.println("EL SALDO DE LA CUENTA EN "+cuentaRegular.getMonedaConvertible().getNombre().toUpperCase()+" ES :");
         System.out.println(cuentaRegular.getBalance()+" "+cuentaRegular.getMonedaConvertible().getCodigo());
 
     }

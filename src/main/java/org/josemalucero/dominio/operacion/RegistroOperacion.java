@@ -16,8 +16,32 @@ public class RegistroOperacion {
         this.dateTimeOperacion = LocalDateTime.now();
     }
 
+    public String getFormattedDateTime(){
+        return String.format("%02d",dateTimeOperacion.getDayOfMonth())+"."+
+                dateTimeOperacion.getMonth()+"."+
+                dateTimeOperacion.getYear()+" "+
+                String.format("%02d",dateTimeOperacion.getHour())+":"+
+                String.format("%02d",dateTimeOperacion.getMinute())+":"+
+                String.format("%02d",dateTimeOperacion.getSecond());
+
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+
+
     @Override
     public String toString() {
-        return  dateTimeOperacion+" | "+descripcion+" | "+monto+" | "+balance;
+        return  getFormattedDateTime()+" | "+descripcion+" | "+monto+" | "+balance;
     }
 }

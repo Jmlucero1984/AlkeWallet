@@ -9,10 +9,12 @@ public class ContextoUsuario {
     private EstadoUsuario estadoActual;
     private Usuario usuarioLogueado;
     private Scanner scanner;
+
     public ContextoUsuario(Scanner scanner) {
         // Estado inicial: Login
         this.estadoActual = new EstadoLogin();
         this.scanner = scanner;
+
     }
 
     public Scanner getScanner(){

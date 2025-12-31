@@ -5,6 +5,7 @@ import org.josemalucero.dominio.cuenta.Transferible;
 import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
+import org.josemalucero.servicio.FormateadorDeRegistroAImprimir;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.math.BigDecimal;
@@ -125,7 +126,7 @@ public class EstadoOperaciones implements EstadoUsuario {
         System.out.println("TRANSFERIR A CUENTA");
         Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getScanner());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        if(usuarioDestino.isEmpty()){
+        if(usuarioDestino==null ||usuarioDestino.isEmpty()){
             return;
         } else  {
             System.out.println("La cuenta destino pertenece a: " + usuarioDestino.get().getNombreCompleto());
@@ -179,34 +180,14 @@ public class EstadoOperaciones implements EstadoUsuario {
             }
         }
     }
-//    private void transferirDinero(ContextoUsuario contextoUsuario) {
-//        System.out.println("TRANSFERIR A CUENTA");
-//        Usuario usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getScanner());
-//        if(usuarioDestino!=null) {
-//            System.out.println("La cuenta destino pertenece a: "+usuarioDestino.getNombreCompleto());
-//            Optional<BigDecimal> cifraVerificada;
-//            boolean operacionExitosa=false;
-//            while(!operacionExitosa) {
-//                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getScanner()));
-//                if (cifraVerificada.isPresent()) {
-//                    operacionExitosa = contextoUsuario.getUsuarioLogueado().getCuentaRegularPesos().retirar(cifraVerificada.get());
-//                    if(operacionExitosa) {
-//                        usuarioDestino.getCuentaRegularPesos().depositar(cifraVerificada.get());
-//                        System.out.println("TRANSFERENCIA REALIZADA");
-//                    }
-//                } else {
-//                    return;
-//                }
-//            }
-//
-//        }
-//
-//    }
+
 
     private void verHistorial(ContextoUsuario contextoUsuario) {
         System.out.println("Mostrando historial...");
+
         ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
-        operacionesHistoricas.forEach(System.out::println);
+        System.out.println(FormateadorDeRegistroAImprimir.GenerarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
+        operacionesHistoricas.forEach(t->System.out.println(FormateadorDeRegistroAImprimir.FormatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
 
     }
 

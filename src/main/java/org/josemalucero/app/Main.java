@@ -5,10 +5,7 @@ package org.josemalucero.app;
 import org.josemalucero.BasicConsolePassword;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
-import org.josemalucero.servicio.BCryptPasswordEncoderService;
-import org.josemalucero.servicio.RepositorioMonedas;
-import org.josemalucero.servicio.RepositorioUsuarios;
-import org.josemalucero.servicio.RespositorioCuentas;
+import org.josemalucero.servicio.*;
 
 import java.io.Console;
 import java.io.IOException;

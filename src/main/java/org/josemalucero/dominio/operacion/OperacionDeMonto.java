@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 public class OperacionDeMonto extends Operacion{
     protected final BigDecimal monto;
 
+
     public OperacionDeMonto(CuentaRegular cuentaRegular,BigDecimal monto) {
         super(cuentaRegular);
         this.monto = monto;

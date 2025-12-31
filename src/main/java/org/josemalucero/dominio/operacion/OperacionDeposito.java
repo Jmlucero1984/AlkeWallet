@@ -1,10 +1,8 @@
 package org.josemalucero.dominio.operacion;
 
-import org.josemalucero.dominio.cuenta.Cuenta;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class OperacionDeposito extends OperacionDeMonto implements Validable,Reversible, Registrable{
     public OperacionDeposito(CuentaRegular cuenta, BigDecimal monto) {
@@ -54,4 +52,6 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
     }
+
+
 }
