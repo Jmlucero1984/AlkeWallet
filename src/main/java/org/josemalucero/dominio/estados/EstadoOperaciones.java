@@ -20,12 +20,14 @@ public class EstadoOperaciones implements EstadoUsuario {
     public void mostrarMenu(ContextoUsuario contexto) {
          // Método helper
         System.out.println("Bienvenido, " + contexto.getUsuarioLogueado().getNombreCompleto());
-        System.out.println("1. Consultar saldo");
-        System.out.println("2. Depositar dinero");
-        System.out.println("3. Retirar dinero");
-        System.out.println("4. Transferir dinero");
-        System.out.println("5. Ver historial de transacciones");
-        System.out.println("6. Cerrar sesión (Sign Out)");
+        System.out.println("1. Consultar datos cuenta");
+        System.out.println("2. Consultar saldo");
+        System.out.println("3. Depositar dinero");
+        System.out.println("4. Retirar dinero");
+        System.out.println("5. Transferir dinero");
+        System.out.println("6. Consultar conversión entre monedas");
+        System.out.println("7. Ver historial de transacciones");
+        System.out.println("8. Cerrar sesión (Sign Out)");
         System.out.print("Seleccione una opción: ");
     }
 
@@ -33,26 +35,33 @@ public class EstadoOperaciones implements EstadoUsuario {
     public void procesarOpcion(int opcion, ContextoUsuario contexto) {
         switch (opcion) {
             case 1:
+                consultarDatosCuenta(contexto);
+                break;
+            case 2:
                 consultarSaldo(contexto);
                 break;
 
-            case 2:
+            case 3:
                 depositarDinero(contexto);
                 break;
 
-            case 3:
+            case 4:
                 retirarDinero(contexto);
                 break;
 
-            case 4:
+            case 5:
                 transferirDinero(contexto);
                 break;
 
-            case 5:
+            case 6:
+                consultarConversionMoneda(contexto);
+                break;
+
+            case 7:
                 verHistorial(contexto);
                 break;
 
-            case 6:
+            case 8:
                 System.out.println("Cerrando sesión...");
                 contexto.cerrarSesion();
                 break;
@@ -72,7 +81,7 @@ public class EstadoOperaciones implements EstadoUsuario {
     private void consultarSaldo(ContextoUsuario contextoUsuario) {
         OperacionConsulta operacionConsulta = new OperacionConsulta(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
         operacionConsulta.ejecutar();
-        System.out.println("SERIAL CUENTA: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+
     }
 
     private void depositarDinero(ContextoUsuario contextoUsuario) {
@@ -97,6 +106,16 @@ public class EstadoOperaciones implements EstadoUsuario {
                 }
             }
         }
+    }
+
+    private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
+        System.out.println(contextoUsuario.getUsuarioLogueado().getNombreCompleto());
+        System.out.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
+        System.out.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+    }
+
+    private void consultarConversionMoneda(ContextoUsuario contextoUsuario){
+        contextoUsuario.cambiarEstado(new EstadoConversionMonedas());
     }
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
