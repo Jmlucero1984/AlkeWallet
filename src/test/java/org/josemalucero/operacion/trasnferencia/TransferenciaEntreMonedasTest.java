@@ -1,6 +1,7 @@
 package org.josemalucero.operacion.trasnferencia;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.OperacionTransferencia;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino;
@@ -30,7 +31,7 @@ public class TransferenciaEntreMonedasTest {
         cuentaOrigen.depositar(new BigDecimal("1000.00"));
         cuentaOrigen.setMoneda(monedaConvertibleOrigen);
         BigDecimal cantidadATransferir = new BigDecimal("550.00");
-        operacionTransferenciaMonedaDestino = new OperacionTransferenciaMonedaDestino(cuentaOrigen,cuentaDestino,cantidadATransferir);
+        operacionTransferenciaMonedaDestino = new OperacionTransferenciaMonedaDestino(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda());
         operacionTransferenciaMonedaDestino.ejecutar();
         System.out.println("MONTO EFECTIVO: "+operacionTransferenciaMonedaDestino.getMontoEfectivo());
         System.out.println("BALANCE ORIGEN: "+cuentaOrigen.getBalance());
@@ -48,7 +49,7 @@ public class TransferenciaEntreMonedasTest {
         cuentaOrigen.setMoneda(monedaConvertibleOrigen);
         cuentaOrigen.depositar(new BigDecimal("1000.00"));
         BigDecimal cantidadATransferir = new BigDecimal("1000.00");
-        operacionTransferenciaMonedaOrigen = new OperacionTransferenciaMonedaOrigen(cuentaOrigen,cuentaDestino,cantidadATransferir);
+        operacionTransferenciaMonedaOrigen = new OperacionTransferenciaMonedaOrigen(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda());
         operacionTransferenciaMonedaOrigen.ejecutar();
         System.out.println("MONTO EFECTIVO: "+operacionTransferenciaMonedaOrigen.getMontoEfectivo());
         System.out.println("BALANCE ORIGEN: "+cuentaOrigen.getBalance());

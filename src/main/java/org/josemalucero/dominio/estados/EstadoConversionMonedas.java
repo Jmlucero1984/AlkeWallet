@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.RepositorioMonedas;
@@ -66,7 +67,9 @@ public class EstadoConversionMonedas implements EstadoUsuario {
     }
 
     private BigDecimal convertir(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto) {
-        return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
+        ConversorMoneda conversorMoneda = new ConversorMoneda();
+        return conversorMoneda.convertirMoneda(origen,destino,monto);
+        //return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
     }
 
     @Override

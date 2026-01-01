@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 
 import java.math.BigDecimal;
@@ -8,9 +9,11 @@ import java.math.RoundingMode;
 
 public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
     BigDecimal montoEfectivo;
-    public OperacionTransferenciaMonedaDestino(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto) {
+    ConversorMoneda conversorMoneda;
+    public OperacionTransferenciaMonedaDestino(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, ConversorMoneda conversorMoneda) {
         super(cuentaOrigen, cuentaDestino, monto);
-        montoEfectivo = convertir(cuentaOrigen.getMonedaConvertible(),cuentaDestino.getMonedaConvertible(),monto);
+        this.conversorMoneda = conversorMoneda;
+        montoEfectivo = convertir(cuentaDestino.getMonedaConvertible(),cuentaOrigen.getMonedaConvertible(),monto);
 
     }
 
@@ -36,7 +39,12 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
     }
 
     private BigDecimal convertir(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto) {
-        return  destino.getRatioDolar().divide(origen.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
+        // ORIGINAL:
+        // destino.getRatioDolar().divide(origen.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
+        // FUNCTION
+        // monedaOrigen.getRatioDolar().divide(monedaOrigen.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
+        return conversorMoneda.convertirMoneda( origen,  destino,  monto);
+
 
     }
 

@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 
 import java.math.BigDecimal;
@@ -8,8 +9,10 @@ import java.math.RoundingMode;
 
 public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
     BigDecimal montoEfectivo;
-    public OperacionTransferenciaMonedaOrigen(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto) {
+    ConversorMoneda conversorMoneda;
+    public OperacionTransferenciaMonedaOrigen(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, ConversorMoneda conversorMoneda) {
         super(cuentaOrigen, cuentaDestino, monto);
+        this.conversorMoneda = conversorMoneda;
         montoEfectivo = convertir(cuentaOrigen.getMonedaConvertible(),cuentaDestino.getMonedaConvertible(),monto);
 
     }
@@ -34,8 +37,8 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
     }
 
     private BigDecimal convertir(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto) {
-
-        return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
+        return conversorMoneda.convertirMoneda(origen, destino, monto);
+       // return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
 
     }
     public BigDecimal getMontoEfectivo(){

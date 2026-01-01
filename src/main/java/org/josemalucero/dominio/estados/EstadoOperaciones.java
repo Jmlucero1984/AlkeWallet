@@ -2,6 +2,7 @@ package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
+import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
@@ -177,10 +178,10 @@ public class EstadoOperaciones implements EstadoUsuario {
                     OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
                     switch (opcion) {
                         case 1:
-                            operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
+                            operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
                             break;
                         case 2:
-                            operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
+                            operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
                             break;
                     }
 
