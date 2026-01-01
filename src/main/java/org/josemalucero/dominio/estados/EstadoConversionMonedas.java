@@ -18,11 +18,12 @@ public class EstadoConversionMonedas implements EstadoUsuario {
     public void mostrarMenu(ContextoUsuario contexto) {
         if(monedaDePartida==null) {
             System.out.println("Moneda de PARTIDA-> para convertir");
-            for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
+
+            for ( int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
                 System.out.println("" + (i + 1) + ". " + RepositorioMonedas.getMonedasDB().get(i).getNombre()
                         + " | " + RepositorioMonedas.getMonedasDB().get(i).getCodigo());
             }
-            System.out.print("Seleccione una opción: ");
+
         } else {
             System.out.println("Moneda de ->DESTINO para convertir");
             for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
@@ -30,13 +31,16 @@ public class EstadoConversionMonedas implements EstadoUsuario {
                 System.out.println("" + (i + 1) + ". " + RepositorioMonedas.getMonedasDB().get(i).getNombre()
                         + " | " + RepositorioMonedas.getMonedasDB().get(i).getCodigo());
             }
-            System.out.print("Seleccione una opción: ");
+
         }
+        System.out.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". CANCELAR");
+        System.out.print("Seleccione una opción: ");
 
     }
 
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
+        if(opcion==RepositorioMonedas.getMonedasDB().size()+1)  contextoUsuario.cambiarEstado(new EstadoOperaciones());
         int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size();
         if (monedaDePartida != null) cantidadDeOpciones--;
         if (opcion <= 0 || opcion > cantidadDeOpciones) {
