@@ -29,9 +29,11 @@ class ConversorMonedaTest {
 
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(
+            name = "{0}"
+    )
     @MethodSource("datosConversorMoneda")
-    void conversorMonedaParametrizadoTest(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto, BigDecimal valorEsperado) {
+    void conversorMonedaParametrizadoTest(String nombreCaso, MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto, BigDecimal valorEsperado) {
 
             BigDecimal convertido = new ConversorMoneda().convertirMoneda(origen, destino, monto);
 
@@ -42,24 +44,28 @@ class ConversorMonedaTest {
     static Stream<Arguments> datosConversorMoneda() {
         return Stream.of(
                 Arguments.of(
+                        "CLP->USD",
                         new MonedaConvertible("CLP","PesoChileno", new BigDecimal("0.0011")),
                         new MonedaConvertible("USD","DolarEstadounidense", new BigDecimal("1.00")),
                         new BigDecimal("1000"),
                         new BigDecimal("1.10")
                 ),
                 Arguments.of(
+                        "USD->CLP",
                         new MonedaConvertible("USD","DolarEstadounidense", new BigDecimal("1.00")),
                         new MonedaConvertible("CLP","PesoChileno", new BigDecimal("0.0011")),
                         new BigDecimal("5.00"),
                         new BigDecimal("4545.45")
                 ),
                 Arguments.of(
+                        "CLP->ARS",
                         new MonedaConvertible("CLP","PesoChileno", new BigDecimal("0.0011")),
                         new MonedaConvertible("ARS","PesoArgentino", new BigDecimal("0.00069")),
                         new BigDecimal("1000"),
                         new BigDecimal("1594.20")
                 ),
                 Arguments.of(
+                        "ARS->CLP",
                         new MonedaConvertible("ARS","PesoArgentino", new BigDecimal("0.00069")),
                         new MonedaConvertible("CLP","PesoChileno", new BigDecimal("0.0011")),
                         new BigDecimal("594.23"),
