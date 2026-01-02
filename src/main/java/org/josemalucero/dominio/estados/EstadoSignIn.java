@@ -1,5 +1,7 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.app.ConsoleInputProvider;
+import org.josemalucero.app.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.BCryptPasswordEncoderService;
@@ -38,14 +40,14 @@ public class EstadoSignIn implements EstadoUsuario {
     }
 
     private void registrarNuevoUsuario(ContextoUsuario contexto) {
-        Scanner scanner =  contexto.getScanner();
+        InputProvider consoleInputProvider =  contexto.getConsoleInputProvider();
         //Console console = System.console();
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
 
         System.out.print("Nombre de usuario: ");
-        String nombre = scanner.nextLine();
+        String nombre = consoleInputProvider.leerOpcionString();
         System.out.print("Apellido de usuario: ");
-        String apellido = scanner.nextLine();
+        String apellido = consoleInputProvider.leerOpcionString();
 
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
@@ -57,14 +59,14 @@ public class EstadoSignIn implements EstadoUsuario {
             boolean coinciden = false;
             while(!coinciden){
                 System.out.println("Introduzca su clave: ");
-                clave = scanner.nextLine();
+                clave = consoleInputProvider.leerOpcionString();
                 /*
                 char[] passwordArray = console.readPassword("Contraseña (espacios): ");
                 clave = new String(passwordArray);
                 */
 
                 System.out.print("Confirmar clave: ");
-                String confirmaClave  = scanner.nextLine();
+                String confirmaClave  = consoleInputProvider.leerOpcionString();
                 /*
                 passwordArray = console.readPassword("Contraseña (espacios): ");
                 String confirmaClave =new String(passwordArray);

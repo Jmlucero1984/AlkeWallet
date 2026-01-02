@@ -1,5 +1,7 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.app.ConsoleInputProvider;
+import org.josemalucero.app.InputProvider;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
@@ -91,7 +93,7 @@ public class EstadoOperaciones implements EstadoUsuario {
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
         while(!operacionExitosa) {
-            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getScanner()));
+            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
             if(cifraVerificada.isEmpty()){
                 return;
             } else {
@@ -125,7 +127,7 @@ public class EstadoOperaciones implements EstadoUsuario {
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
         while(!operacionExitosa) {
-            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getScanner()));
+            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
             if(cifraVerificada.isEmpty()){
                 return;
             } else  {
@@ -144,7 +146,7 @@ public class EstadoOperaciones implements EstadoUsuario {
     }
     private void transferirDinero(ContextoUsuario contextoUsuario) {
         System.out.println("TRANSFERIR A CUENTA");
-        Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getScanner());
+        Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getConsoleInputProvider());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         if(usuarioDestino==null ||usuarioDestino.isEmpty()){
             return;
@@ -164,14 +166,14 @@ public class EstadoOperaciones implements EstadoUsuario {
                 System.out.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
                 String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
                 String titulo = "Seleccione opción para transferencia entre cuentas";
-                int eleccion = seleccionMultipleGenerica(contextoUsuario.getScanner(),titulo, opciones);
+                int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
                 if(eleccion==-1) return;
                 opcion = eleccion;
             }
             Optional<BigDecimal> cifraVerificada;
             boolean operacionExitosa = false;
             while (!operacionExitosa) {
-                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getScanner()));
+                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
                 if(cifraVerificada.isEmpty()) {
                     return;
                 } else {
@@ -212,7 +214,7 @@ public class EstadoOperaciones implements EstadoUsuario {
     }
 
 
-    private int seleccionMultipleGenerica(Scanner scanner,String titulo,String[] opciones){
+    private int seleccionMultipleGenerica(InputProvider consoleInputProvider,String titulo,String[] opciones){
 
         while(true) {
             System.out.println(titulo+" | ESC para salir.");
@@ -220,7 +222,7 @@ public class EstadoOperaciones implements EstadoUsuario {
                 System.out.println((i+1)+". "+opciones[i]);
             }
 
-            String textoIntroducido = scanner.nextLine();
+            String textoIntroducido = consoleInputProvider.leerOpcionString();
             if (textoIntroducido.equalsIgnoreCase("ESC")) return -1;
             int opcion;
             try {
@@ -235,12 +237,12 @@ public class EstadoOperaciones implements EstadoUsuario {
             }
         }
     }
-    private Optional<Usuario> manejarEntradaDeNumeroCuenta(Scanner scanner){
+    private Optional<Usuario> manejarEntradaDeNumeroCuenta(InputProvider consoleInputProvider){
         boolean cuentaValida = false;
 
         while(!cuentaValida){
             System.out.println("Introducir numero de cuenta destino | ESC para salir.");
-            String textoIntroducido = scanner.nextLine();
+            String textoIntroducido = consoleInputProvider.leerOpcionString();
             if(textoIntroducido.equalsIgnoreCase("ESC")) return null;
             Optional<Usuario> usuario = RepositorioUsuarios.consultarUsuarioPorCuenta(textoIntroducido);
             if (usuario.isPresent()) {
@@ -252,13 +254,13 @@ public class EstadoOperaciones implements EstadoUsuario {
         }
         return  null;
     }
-    private BigDecimal manejarEntradaDeCifraMonetaria(Scanner scanner) {
+    private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
 
         boolean cantidadVálida = false;
 
         while(!cantidadVálida){
             System.out.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
-            String cantidadIntroducida = scanner.nextLine();
+            String cantidadIntroducida = consoleInputProvider.leerOpcionString();
             if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
             cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
             if (cantidadVálida) {

@@ -1,5 +1,7 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.app.ConsoleInputProvider;
+import org.josemalucero.app.InputProvider;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
@@ -56,7 +58,7 @@ public class EstadoConversionMonedas implements EstadoUsuario {
                 monedaDeDestino = eleccion;
                 Optional<BigDecimal> cifraVerificada;
 
-                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getScanner()));
+                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
                 if(!cifraVerificada.isEmpty()){
                   BigDecimal resultado =convertir(monedaDePartida,monedaDeDestino,cifraVerificada.get());
                   System.out.println(cifraVerificada.get()+" "+monedaDePartida.getCodigo()+" -> "+resultado+" "+monedaDeDestino.getCodigo());
@@ -77,13 +79,13 @@ public class EstadoConversionMonedas implements EstadoUsuario {
         return "CONVERSIÓN DE MONEDAS";
     }
 
-        private BigDecimal manejarEntradaDeCifraMonetaria(Scanner scanner) {
+        private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
 
             boolean cantidadVálida = false;
 
             while(!cantidadVálida){
                 System.out.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
-                String cantidadIntroducida = scanner.nextLine();
+                String cantidadIntroducida = consoleInputProvider.leerOpcionString();
                 if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
                 cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
                 if (cantidadVálida) {
