@@ -79,7 +79,7 @@ public class AlkaWallet_Interacciones_Test {
     }
 
     @Test
-    void depositoEnCuentaCLP() {
+    void depositoEnCuentaCLPTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
         String clave = "PM";
@@ -99,7 +99,7 @@ public class AlkaWallet_Interacciones_Test {
     }
 
     @Test
-    void depositoYRetiroEnCuentaCLP() {
+    void depositoYRetiroEnCuentaCLPTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
         String clave = "PM";
@@ -120,6 +120,27 @@ public class AlkaWallet_Interacciones_Test {
         estadoUsuario = interacciones.logOutDesdeOperaciones();
         CuentaRegular cuentaRegular = RepositorioUsuarios.consultarUsuario(nombre,apellido).get().getCuentaRegular();
         Assertions.assertEquals("ENTRADA",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(balanceEsperado,cuentaRegular.getBalance());
+    }
+
+    @Test
+    void depositoYRetiroEnCuentaCLPEncadenadasTest() {
+        String nombre = "Pedro";
+        String apellido = "Muñoz";
+        String clave = "PM";
+        String depositoStr = "15000.00";
+        BigDecimal deposito = new BigDecimal(depositoStr);
+        String retiroStr = "1560.50";
+        BigDecimal retiro = new BigDecimal(retiroStr);
+        BigDecimal balanceEsperado = deposito.subtract(retiro);
+        InteraccionesEncadenables interaccionesEncadenadas = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake);
+        interaccionesEncadenadas.crearUsuario(nombre, apellido, clave)
+                .logInUsuarioYAsignarCuentaCLPAUsuario(nombre, apellido, clave)
+                .logInHastaOperacionesUsuarioExistenteYConCuenta(nombre,apellido,clave)
+                .depositarEnCuenta(depositoStr)
+                .retirarDeCuenta(retiroStr)
+                .logOutDesdeOperaciones();
+        CuentaRegular cuentaRegular = RepositorioUsuarios.consultarUsuario(nombre,apellido).get().getCuentaRegular();
         Assertions.assertEquals(balanceEsperado,cuentaRegular.getBalance());
     }
 
