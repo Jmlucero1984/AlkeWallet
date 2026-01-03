@@ -42,10 +42,10 @@ public class AlkaWallet_Interacciones_Test {
     @Test
     void crearUsarioInteractionTest(){
         Interacciones interacciones = new Interacciones(consoleInputStub,alkeWalletFake);
-        EstadoUsuario estadoActual = interacciones.crearUsuario("Pedro","Nuñez","PM");
+        EstadoUsuario estadoActual = interacciones.crearUsuario("Pedro","Muñoz","Pedromuñoz");
 
         Assertions.assertAll(
-                ()->assertTrue(RepositorioUsuarios.consultarUsuario("Pedro","Nuñez").isPresent()),
+                ()->assertTrue(RepositorioUsuarios.consultarUsuario("Pedro","Muñoz").isPresent()),
                 ()->assertEquals(estadoActual.getNombreEstado(),"ENTRADA")
         );
     }
@@ -53,9 +53,9 @@ public class AlkaWallet_Interacciones_Test {
     @Test
     void logInUsuarioYAsignarCuentaCLPAUsuarioTest(){
         Interacciones interacciones = new Interacciones(consoleInputStub,alkeWalletFake);
-        interacciones.crearUsuario("Pedro","Nuñez","PM");
-        EstadoUsuario estadoActual= interacciones.logInUsuarioYAsignarCuentaCLPAUsuario("Pedro","Nuñez","PM");
-        Optional<Usuario> usuarioCreado = RepositorioUsuarios.consultarUsuario("Pedro","Nuñez");
+        interacciones.crearUsuario("Pedro","Muñoz","Pedromuñoz");
+        EstadoUsuario estadoActual= interacciones.logInUsuarioYAsignarCuentaCLPAUsuario("Pedro","Muñoz","Pedromuñoz");
+        Optional<Usuario> usuarioCreado = RepositorioUsuarios.consultarUsuario("Pedro","Muñoz");
         Assertions.assertAll(
                 ()->assertTrue(usuarioCreado.isPresent()),
                 ()->assertTrue(usuarioCreado.get().getCuentaRegular().getMonedaConvertible().getCodigo().equals("CLP")),
@@ -67,7 +67,7 @@ public class AlkaWallet_Interacciones_Test {
     void logInHastaOperacionesUsuarioConCuentaAndLogOutTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
-        String clave = "PM";
+        String clave = "Pedromuñoz";
         Interacciones interacciones = new Interacciones(consoleInputStub, alkeWalletFake);
         interacciones.crearUsuario(nombre, apellido, clave);
         interacciones.logInUsuarioYAsignarCuentaCLPAUsuario(nombre, apellido, clave);
@@ -82,7 +82,7 @@ public class AlkaWallet_Interacciones_Test {
     void depositoEnCuentaCLPTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
-        String clave = "PM";
+        String clave = "Pedromuñoz";
         String depositoStr = "15000.00";
         BigDecimal deposito = new BigDecimal(depositoStr);
         Interacciones interacciones = new Interacciones(consoleInputStub, alkeWalletFake);
@@ -102,7 +102,7 @@ public class AlkaWallet_Interacciones_Test {
     void depositoYRetiroEnCuentaCLPTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
-        String clave = "PM";
+        String clave = "Pedromuñoz";
         String depositoStr = "15000.00";
         BigDecimal deposito = new BigDecimal(depositoStr);
         String retiroStr = "1560.50";
@@ -127,7 +127,7 @@ public class AlkaWallet_Interacciones_Test {
     void depositoYRetiroEnCuentaCLPEncadenadasTest() {
         String nombre = "Pedro";
         String apellido = "Muñoz";
-        String clave = "PM";
+        String clave = "Pedromuñoz";
         String depositoStr = "15000.00";
         BigDecimal deposito = new BigDecimal(depositoStr);
         String retiroStr = "1560.50";

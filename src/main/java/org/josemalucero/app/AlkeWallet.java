@@ -48,8 +48,8 @@ public class AlkeWallet {
 
        private void createSomeUsers() {
             BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-            RepositorioUsuarios.agregarUsuario("J", "P", bCryptPasswordEncoderService.hash("JP"));
-            RepositorioUsuarios.agregarUsuario("M", "M", bCryptPasswordEncoderService.hash("MM"));
+            RepositorioUsuarios.agregarUsuario("Jose", "Paez", bCryptPasswordEncoderService.hash("Josepaez"));
+            RepositorioUsuarios.agregarUsuario("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"));
         }
 
 
