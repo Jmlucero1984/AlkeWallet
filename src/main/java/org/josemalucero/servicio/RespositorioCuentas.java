@@ -24,7 +24,9 @@ public class RespositorioCuentas {
         return cuentaRegular;
 
     }
-
+public static void clearCuentasDB(){
+        cuentasDB.clear();
+}
 
     public static String generarSerial(int cantBlocks, int charsPerBlock){
         Random random = new Random();

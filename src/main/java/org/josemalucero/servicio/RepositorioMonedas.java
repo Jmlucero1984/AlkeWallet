@@ -26,4 +26,8 @@ public class RepositorioMonedas {
 
 
     }
+
+    public static void clearMonedasDB(){
+        monedasDB.clear();
+    }
 }

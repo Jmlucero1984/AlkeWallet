@@ -1,24 +1,39 @@
 package org.josemalucero.app;
 
-public class ConsoleInputStub implements InputProvider{
-    int proximaRespuestaInt;
-    String procimaRespuestaString;
+import java.util.LinkedList;
+import java.util.Queue;
 
-    public void setProximaRespuestaInt(int proximaRespuestaInt) {
-        this.proximaRespuestaInt = proximaRespuestaInt;
+public class ConsoleInputStub implements InputProvider{
+    Queue<Integer> respuestasInt = new LinkedList<>();
+    Queue<String> respuestasString = new LinkedList<>();
+
+
+    public void addProximaRespuestaInt(int proximaRespuestaInt) {
+        respuestasInt.add(proximaRespuestaInt);
+    }
+    public void addSerieDeRespuestasInt(int[] serieDeRespuestas) {
+        for (int i = 0; i < serieDeRespuestas.length; i++) {
+            respuestasInt.add(serieDeRespuestas[i]);
+        }
     }
 
-    public void setProcimaRespuestaString(String procimaRespuestaString) {
-        this.procimaRespuestaString = procimaRespuestaString;
+    public void addSerieDeRespuestasString(String[] serieDeRespuestas) {
+        for (int i = 0; i < serieDeRespuestas.length; i++) {
+            respuestasString.add(serieDeRespuestas[i]);
+        }
+    }
+
+    public void setProximaRespuestaString(String proximaRespuestaString) {
+        respuestasString.add(proximaRespuestaString);
     }
 
     @Override
     public int leerOpcionInt() {
-        return proximaRespuestaInt;
+        return respuestasInt.remove();
     }
 
     @Override
     public String leerOpcionString() {
-        return procimaRespuestaString;
+        return respuestasString.remove();
     }
 }

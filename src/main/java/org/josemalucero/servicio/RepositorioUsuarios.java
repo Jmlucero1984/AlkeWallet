@@ -26,5 +26,9 @@ public class RepositorioUsuarios {
         return usuario;
     }
 
+    public static void clearUsuariosDB() {
+        usuariosDB.clear();
+    }
+
 
 }
