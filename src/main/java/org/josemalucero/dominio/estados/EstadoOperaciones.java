@@ -147,61 +147,61 @@ public class EstadoOperaciones implements EstadoUsuario {
     private void transferirDinero(ContextoUsuario contextoUsuario) {
         System.out.println("TRANSFERIR A CUENTA");
         Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getConsoleInputProvider());
+
+        if(usuarioDestino!=null && !usuarioDestino.isEmpty()){
+            operarSobreCuentaParaTransferir(contextoUsuario,usuarioDestino.get());
+        }
+    }
+
+    private void operarSobreCuentaParaTransferir(ContextoUsuario contextoUsuario,Usuario usuarioDestino){
+        System.out.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        if(usuarioDestino==null ||usuarioDestino.isEmpty()){
+        if(usuarioDestino.equals(contextoUsuario.getUsuarioLogueado())){
+            System.out.println("|||| No le parece sin sentido transferirse a usted mismo? ||||");
             return;
-        } else  {
-            System.out.println("La cuenta destino pertenece a: " + usuarioDestino.get().getNombreCompleto());
-            if(usuarioDestino.get().equals(contextoUsuario.getUsuarioLogueado())){
-                System.out.println("|||| No le parece sin sentido transferirse a usted mismo? ||||");
-                return;
-            }
+        }
 
-            if (!(usuarioDestino.get().getCuentaRegular() instanceof Transferible)) {
-                System.out.println("La cuenta destino no puede recibir transferencias");
-                return;
-            }
-            int opcion = 0;
-            if(!usuarioDestino.get().getCuentaRegular().getMonedaConvertible().getCodigo().equals(cuentaRegular.getMonedaConvertible().getCodigo())){
-                System.out.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
-                String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
-                String titulo = "Seleccione opción para transferencia entre cuentas";
-                int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
-                if(eleccion==-1) return;
-                opcion = eleccion;
-            }
-            Optional<BigDecimal> cifraVerificada;
-            boolean operacionExitosa = false;
-            while (!operacionExitosa) {
-                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
-                if(cifraVerificada.isEmpty()) {
-                    return;
-                } else {
-                    OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get());
-                    switch (opcion) {
-                        case 1:
-                            operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
-                            break;
-                        case 2:
-                            operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.get().getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
-                            break;
-                    }
+        if (!(usuarioDestino.getCuentaRegular() instanceof Transferible)) {
+            System.out.println("La cuenta destino no puede recibir transferencias");
+            return;
+        }
+        int opcion = 0;
 
-                    if (operacionTransferencia.preValidar() ){
-                        operacionTransferencia.ejecutar();
-                        if(operacionTransferencia.posValidar()) {
-                            operacionExitosa = true;
-                            operacionTransferencia.registrar(cuentaRegular);
+        if(!usuarioDestino.getCuentaRegular().getMonedaConvertible().getCodigo().equals(cuentaRegular.getMonedaConvertible().getCodigo())){
+            System.out.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
+            String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
+            String titulo = "Seleccione opción para transferencia entre cuentas";
+            int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
+            if(eleccion==-1) return;
+            opcion = eleccion;
+        }
 
-                            System.out.println("TRANSFERENCIA REALIZADA");
-                        } else {
-                            operacionTransferencia.restaurarEstadoAnterior();
-                        }
-                    }
-                }
+        Optional<BigDecimal> cifraVerificada=null;
+        cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
+        if(cifraVerificada==null) {return;}
+
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get());
+        switch (opcion) {
+            case 1:
+                operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
+                break;
+            case 2:
+                operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
+                break;
+        }
+
+        if (operacionTransferencia.preValidar() ){
+            operacionTransferencia.ejecutar();
+            if(operacionTransferencia.posValidar()) {
+                operacionTransferencia.registrar(cuentaRegular);
+                System.out.println("TRANSFERENCIA REALIZADA");
+            } else {
+                operacionTransferencia.restaurarEstadoAnterior();
             }
         }
     }
+
+
 
 
     private void verHistorial(ContextoUsuario contextoUsuario) {

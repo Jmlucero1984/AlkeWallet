@@ -27,6 +27,10 @@ public class RepositorioMonedas {
 
     }
 
+    public static MonedaConvertible encontrarMonedaPorCodigo(String codigoMoneda){
+        return monedasDB.stream().filter(t->t.getCodigo().equals(codigoMoneda)).findAny().get();
+    }
+
     public static void clearMonedasDB(){
         monedasDB.clear();
     }

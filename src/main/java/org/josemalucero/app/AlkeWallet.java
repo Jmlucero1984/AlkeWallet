@@ -5,7 +5,6 @@ import org.josemalucero.servicio.BCryptPasswordEncoderService;
 import org.josemalucero.servicio.RepositorioMonedas;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
-import java.util.Scanner;
 
 public class AlkeWallet {
 
@@ -15,8 +14,9 @@ public class AlkeWallet {
     public AlkeWallet(ContextoUsuario contexto) {
 
         this.contexto = contexto;
-        createSomeUsers();
         RepositorioMonedas.crearMonedasBasicas();
+        createSomeUsers();
+
     }
 
     public void procesarOpcion(int opcion) {
@@ -26,11 +26,7 @@ public class AlkeWallet {
 
     public void run() {
 
-
-
-
         System.out.println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
-
 
         while (true) {
             try {
@@ -48,8 +44,9 @@ public class AlkeWallet {
 
        private void createSomeUsers() {
             BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-            RepositorioUsuarios.agregarUsuario("Jose", "Paez", bCryptPasswordEncoderService.hash("Josepaez"));
-            RepositorioUsuarios.agregarUsuario("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"));
+            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
+            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
+            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
         }
 
 

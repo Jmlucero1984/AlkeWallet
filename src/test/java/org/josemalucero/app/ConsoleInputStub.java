@@ -16,6 +16,12 @@ public class ConsoleInputStub implements InputProvider{
             respuestasInt.add(serieDeRespuestas[i]);
         }
     }
+    public void clearRespuestasString(){
+        respuestasString.clear();
+    }
+    public void clearRespuestasInt(){
+        respuestasInt.clear();
+    }
 
     public void addSerieDeRespuestasString(String[] serieDeRespuestas) {
         for (int i = 0; i < serieDeRespuestas.length; i++) {

@@ -1,9 +1,8 @@
-package org.josemalucero.operacion.trasnferencia;
+package org.josemalucero.operacion.transferencia;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
-import org.josemalucero.dominio.operacion.OperacionTransferencia;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen;
 import org.junit.jupiter.api.Test;

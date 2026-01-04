@@ -12,9 +12,9 @@ public class FormateadorDeRegistroAImprimir {
 
 
     public static String FormatearRegistro(RegistroOperacion registroOperacion, Alineado alineado) {
-        String formattedOutput = alinearTexto(MAX_DATE_CHARS,registroOperacion.getFormattedDateTime(),alineado) +" | "+
-                alinearTexto(MAX_DESCRIPTION_CHARS,registroOperacion.getDescripcion(),alineado) +" | "+
-                alinearTexto(MAX_MONTO_CHARS,registroOperacion.getMonto().toString(),alineado) +" | "+
+        String formattedOutput = alinearTexto(MAX_DATE_CHARS,registroOperacion.getFormattedDateTime(),alineado) +" │ "+
+                alinearTexto(MAX_DESCRIPTION_CHARS,registroOperacion.getDescripcion(),alineado) +" │ "+
+                alinearTexto(MAX_MONTO_CHARS,registroOperacion.getMonto().toString(),alineado) +" │ "+
                 alinearTexto(MAX_BALANCE_CHARS,registroOperacion.getBalance().toString(),alineado);
         return formattedOutput;
 
@@ -23,11 +23,11 @@ public class FormateadorDeRegistroAImprimir {
     public static String GenerarCabeceras(Alineado alineado) {
         char[] guiones =new char[MAX_DATE_CHARS+MAX_DESCRIPTION_CHARS+MAX_MONTO_CHARS+MAX_BALANCE_CHARS+3*3];
         for (int i = 0; i < guiones.length; i++) {
-            guiones[i]='-';
+            guiones[i]='─';
         }
-        String formattedOutput = alinearTexto(MAX_DATE_CHARS,"FECHA Y HORA",alineado) +" | "+
-                alinearTexto(MAX_DESCRIPTION_CHARS,"DESCRIPCIÓN",alineado) +" | "+
-                alinearTexto(MAX_MONTO_CHARS,"MONTO",alineado) +" | "+
+        String formattedOutput = alinearTexto(MAX_DATE_CHARS,"FECHA Y HORA",alineado) +" │ "+
+                alinearTexto(MAX_DESCRIPTION_CHARS,"DESCRIPCIÓN",alineado) +" │ "+
+                alinearTexto(MAX_MONTO_CHARS,"MONTO",alineado) +" │ "+
                 alinearTexto(MAX_BALANCE_CHARS,"BALANCE",alineado)+"\n"+ new String(guiones);
         return formattedOutput;
     }

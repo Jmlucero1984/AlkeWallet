@@ -91,6 +91,6 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
-        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",monto,cuentaRegular.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",monto,cuentaDestino.getBalance()));
     }
 }

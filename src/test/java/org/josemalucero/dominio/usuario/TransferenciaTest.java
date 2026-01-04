@@ -3,9 +3,8 @@ package org.josemalucero.dominio.usuario;
 import Helpers.RandomStringGenerators;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.OperacionTransferencia;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
+import org.josemalucero.servicio.RepositorioMonedas;
+import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,10 +22,22 @@ public class TransferenciaTest {
     private OperacionTransferencia operacionTransferenciaMock;
 
 
+
+
     @BeforeEach
     void setUp() {
-        usuario_origen = new Usuario("Nombre_a","Apellido_a", RandomStringGenerators.getRandomString(8));
-        usuario_destino = new Usuario("Nombre_b","Apellido_b", RandomStringGenerators.getRandomString(8));
+        RepositorioMonedas.crearMonedasBasicas();
+        usuario_origen = new Usuario("Nombre_a","Apellido_a", "clave_nombre_a"/*RandomStringGenerators.getRandomString(8)*/);
+        usuario_destino = new Usuario("Nombre_b","Apellido_b", "clave_nombre_b"/*RandomStringGenerators.getRandomString(8)*/);
+        usuario_origen.crearCuentRegular();
+        usuario_destino.crearCuentRegular();
+        usuario_origen.getCuentaRegular().setMoneda(RepositorioMonedas.encontrarMonedaPorCodigo("ARS"));
+        usuario_destino.getCuentaRegular().setMoneda(RepositorioMonedas.encontrarMonedaPorCodigo("ARS"));
+
+    }
+    @AfterEach
+    void tearDown(){
+        RepositorioMonedas.clearMonedasDB();
     }
 
 
