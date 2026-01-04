@@ -21,13 +21,13 @@ public class InteraccionesEncadenables{
         return  this;
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaCLPAUsuario(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,9,2});
         consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
         alkeWalletFake.runBySteps(6);
         return  this;
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaARSAUsuario(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,9,2});
         consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
         alkeWalletFake.runBySteps(6);
         return  this;
@@ -41,7 +41,7 @@ public class InteraccionesEncadenables{
     }
 
     public InteraccionesEncadenables mostrarHistorial() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{7});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{9});
         alkeWalletFake.runBySteps(1);
         return  this;
     }
@@ -79,7 +79,7 @@ public class InteraccionesEncadenables{
         return  this;
     }
     public InteraccionesEncadenables logOutDesdeOperaciones() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{9,2});
         alkeWalletFake.runBySteps(2);
         return  this;
     }

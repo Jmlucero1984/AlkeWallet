@@ -1,12 +1,9 @@
 package org.josemalucero.dominio.usuario;
 
-import org.josemalucero.app.ConsoleInputProvider;
-import org.josemalucero.app.InputProvider;
+import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.estados.EstadoEntrada;
 import org.josemalucero.dominio.estados.EstadoLogin;
 import org.josemalucero.dominio.estados.EstadoUsuario;
-
-import java.util.Scanner;
 
 public class ContextoUsuario {
     private EstadoUsuario estadoActual;

@@ -1,16 +1,12 @@
 package org.josemalucero.dominio.estados;
 
-import org.josemalucero.app.ConsoleInputProvider;
-import org.josemalucero.app.InputProvider;
+import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.BCryptPasswordEncoderService;
-import org.josemalucero.servicio.PasswordHashService;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
-import java.io.Console;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class EstadoSignIn implements EstadoUsuario {
 
@@ -130,13 +126,11 @@ public class EstadoSignIn implements EstadoUsuario {
         }
 
 
-
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
             System.out.println("Ya existe un usuario con el nombre: "+usuarioExistente.get().getNombreCompleto());
         } else {
             String clave =null;
-
             boolean coinciden = false;
             while(!coinciden){
 
@@ -165,8 +159,6 @@ public class EstadoSignIn implements EstadoUsuario {
 
                 if(clave.equals(confirmaClave)) {
                     coinciden = true;
-
-
                 } else {
                     System.out.println("Las constraseñas no coincide");
                     clave=null;

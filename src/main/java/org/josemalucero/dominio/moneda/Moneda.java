@@ -1,6 +1,6 @@
 package org.josemalucero.dominio.moneda;
 
-import java.math.BigDecimal;
+
 
 public class Moneda {
     protected String codigo;
@@ -10,9 +10,7 @@ public class Moneda {
     public Moneda(String codigo, String nombre) {
         this.codigo = codigo;
         this.nombre = nombre;
-
     }
-
 
     public String getCodigo() {
         return codigo;

@@ -1,27 +1,23 @@
 package org.josemalucero.dominio.estados;
 
-import org.josemalucero.app.ConsoleInputProvider;
-import org.josemalucero.app.InputProvider;
-import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.RepositorioMonedas;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class EstadoConversionMonedas implements EstadoUsuario {
 
     private MonedaConvertible monedaDePartida;
     private MonedaConvertible monedaDeDestino;
+
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
         if(monedaDePartida==null) {
             System.out.println("Moneda de PARTIDA-> para convertir");
-
             for ( int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
                 System.out.println("" + (i + 1) + ". " + RepositorioMonedas.getMonedasDB().get(i).getNombre()
                         + " | " + RepositorioMonedas.getMonedasDB().get(i).getCodigo());
@@ -43,21 +39,23 @@ public class EstadoConversionMonedas implements EstadoUsuario {
 
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
+
         if(opcion==RepositorioMonedas.getMonedasDB().size()+1)  contextoUsuario.cambiarEstado(new EstadoOperaciones());
         int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size();
         if (monedaDePartida != null) cantidadDeOpciones--;
-        if (opcion <= 0 || opcion > cantidadDeOpciones) {
+        if (opcion <= 0 || opcion > cantidadDeOpciones || (monedaDePartida != null && opcion ==RepositorioMonedas.getMonedasDB().indexOf(monedaDePartida)+1 )) {
             System.out.println("Opción inválida");
+        } else if (opcion==cantidadDeOpciones){
+            contextoUsuario.cambiarEstado(new EstadoOperaciones());
         } else {
             MonedaConvertible eleccion = RepositorioMonedas.getMonedasDB().get(opcion - 1);
             System.out.println("Seleccionó " + eleccion.getNombre());
+
             if (monedaDePartida == null) {
                 monedaDePartida = eleccion;
-
             } else {
                 monedaDeDestino = eleccion;
                 Optional<BigDecimal> cifraVerificada;
-
                 cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
                 if(!cifraVerificada.isEmpty()){
                   BigDecimal resultado =convertir(monedaDePartida,monedaDeDestino,cifraVerificada.get());
@@ -71,7 +69,6 @@ public class EstadoConversionMonedas implements EstadoUsuario {
     private BigDecimal convertir(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto) {
         ConversorMoneda conversorMoneda = new ConversorMoneda();
         return conversorMoneda.convertirMoneda(origen,destino,monto);
-        //return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
     }
 
     @Override
@@ -79,20 +76,20 @@ public class EstadoConversionMonedas implements EstadoUsuario {
         return "CONVERSIÓN DE MONEDAS";
     }
 
-        private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
+    private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
 
-            boolean cantidadVálida = false;
+        boolean cantidadVálida = false;
 
-            while(!cantidadVálida){
-                System.out.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
-                String cantidadIntroducida = consoleInputProvider.leerOpcionString();
-                if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
-                cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
-                if (cantidadVálida) {
-                    return new BigDecimal(cantidadIntroducida);
-                }
-                System.out.println("Cantidad inválida, intente nuevamente...");
+        while(!cantidadVálida){
+            System.out.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
+            String cantidadIntroducida = consoleInputProvider.leerOpcionString();
+            if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
+            cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
+            if (cantidadVálida) {
+                return new BigDecimal(cantidadIntroducida);
             }
-            return  null;
+            System.out.println("Cantidad inválida, intente nuevamente...");
         }
+        return  null;
+    }
 }

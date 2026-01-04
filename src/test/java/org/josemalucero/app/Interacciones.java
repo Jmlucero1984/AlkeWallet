@@ -20,13 +20,13 @@ public class Interacciones {
         return alkeWalletFake.contexto.getEstadoActual();
     }
     public EstadoUsuario logInUsuarioYAsignarCuentaCLPAUsuario(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,9,2});
         consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave});
         alkeWalletFake.runBySteps(5);
         return  alkeWalletFake.contexto.getEstadoActual();
     }
     public EstadoUsuario logInUsuarioYAsignarCuentaARSAUsuario(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,9,2});
         consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave,clave});
         alkeWalletFake.runBySteps(5);
         return  alkeWalletFake.contexto.getEstadoActual();
@@ -51,7 +51,7 @@ public class Interacciones {
         return alkeWalletFake.contexto.getEstadoActual();
     }
     public EstadoUsuario logOutDesdeOperaciones() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{8,2});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{9,2});
         alkeWalletFake.runBySteps(2);
         return alkeWalletFake.contexto.getEstadoActual();
     }

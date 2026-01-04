@@ -8,10 +8,9 @@ public class FormateadorDeRegistroAImprimir {
     private static final int MAX_MONTO_CHARS = 30;
     private static final int MAX_DATE_CHARS = 40;
     public enum Alineado {IZQUIERDA,CENTRO, DERECHA};
-    private enum Fill {PRE,POST};
 
 
-    public static String FormatearRegistro(RegistroOperacion registroOperacion, Alineado alineado) {
+    public static String formatearRegistro(RegistroOperacion registroOperacion, Alineado alineado) {
         String formattedOutput = alinearTexto(MAX_DATE_CHARS,registroOperacion.getFormattedDateTime(),alineado) +" │ "+
                 alinearTexto(MAX_DESCRIPTION_CHARS,registroOperacion.getDescripcion(),alineado) +" │ "+
                 alinearTexto(MAX_MONTO_CHARS,registroOperacion.getMonto().toString(),alineado) +" │ "+
@@ -20,7 +19,7 @@ public class FormateadorDeRegistroAImprimir {
 
     }
 
-    public static String GenerarCabeceras(Alineado alineado) {
+    public static String generarCabeceras(Alineado alineado) {
         char[] guiones =new char[MAX_DATE_CHARS+MAX_DESCRIPTION_CHARS+MAX_MONTO_CHARS+MAX_BALANCE_CHARS+3*3];
         for (int i = 0; i < guiones.length; i++) {
             guiones[i]='─';
@@ -34,9 +33,10 @@ public class FormateadorDeRegistroAImprimir {
 
 
 
-    private  static String alinearTexto(int espaciosDisponibles, String texto, Alineado alineado){
+    public  static String alinearTexto(int espaciosDisponibles, String texto, Alineado alineado){
         if (texto.length() > espaciosDisponibles-2) {
-            texto = texto.substring(0, espaciosDisponibles-2);
+            texto = texto.substring(0, espaciosDisponibles-3);
+            texto +="...";
         }
         int espaciosLibres = espaciosDisponibles-texto.length();
         char[] textoChars =texto.toCharArray();

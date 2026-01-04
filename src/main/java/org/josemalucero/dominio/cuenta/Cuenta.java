@@ -7,12 +7,15 @@ import org.josemalucero.dominio.operacion.RegistroOperacion;
 import java.util.ArrayList;
 
 public class Cuenta {
+
     String serialCuenta;
+    MonedaConvertible monedaConvertible;
     ArrayList<RegistroOperacion> historialOperaciones = new ArrayList<>();
 
     public MonedaConvertible getMonedaConvertible() {
         return monedaConvertible;
     }
+
     public void registrarOperacion(RegistroOperacion registroOperacion){
         historialOperaciones.add(registroOperacion);
     }
@@ -22,12 +25,6 @@ public class Cuenta {
 
     public void setMoneda(MonedaConvertible monedaConvertible) {
         this.monedaConvertible = monedaConvertible;
-    }
-
-    MonedaConvertible monedaConvertible;
-
-    public Cuenta() {
-
     }
 
     public String getSerialCuenta() {

@@ -1,16 +1,12 @@
 package org.josemalucero.dominio.estados;
 
-import org.josemalucero.app.ConsoleInputProvider;
-import org.josemalucero.app.InputProvider;
+import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.BCryptPasswordEncoderService;
-import org.josemalucero.servicio.PasswordHashService;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
-import java.io.Console;
 import java.util.Optional;
-import java.util.Scanner;
 
 public class EstadoLogin implements EstadoUsuario {
 
@@ -51,7 +47,7 @@ public class EstadoLogin implements EstadoUsuario {
     }
 
     private Usuario autenticarUsuario(ContextoUsuario contextoUsuario) {
-        // Lógica real de autenticación aquí
+
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
         //Console console = System.console();

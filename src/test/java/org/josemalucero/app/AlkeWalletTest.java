@@ -78,14 +78,14 @@ class AlkeWalletTest {
         alkeWalletFake.runBySteps(4);
 
         assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
-        consoleInputStub.addProximaRespuestaInt(8);
+        consoleInputStub.addProximaRespuestaInt(9);
         alkeWalletFake.runBySteps(1);
         assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
     void alkeWalletTest_interaccion_transferencia() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{2,1,1,2,3,8});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{2,1,1,2,3,9});
         consoleInputStub.addSerieDeRespuestasString(new String[]{"Arturo","Amelio","AAmelio","AAmelio","Arturo","Amelio","AAmelio","15000.00"});
         alkeWalletFake.runBySteps(4);
         String serialCuenta = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta();
@@ -101,7 +101,7 @@ class AlkeWalletTest {
         assertEquals(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance(),new BigDecimal("15000.00"));
 
         /* ESTADO OPERACIONES PARA TRANSFERIR */
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{5,1,8});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{5,1,9});
         consoleInputStub.setProximaRespuestaString(serialCuenta);
         consoleInputStub.setProximaRespuestaString("3000.00");
         alkeWalletFake.runBySteps(1);

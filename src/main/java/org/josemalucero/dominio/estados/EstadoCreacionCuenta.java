@@ -1,14 +1,13 @@
 package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.Registrable;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.RepositorioMonedas;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+
 
 public class EstadoCreacionCuenta implements EstadoUsuario, Registrable {
     @Override
@@ -33,7 +32,6 @@ public class EstadoCreacionCuenta implements EstadoUsuario, Registrable {
             registrar(contexto.getUsuarioLogueado().getCuentaRegular());
             contexto.cambiarEstado(new EstadoOperaciones());
         }
-
     }
 
     @Override
@@ -44,7 +42,6 @@ public class EstadoCreacionCuenta implements EstadoUsuario, Registrable {
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         String monedaCuenta = cuentaRegular.getMonedaConvertible().getNombre();
-
         cuentaRegular.registrarOperacion(new RegistroOperacion("Apertura Cuenta Regular en "+monedaCuenta, BigDecimal.ZERO,BigDecimal.ZERO));
     }
 }

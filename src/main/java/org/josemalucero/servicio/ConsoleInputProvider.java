@@ -1,4 +1,4 @@
-package org.josemalucero.app;
+package org.josemalucero.servicio;
 
 import java.util.Scanner;
 
@@ -14,7 +14,15 @@ import java.util.Scanner;
  * @author José María Lucero
  */
 public class ConsoleInputProvider  implements InputProvider{
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
+
+    public ConsoleInputProvider() {
+    }
+    public ConsoleInputProvider(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
+
     @Override
     public int leerOpcionInt() {
         int entrada = scanner.nextInt();

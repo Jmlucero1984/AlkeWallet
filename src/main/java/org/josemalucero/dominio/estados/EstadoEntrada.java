@@ -4,6 +4,7 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 
 public class EstadoEntrada implements EstadoUsuario{
+
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
         System.out.println("1. Iniciar sesión");
@@ -26,7 +27,6 @@ public class EstadoEntrada implements EstadoUsuario{
 
                 case 3:
                     contexto.cambiarEstado(new EstadoSalir());
-
                     break;
 
                 default:

@@ -1,9 +1,11 @@
 package org.josemalucero.app;
 
+import org.josemalucero.servicio.InputProvider;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ConsoleInputStub implements InputProvider{
+public class ConsoleInputStub implements InputProvider {
     Queue<Integer> respuestasInt = new LinkedList<>();
     Queue<String> respuestasString = new LinkedList<>();
 
