@@ -12,7 +12,6 @@ public class AlkeWallet {
     protected final ContextoUsuario contexto;
 
     public AlkeWallet(ContextoUsuario contexto) {
-
         this.contexto = contexto;
         RepositorioMonedas.crearMonedasBasicas();
         createSomeUsers();
@@ -23,7 +22,13 @@ public class AlkeWallet {
         contexto.procesarOpcion(opcion);
     }
 
-
+    /**
+     * Da inicio a la apliación que continua en un bucle while
+     * manejando los distintos estados a través de lo que se ingresa
+     * por consola. Solo se termina el programa cuando desde alguno de
+     * los estados de llama a {@code System.exit()}
+     *
+     */
     public void run() {
 
         System.out.println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
@@ -42,6 +47,10 @@ public class AlkeWallet {
         }
     }
 
+    /**
+     * Genera algunos usuarios ficticios para poder
+     * hacer uso de la app con una base mínima.
+     */
        private void createSomeUsers() {
             BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
             RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");

@@ -308,10 +308,6 @@ public class AlkaWallet_Interacciones_Test {
                 ()->assertTrue(diferenciaCicloConversion.compareTo(toleranciaRedondeoAlBalancear)<=0,"Lo debitado de una cuenta no coincide con lo acreditado en la otra")
         );
 
-
-
     }
-
-
 
 }

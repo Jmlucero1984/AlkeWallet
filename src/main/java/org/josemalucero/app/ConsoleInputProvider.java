@@ -2,6 +2,17 @@ package org.josemalucero.app;
 
 import java.util.Scanner;
 
+/**
+ * Fachada/Adaptador para la entrada por consola usando Scanner.
+ * <p>
+ * Proporciona una interfaz simplificada y controlada para leer
+ * diferentes tipos de entrada desde la consola.
+ * </p>
+ *
+ * @see java.util.Scanner
+ * @see InputProvider
+ * @author José María Lucero
+ */
 public class ConsoleInputProvider  implements InputProvider{
     private final Scanner scanner = new Scanner(System.in);
     @Override
