@@ -52,6 +52,6 @@ public class EstadoConversionCuenta extends EstadoUsuario{
 
     @Override
     public String getNombreEstado() {
-        return "CONVERSION DE CUENTA";
+        return "CONVERSIÓN DE CUENTA";
     }
 }

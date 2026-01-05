@@ -27,7 +27,7 @@ public class AlkeWallet {
      * manejando los distintos estados a través de lo que se ingresa
      * por consola. Solo se termina el programa cuando desde alguno de
      * los estados de llama a {@code System.exit()}
-     *
+     *@author José Maria Lucero
      */
     public void run() {
 
@@ -50,6 +50,7 @@ public class AlkeWallet {
     /**
      * Genera algunos usuarios ficticios para poder
      * hacer uso de la app con una base mínima.
+     * @author José Maria Lucero
      */
        private void createSomeUsers() {
             BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();

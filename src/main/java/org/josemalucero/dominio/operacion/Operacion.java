@@ -9,7 +9,7 @@ public abstract class Operacion {
     //protected final String id;
     protected final CuentaRegular cuentaRegular;
     //protected final LocalDateTime fecha;
-    protected EstadoOperacion estado;
+
     protected OutputProvider outputProvider;
 
 
