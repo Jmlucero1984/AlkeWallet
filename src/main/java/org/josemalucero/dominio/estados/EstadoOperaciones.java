@@ -8,27 +8,32 @@ import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.FormateadorDeRegistroAImprimir;
+import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class EstadoOperaciones implements EstadoUsuario {
+public class EstadoOperaciones extends EstadoUsuario {
+
+    public EstadoOperaciones(InputProvider inputProvider, OutputProvider outputProvider) {
+        super(inputProvider, outputProvider);
+    }
 
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
-        System.out.println("Bienvenido, " + contexto.getUsuarioLogueado().getNombreCompleto());
-        System.out.println("1. Consultar datos cuenta");
-        System.out.println("2. Consultar saldo");
-        System.out.println("3. Depositar dinero");
-        System.out.println("4. Retirar dinero");
-        System.out.println("5. Transferir dinero");
-        System.out.println("6. Consultar conversión entre monedas");
-        System.out.println("7. Convertir cuenta a otra moneda");
-        System.out.println("8. Ver historial de transacciones");
-        System.out.println("9. Cerrar sesión (Sign Out)");
-        System.out.print("Seleccione una opción: ");
+        outputProvider.println("Bienvenido, " + contexto.getUsuarioLogueado().getNombreCompleto());
+        outputProvider.println("1. Consultar datos cuenta");
+        outputProvider.println("2. Consultar saldo");
+        outputProvider.println("3. Depositar dinero");
+        outputProvider.println("4. Retirar dinero");
+        outputProvider.println("5. Transferir dinero");
+        outputProvider.println("6. Consultar conversión entre monedas");
+        outputProvider.println("7. Convertir cuenta a otra moneda");
+        outputProvider.println("8. Ver historial de transacciones");
+        outputProvider.println("9. Cerrar sesión (Sign Out)");
+        outputProvider.print("Seleccione una opción: ");
     }
 
     @Override
@@ -65,12 +70,12 @@ public class EstadoOperaciones implements EstadoUsuario {
                 break;
 
             case 9:
-                System.out.println("Cerrando sesión...");
+                outputProvider.println("Cerrando sesión...");
                 contexto.cerrarSesion();
                 break;
 
             default:
-                System.out.println("Opción inválida");
+                outputProvider.println("Opción inválida");
         }
     }
 
@@ -82,12 +87,12 @@ public class EstadoOperaciones implements EstadoUsuario {
 
 
     private void consultarSaldo(ContextoUsuario contextoUsuario) {
-        OperacionConsulta operacionConsulta = new OperacionConsulta(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
+        OperacionConsulta operacionConsulta = new OperacionConsulta(contextoUsuario.getUsuarioLogueado().getCuentaRegular(),outputProvider);
         operacionConsulta.ejecutar();
     }
 
     private void depositarDinero(ContextoUsuario contextoUsuario) {
-        System.out.println("DEPOSITAR EN CUENTA");
+        outputProvider.println("DEPOSITAR EN CUENTA");
         Optional<BigDecimal> cifraVerificada;
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
@@ -96,13 +101,13 @@ public class EstadoOperaciones implements EstadoUsuario {
             if(cifraVerificada.isEmpty()){
                 return;
             } else {
-                OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada.get());
+                OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada.get(),outputProvider);
                 if (operacionDeposito.preValidar()) {
                     operacionDeposito.ejecutar();
                     if(operacionDeposito.posValidar()){
                         operacionExitosa = true;
                         operacionDeposito.registrar(cuentaRegular);
-                        System.out.println("DEPOSITO REALIZADO");
+                        outputProvider.println("DEPOSITO REALIZADO");
                     }
 
                 }
@@ -111,21 +116,21 @@ public class EstadoOperaciones implements EstadoUsuario {
     }
 
     private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
-        System.out.println(contextoUsuario.getUsuarioLogueado().getNombreCompleto());
-        System.out.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
-        System.out.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+        outputProvider.println(contextoUsuario.getUsuarioLogueado().getNombreCompleto());
+        outputProvider.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
+        outputProvider.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
     }
 
     private void convertirCuentaAOtraMoneda(ContextoUsuario contextoUsuario){
-        contextoUsuario.cambiarEstado(new EstadoConversionCuenta());
+        contextoUsuario.cambiarEstado(new EstadoConversionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
     }
 
     private void consultarConversionMoneda(ContextoUsuario contextoUsuario){
-        contextoUsuario.cambiarEstado(new EstadoConversionMonedas());
+        contextoUsuario.cambiarEstado(new EstadoConversionMonedas(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
     }
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
-        System.out.println("RETIRAR DE CUENTA");
+        outputProvider.println("RETIRAR DE CUENTA");
         Optional<BigDecimal> cifraVerificada;
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
@@ -134,13 +139,13 @@ public class EstadoOperaciones implements EstadoUsuario {
             if(cifraVerificada.isEmpty()){
                 return;
             } else  {
-                OperacionRetiro operacionRetiro = new OperacionRetiro(cuentaRegular,cifraVerificada.get());
+                OperacionRetiro operacionRetiro = new OperacionRetiro(cuentaRegular,cifraVerificada.get(),outputProvider);
                 if (operacionRetiro.preValidar()){
                     operacionRetiro.ejecutar();
                     if(operacionRetiro.posValidar()) {
                         operacionExitosa = true;
                         operacionRetiro.registrar(cuentaRegular);
-                        System.out.println("RETIRO REALIZADO");
+                        outputProvider.println("RETIRO REALIZADO");
                     }
                 }
             }
@@ -148,7 +153,7 @@ public class EstadoOperaciones implements EstadoUsuario {
     }
 
     private void transferirDinero(ContextoUsuario contextoUsuario) {
-        System.out.println("TRANSFERIR A CUENTA");
+        outputProvider.println("TRANSFERIR A CUENTA");
         Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getConsoleInputProvider());
         if(usuarioDestino!=null && !usuarioDestino.isEmpty()){
             operarSobreCuentaParaTransferir(contextoUsuario,usuarioDestino.get());
@@ -156,21 +161,22 @@ public class EstadoOperaciones implements EstadoUsuario {
     }
 
     private void operarSobreCuentaParaTransferir(ContextoUsuario contextoUsuario,Usuario usuarioDestino){
-        System.out.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
+        outputProvider.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
+        outputProvider.println("");
         if(usuarioDestino.equals(contextoUsuario.getUsuarioLogueado())){
-            System.out.println("|||| No le parece sin sentido transferirse a usted mismo? ||||");
+            outputProvider.println("|||| No le parece sin sentido transferirse a usted mismo? ||||");
             return;
         }
 
         if (!(usuarioDestino.getCuentaRegular() instanceof Transferible)) {
-            System.out.println("La cuenta destino no puede recibir transferencias");
+            outputProvider.println("La cuenta destino no puede recibir transferencias");
             return;
         }
         int opcion = 0;
 
         if(!usuarioDestino.getCuentaRegular().getMonedaConvertible().getCodigo().equals(cuentaRegular.getMonedaConvertible().getCodigo())){
-            System.out.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
+            outputProvider.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
             String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
             String titulo = "Seleccione opción para transferencia entre cuentas";
             int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
@@ -182,13 +188,13 @@ public class EstadoOperaciones implements EstadoUsuario {
         cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
         if(cifraVerificada==null) {return;}
 
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get());
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),outputProvider);
         switch (opcion) {
             case 1:
-                operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
+                operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda(),outputProvider);
                 break;
             case 2:
-                operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda());
+                operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda(),outputProvider);
                 break;
         }
 
@@ -196,7 +202,7 @@ public class EstadoOperaciones implements EstadoUsuario {
             operacionTransferencia.ejecutar();
             if(operacionTransferencia.posValidar()) {
                 operacionTransferencia.registrar(cuentaRegular);
-                System.out.println("TRANSFERENCIA REALIZADA");
+                outputProvider.println("TRANSFERENCIA REALIZADA");
             } else {
                 operacionTransferencia.restaurarEstadoAnterior();
             }
@@ -207,19 +213,19 @@ public class EstadoOperaciones implements EstadoUsuario {
 
 
     private void verHistorial(ContextoUsuario contextoUsuario) {
-        System.out.println("Mostrando historial...");
+        outputProvider.println("Mostrando historial...");
         ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
-        System.out.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
-        operacionesHistoricas.forEach(t->System.out.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
+        outputProvider.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
+        operacionesHistoricas.forEach(t->outputProvider.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
 
     }
 
 
     private int seleccionMultipleGenerica(InputProvider consoleInputProvider,String titulo,String[] opciones){
         while(true) {
-            System.out.println(titulo+" | ESC para salir.");
+            outputProvider.println(titulo+" | ESC para salir.");
             for(int i=0;i<opciones.length;i++){
-                System.out.println((i+1)+". "+opciones[i]);
+                outputProvider.println((i+1)+". "+opciones[i]);
             }
 
             String textoIntroducido = consoleInputProvider.leerOpcionString();
@@ -230,10 +236,10 @@ public class EstadoOperaciones implements EstadoUsuario {
                 if(opcion>0 && opcion<opciones.length+1){
                     return opcion;
                 } else {
-                    System.out.println("Opción invalida");
+                    outputProvider.println("Opción invalida");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Opción invalida");
+                outputProvider.println("Opción invalida");
             }
         }
     }
@@ -241,16 +247,16 @@ public class EstadoOperaciones implements EstadoUsuario {
     private Optional<Usuario> manejarEntradaDeNumeroCuenta(InputProvider consoleInputProvider){
         boolean cuentaValida = false;
         while(!cuentaValida){
-            System.out.println("Introducir numero de cuenta destino | ESC para salir.");
+            outputProvider.println("Introducir numero de cuenta destino | ESC para salir.");
             String textoIntroducido = consoleInputProvider.leerOpcionString();
             if(textoIntroducido.equalsIgnoreCase("ESC")) return null;
             Optional<Usuario> usuario = RepositorioUsuarios.consultarUsuarioPorCuenta(textoIntroducido);
             if (usuario.isPresent()) {
-                System.out.println("USUARIO ENCONTRADO");
-                System.out.println(usuario.get().getNombreCompleto());
+                outputProvider.println("USUARIO ENCONTRADO");
+                outputProvider.println(usuario.get().getNombreCompleto());
                 return Optional.of(usuario.get());
             }
-            System.out.println("No existe el numero de cuenta, intente nuevamente...");
+            outputProvider.println("No existe el numero de cuenta, intente nuevamente...");
         }
         return  null;
     }
@@ -258,14 +264,14 @@ public class EstadoOperaciones implements EstadoUsuario {
     private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
         boolean cantidadVálida = false;
         while(!cantidadVálida){
-            System.out.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
+            outputProvider.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
             String cantidadIntroducida = consoleInputProvider.leerOpcionString();
             if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
             cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
             if (cantidadVálida) {
                 return new BigDecimal(cantidadIntroducida);
             }
-            System.out.println("Cantidad inválida, intente nuevamente...");
+            outputProvider.println("Cantidad inválida, intente nuevamente...");
         }
         return  null;
     }

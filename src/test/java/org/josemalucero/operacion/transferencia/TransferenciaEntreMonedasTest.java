@@ -5,6 +5,7 @@ import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen;
+import org.josemalucero.servicio.ConsoleOutputProvider;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -30,7 +31,7 @@ public class TransferenciaEntreMonedasTest {
         cuentaOrigen.depositar(new BigDecimal("1000.00"));
         cuentaOrigen.setMoneda(monedaConvertibleOrigen);
         BigDecimal cantidadATransferir = new BigDecimal("550.00");
-        operacionTransferenciaMonedaDestino = new OperacionTransferenciaMonedaDestino(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda());
+        operacionTransferenciaMonedaDestino = new OperacionTransferenciaMonedaDestino(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda(), new ConsoleOutputProvider());
         operacionTransferenciaMonedaDestino.ejecutar();
         System.out.println("MONTO EFECTIVO: "+operacionTransferenciaMonedaDestino.getMontoEfectivo());
         System.out.println("BALANCE ORIGEN: "+cuentaOrigen.getBalance());
@@ -48,7 +49,7 @@ public class TransferenciaEntreMonedasTest {
         cuentaOrigen.setMoneda(monedaConvertibleOrigen);
         cuentaOrigen.depositar(new BigDecimal("1000.00"));
         BigDecimal cantidadATransferir = new BigDecimal("1000.00");
-        operacionTransferenciaMonedaOrigen = new OperacionTransferenciaMonedaOrigen(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda());
+        operacionTransferenciaMonedaOrigen = new OperacionTransferenciaMonedaOrigen(cuentaOrigen,cuentaDestino,cantidadATransferir, new ConversorMoneda(),new ConsoleOutputProvider());
         operacionTransferenciaMonedaOrigen.ejecutar();
         System.out.println("MONTO EFECTIVO: "+operacionTransferenciaMonedaOrigen.getMontoEfectivo());
         System.out.println("BALANCE ORIGEN: "+cuentaOrigen.getBalance());

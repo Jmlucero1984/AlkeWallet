@@ -18,13 +18,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AlkeWalletTest {
     ConsoleInputStub consoleInputStub;
+    ConsoleOutputStub consoleOutputStub;
     ContextoUsuario contextoUsuario;
     AlkeWalletFake alkeWalletFake;
 
     @BeforeEach
     void setUp(){
         consoleInputStub = new ConsoleInputStub();
-        contextoUsuario = new ContextoUsuario(consoleInputStub);
+        consoleOutputStub = new ConsoleOutputStub();
+        contextoUsuario = new ContextoUsuario(consoleInputStub,consoleOutputStub);
         alkeWalletFake = new AlkeWalletFake(contextoUsuario);
     }
 
@@ -42,14 +44,14 @@ class AlkeWalletTest {
     void alkeWalletTest_1() {
         consoleInputStub.addProximaRespuestaInt(1);
         alkeWalletFake.run();
-       assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
+       assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
     void alkeWalletTest_2() {
         consoleInputStub.addProximaRespuestaInt(2);
         alkeWalletFake.run();
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("REGISTRO DE NUEVO USUARIO"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("REGISTRO DE NUEVO USUARIO"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
 
@@ -59,7 +61,7 @@ class AlkeWalletTest {
         consoleInputStub.addSerieDeRespuestasString(new String[]{"Jose","Lucero","Joselucero"});
         alkeWalletFake.runBySteps(3);
 
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
@@ -68,7 +70,7 @@ class AlkeWalletTest {
         consoleInputStub.addSerieDeRespuestasString(new String[]{"Carlos","Casas","CCasas","CCasas","Carlos","Casas","CCasas"});
         alkeWalletFake.runBySteps(4);
 
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
@@ -77,10 +79,10 @@ class AlkeWalletTest {
         consoleInputStub.addSerieDeRespuestasString(new String[]{"Berta","Arranz","BArranz","BArranz","Berta","Arranz","BArranz"});
         alkeWalletFake.runBySteps(4);
 
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
         consoleInputStub.addProximaRespuestaInt(9);
         alkeWalletFake.runBySteps(1);
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
@@ -108,7 +110,7 @@ class AlkeWalletTest {
 
         alkeWalletFake.runBySteps(2);
 
-        assertTrue(alkeWalletFake.contexto.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
+        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
         /* ESTADO LOGIN */
         consoleInputStub.addSerieDeRespuestasInt(new int[]{1});
         consoleInputStub.addSerieDeRespuestasString(new String[]{"Arturo","Amelio","AAmelio"});

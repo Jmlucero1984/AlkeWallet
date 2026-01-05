@@ -1,36 +1,41 @@
 package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.dominio.usuario.Usuario;
+import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.OutputProvider;
 
-public class EstadoEntrada implements EstadoUsuario{
+public class EstadoEntrada extends EstadoUsuario{
 
-    @Override
-    public void mostrarMenu(ContextoUsuario contexto) {
-        System.out.println("1. Iniciar sesión");
-        System.out.println("2. Registrarse (Sign In)");
-        System.out.println("3. Salir");
-        System.out.print("Seleccione una opción: ");
+    public EstadoEntrada(InputProvider inputProvider, OutputProvider outputProvider) {
+        super(inputProvider, outputProvider);
     }
 
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contexto) {
+    public void mostrarMenu(ContextoUsuario contexto) {
+        outputProvider.println("1. Iniciar sesión");
+        outputProvider.println("2. Registrarse (Sign In)");
+        outputProvider.println("3. Salir");
+        outputProvider.print("Seleccione una opción: ");
+    }
+
+    @Override
+    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
 
             switch (opcion) {
                 case 1:
-                    contexto.cambiarEstado(new EstadoLogin());
+                    contextoUsuario.cambiarEstado(new EstadoLogin(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     break;
 
                 case 2:
-                    contexto.cambiarEstado(new EstadoSignIn());
+                    contextoUsuario.cambiarEstado(new EstadoSignIn(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     break;
 
                 case 3:
-                    contexto.cambiarEstado(new EstadoSalir());
+                    contextoUsuario.cambiarEstado(new EstadoSalir(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     break;
 
                 default:
-                    System.out.println("Opción inválida");
+                    outputProvider.println("Opción inválida");
             }
         }
 

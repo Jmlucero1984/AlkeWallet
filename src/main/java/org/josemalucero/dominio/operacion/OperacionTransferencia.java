@@ -4,6 +4,7 @@ import org.josemalucero.dominio.cuenta.Consultable;
 import org.josemalucero.dominio.cuenta.Cuenta;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
+import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,9 +15,9 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     BigDecimal saldoAnteriorCuentaDestino;
 
 
-    public OperacionTransferencia (CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto) {
+    public OperacionTransferencia (CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, OutputProvider outputProvider) {
 
-        super( cuentaOrigen, monto);
+        super( cuentaOrigen, monto,outputProvider);
         this.cuentaDestino = cuentaDestino;
 
     }
@@ -49,14 +50,14 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     @Override
     public boolean preValidar() {
         if (monto.compareTo(BigDecimal.ZERO)==0) {
-            System.out.println("No se puede realizar transferencia por monto igual a 0");
+            outputProvider.println("No se puede realizar transferencia por monto igual a 0");
             return false;
         }
         if(monto.compareTo(cuentaRegular.getBalance())<=0){
             return true;
 
         } else {
-            System.out.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
             return false;
         }
     }
@@ -68,7 +69,7 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
             return true;
 
         } else {
-            System.out.println("HA FALLADO LA TRANSFERENCIA");
+            outputProvider.println("HA FALLADO LA TRANSFERENCIA");
             return false;
         }
     }

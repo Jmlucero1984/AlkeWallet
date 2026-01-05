@@ -1,7 +1,9 @@
 package org.josemalucero.app;
 
 import org.josemalucero.dominio.estados.EstadoUsuario;
+import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.Credencial;
+import org.josemalucero.servicio.RepositorioMonedas;
 
 public class InteraccionesEncadenables{
     ConsoleInputStub consoleInputStub;
@@ -22,14 +24,14 @@ public class InteraccionesEncadenables{
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaCLPAUsuario(Credencial credencial) {
         consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
-        alkeWalletFake.runBySteps(6);
+        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave()});
+        alkeWalletFake.runBySteps(5);
         return  this;
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaARSAUsuario(Credencial credencial) {
         consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
-        alkeWalletFake.runBySteps(6);
+        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave()});
+        alkeWalletFake.runBySteps(5);
         return  this;
     }
 
@@ -41,7 +43,7 @@ public class InteraccionesEncadenables{
     }
 
     public InteraccionesEncadenables mostrarHistorial() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{9});
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{8});
         alkeWalletFake.runBySteps(1);
         return  this;
     }
@@ -76,6 +78,13 @@ public class InteraccionesEncadenables{
         consoleInputStub.addSerieDeRespuestasInt(new int[]{4});
         consoleInputStub.addSerieDeRespuestasString(new String[]{monto});
         alkeWalletFake.runBySteps(1);
+        return  this;
+    }
+
+    public InteraccionesEncadenables convertirCuentaAOtraMoneda(MonedaConvertible monedaConvertible) {
+        int opcionDeMonedaDeDestino = RepositorioMonedas.getMonedasDB().indexOf(monedaConvertible)+1;
+        consoleInputStub.addSerieDeRespuestasInt(new int[]{7,opcionDeMonedaDeDestino});
+        alkeWalletFake.runBySteps(2);
         return  this;
     }
     public InteraccionesEncadenables logOutDesdeOperaciones() {

@@ -1,12 +1,13 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
 public class OperacionDeposito extends OperacionDeMonto implements Validable,Reversible, Registrable{
-    public OperacionDeposito(CuentaRegular cuenta, BigDecimal monto) {
-        super( cuenta, monto);
+    public OperacionDeposito(CuentaRegular cuenta, BigDecimal monto, OutputProvider outputProvider) {
+        super( cuenta, monto,outputProvider);
     }
     BigDecimal saldoAnteriorCuentaOrigen;
     @Override
@@ -26,7 +27,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         if(monto.compareTo(BigDecimal.ZERO)>=0){
             return true;
         } else {
-            System.out.println("No se pueden depositar cantidades negativas");
+            outputProvider.println("No se pueden depositar cantidades negativas");
             return  false;
         }
     }
@@ -38,14 +39,14 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
             return true;
 
         } else {
-            System.out.println("HA FALLADO EL DEPOSITO");
+            outputProvider.println("HA FALLADO EL DEPOSITO");
             return false;
         }
     }
 
     @Override
     public void restaurarEstadoAnterior() {
-        System.out.println("ROLLBACK");
+        outputProvider.println("ROLLBACK");
     }
 
     @Override

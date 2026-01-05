@@ -3,6 +3,7 @@ package org.josemalucero.dominio.usuario;
 import Helpers.RandomStringGenerators;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.OperacionTransferencia;
+import org.josemalucero.servicio.ConsoleOutputProvider;
 import org.josemalucero.servicio.RepositorioMonedas;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.when;
 public class TransferenciaTest {
     private Usuario usuario_origen;
     private Usuario usuario_destino;
+    private ConsoleOutputProvider consoleOutputProvider;
     @InjectMocks
     private OperacionTransferencia operacionTransferenciaMock;
 
@@ -26,6 +28,7 @@ public class TransferenciaTest {
 
     @BeforeEach
     void setUp() {
+        consoleOutputProvider = new ConsoleOutputProvider();
         RepositorioMonedas.crearMonedasBasicas();
         usuario_origen = new Usuario("Nombre_a","Apellido_a", "clave_nombre_a"/*RandomStringGenerators.getRandomString(8)*/);
         usuario_destino = new Usuario("Nombre_b","Apellido_b", "clave_nombre_b"/*RandomStringGenerators.getRandomString(8)*/);
@@ -48,7 +51,7 @@ public class TransferenciaTest {
         BigDecimal cantidadATransferir = new BigDecimal(""+random.nextInt(0,2000)+"."+ random.nextInt(0,99));
         BigDecimal balanceCuentaUsuario_b = usuario_destino.getCuentaRegular().getBalance();
         usuario_origen.getCuentaRegular().depositar(cantidadInicialUsuario_a);
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         assertAll(
 
@@ -63,14 +66,14 @@ public class TransferenciaTest {
     @Test
     void validarTransferenciaConFondosInsuficientes() {
         BigDecimal cantidadATransferir = new BigDecimal("1000.00");
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         assertFalse(operacionTransferencia.preValidar());
     }
 
     @Test
     void validarTransferenciaPorCantidadIgualACero() {
         BigDecimal cantidadATransferir = new BigDecimal("0.00");
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         assertFalse(operacionTransferencia.preValidar());
     }
 
@@ -91,7 +94,7 @@ public class TransferenciaTest {
         operacionTransferenciaMock = new OperacionTransferencia(
                 cuentaRegular_a,
                 cuentaRegular_b,
-                        new BigDecimal("200.00")
+                        new BigDecimal("200.00"),consoleOutputProvider
                 );
 
         operacionTransferenciaMock.ejecutar();
@@ -105,7 +108,7 @@ public class TransferenciaTest {
         BigDecimal cantidadATransferir = new BigDecimal(1000.00);
         usuario_origen.getCuentaRegular().depositar(cantidadInicialCuenta_a);
         usuario_destino.getCuentaRegular().depositar(cantidadInicialCuenta_b);
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_origen.getCuentaRegular().retirar(new BigDecimal(100.00));
         boolean resultadoValidacion = operacionTransferencia.posValidar();
@@ -124,7 +127,7 @@ public class TransferenciaTest {
         BigDecimal cantidadATransferir = new BigDecimal(1000.00);
         usuario_origen.getCuentaRegular().depositar(cantidadInicialCuenta_a);
         usuario_destino.getCuentaRegular().depositar(cantidadInicialCuenta_b);
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_origen.getCuentaRegular().depositar(new BigDecimal(100.00));
         boolean resultadoValidacion = operacionTransferencia.posValidar();
@@ -143,7 +146,7 @@ public class TransferenciaTest {
         BigDecimal cantidadATransferir = new BigDecimal(1000.00);
         usuario_origen.getCuentaRegular().depositar(cantidadInicialCuenta_a);
         usuario_destino.getCuentaRegular().depositar(cantidadInicialCuenta_b);
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_destino.getCuentaRegular().retirar(new BigDecimal(100.00));
         boolean resultadoValidacion = operacionTransferencia.posValidar();
@@ -162,7 +165,7 @@ public class TransferenciaTest {
         BigDecimal cantidadATransferir = new BigDecimal(1000.00);
         usuario_origen.getCuentaRegular().depositar(cantidadInicialCuenta_a);
         usuario_destino.getCuentaRegular().depositar(cantidadInicialCuenta_b);
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir);
+        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_destino.getCuentaRegular().depositar(new BigDecimal(100.00));
         boolean resultadoValidacion = operacionTransferencia.posValidar();

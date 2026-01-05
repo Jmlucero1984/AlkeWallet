@@ -1,13 +1,23 @@
 package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
+import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.OutputProvider;
 
-public interface EstadoUsuario {
+public abstract class EstadoUsuario {
 
-    void mostrarMenu(ContextoUsuario contextoUsuario);
+    protected InputProvider inputProvider;
+    protected OutputProvider outputProvider;
 
-    void procesarOpcion(int opcion, ContextoUsuario contextoUsuario);
+    public EstadoUsuario(InputProvider inputProvider, OutputProvider outputProvider) {
+        this.inputProvider = inputProvider;
+        this.outputProvider = outputProvider;
+    }
 
-    String getNombreEstado();
+    public abstract void mostrarMenu(ContextoUsuario contextoUsuario);
+
+    public abstract void procesarOpcion(int opcion, ContextoUsuario contextoUsuario);
+
+    public abstract String getNombreEstado();
 
 }

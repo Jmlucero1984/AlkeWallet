@@ -1,20 +1,29 @@
 package org.josemalucero.dominio.usuario;
 
+import org.josemalucero.servicio.ConsoleOutputProvider;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.estados.EstadoEntrada;
 import org.josemalucero.dominio.estados.EstadoLogin;
 import org.josemalucero.dominio.estados.EstadoUsuario;
+import org.josemalucero.servicio.OutputProvider;
 
 public class ContextoUsuario {
     private EstadoUsuario estadoActual;
     private Usuario usuarioLogueado;
     private InputProvider consoleInputProvider;
+    private OutputProvider consoleOutputProvider;
 
-    public ContextoUsuario(InputProvider consoleInputProvider) {
+    public ContextoUsuario(InputProvider consoleInputProvider, OutputProvider consoleOutputProvider) {
         // Estado inicial: Login
-        this.estadoActual = new EstadoEntrada();
-        this.consoleInputProvider = consoleInputProvider;
 
+        this.consoleInputProvider = consoleInputProvider;
+        this.consoleOutputProvider = consoleOutputProvider;
+        this.estadoActual = new EstadoEntrada(consoleInputProvider, consoleOutputProvider);
+
+    }
+
+    public OutputProvider getOuputProvider(){
+        return consoleOutputProvider;
     }
 
     public InputProvider getConsoleInputProvider(){
@@ -31,7 +40,7 @@ public class ContextoUsuario {
 
     public void mostrarMenu() {
 
-        System.out.println("\n=== " + estadoActual.getNombreEstado() + " ===");
+        consoleOutputProvider.println("\n=== " + estadoActual.getNombreEstado() + " ===");
         estadoActual.mostrarMenu(this);
     }
 
@@ -49,6 +58,6 @@ public class ContextoUsuario {
 
     public void cerrarSesion() {
         this.usuarioLogueado = null;
-        cambiarEstado(new EstadoLogin());
+        cambiarEstado(new EstadoLogin(consoleInputProvider,consoleOutputProvider));
     }
 }

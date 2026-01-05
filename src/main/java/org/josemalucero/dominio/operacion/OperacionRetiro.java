@@ -2,14 +2,15 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.Cuenta;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OperacionRetiro extends OperacionDeMonto implements Validable,Reversible,Registrable{
     BigDecimal saldoAnteriorCuentaOrigen;
-    public OperacionRetiro(CuentaRegular cuenta, BigDecimal monto) {
-        super( cuenta, monto);
+    public OperacionRetiro(CuentaRegular cuenta, BigDecimal monto, OutputProvider outputProvider) {
+        super( cuenta, monto,outputProvider);
     }
 
     @Override
@@ -31,7 +32,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
             return true;
 
         } else {
-            System.out.println("No se puede retirar la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println("No se puede retirar la cantidad solicitada. FONDOS INSUFICIENTES");
             return false;
         }
     }
@@ -42,14 +43,14 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
             return true;
 
         } else {
-            System.out.println("HA FALLADO EL RETIRO");
+            outputProvider.println("HA FALLADO EL RETIRO");
             return false;
         }
     }
 
     @Override
     public void restaurarEstadoAnterior() {
-        System.out.println("ROLLBACK");
+        outputProvider.println("ROLLBACK");
     }
 
     @Override

@@ -4,33 +4,39 @@ import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.Registrable;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
+import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioMonedas;
 
 import java.math.BigDecimal;
 
 
-public class EstadoCreacionCuenta implements EstadoUsuario, Registrable {
+public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
+    public EstadoCreacionCuenta(InputProvider inputProvider, OutputProvider outputProvider) {
+        super(inputProvider, outputProvider);
+    }
+
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
-        System.out.println("Seleccione su tipo de cuenta");
+        outputProvider.println("Seleccione su tipo de cuenta");
         for(int i =0;i< RepositorioMonedas.getMonedasDB().size();i++) {
-            System.out.println(""+(i+1)+". Cuenta en "+RepositorioMonedas.getMonedasDB().get(i).getNombre()
+            outputProvider.println(""+(i+1)+". Cuenta en "+RepositorioMonedas.getMonedasDB().get(i).getNombre()
                     +" | "+RepositorioMonedas.getMonedasDB().get(i).getCodigo());
         }
-        System.out.print("Seleccione una opción: ");
+        outputProvider.print("Seleccione una opción: ");
 
     }
 
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contexto) {
+    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         if(opcion<=0 || opcion>RepositorioMonedas.getMonedasDB().size()){
-            System.out.println("Opción inválida");
+            outputProvider.println("Opción inválida");
         } else {
-            System.out.println("Usted ha seleccionado cuenta en "+RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
-            contexto.getUsuarioLogueado().crearCuentRegular();
-            contexto.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas.getMonedasDB().get(opcion-1));
-            registrar(contexto.getUsuarioLogueado().getCuentaRegular());
-            contexto.cambiarEstado(new EstadoOperaciones());
+            outputProvider.println("Usted ha seleccionado cuenta en "+RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
+            contextoUsuario.getUsuarioLogueado().crearCuentRegular();
+            contextoUsuario.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas.getMonedasDB().get(opcion-1));
+            registrar(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
+            contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         }
     }
 

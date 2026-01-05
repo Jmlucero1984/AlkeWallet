@@ -2,6 +2,7 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
+import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
@@ -9,8 +10,8 @@ public class OperacionDeConversionDeCuenta extends Operacion implements Registra
     MonedaConvertible monedaDestino;
     BigDecimal balanceAntesDeConversion;
     MonedaConvertible monedaAntesDeConversion;
-    public OperacionDeConversionDeCuenta(CuentaRegular cuentaRegular, MonedaConvertible monedaDestino) {
-        super(cuentaRegular);
+    public OperacionDeConversionDeCuenta(CuentaRegular cuentaRegular, MonedaConvertible monedaDestino, OutputProvider outputProvider) {
+        super(cuentaRegular,outputProvider);
         this.monedaDestino = monedaDestino;
         monedaAntesDeConversion=cuentaRegular.getMonedaConvertible();
         balanceAntesDeConversion = cuentaRegular.getBalance();

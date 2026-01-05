@@ -4,15 +4,18 @@ import Helpers.RandomBigDecimalValuesGenerator;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.estados.EstadoUsuario;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
+import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Credencial;
 import org.josemalucero.dominio.usuario.Usuario;
+import org.josemalucero.servicio.ConsoleOutputProvider;
 import org.josemalucero.servicio.RepositorioMonedas;
 import org.josemalucero.servicio.RepositorioUsuarios;
 import org.josemalucero.servicio.RespositorioCuentas;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
+import java.time.MonthDay;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,13 +25,16 @@ public class AlkaWallet_Interacciones_Test {
 
 
     ConsoleInputStub consoleInputStub;
+    ConsoleOutputProvider consoleOutputStub;
+
     ContextoUsuario contextoUsuario;
     AlkeWalletFake alkeWalletFake;
 
     @BeforeEach
     void setUp(){
         consoleInputStub = new ConsoleInputStub();
-        contextoUsuario = new ContextoUsuario(consoleInputStub);
+        consoleOutputStub =new ConsoleOutputProvider();// new ConsoleOutputStub();
+        contextoUsuario = new ContextoUsuario(consoleInputStub,consoleOutputStub);
         alkeWalletFake = new AlkeWalletFake(contextoUsuario);
     }
 
@@ -167,8 +173,8 @@ public class AlkaWallet_Interacciones_Test {
                 .crearUsuario(usuarioCuentaDestino)
                 .logInUsuarioYAsignarCuentaCLPAUsuario(usuarioCuentaDestino)
                  .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
-        String numeroCuentaDestino = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
-        Usuario usuarioDestino = alkeWalletFake.contexto.getUsuarioLogueado();
+        String numeroCuentaDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
+        Usuario usuarioDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         creacionUsuarioDestino.logOutDesdeOperaciones();
 
         InteraccionesEncadenables depositarYTransferirDesdeCuanteOrigen = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake)
@@ -179,13 +185,13 @@ public class AlkaWallet_Interacciones_Test {
                // .mostrarHistorial()
                 .transfACuentaMismaMoneda(numeroCuentaDestino,tranferenciaStr);
                // .mostrarHistorial();
-        Usuario usuarioOrigen = alkeWalletFake.contexto.getUsuarioLogueado();
+        Usuario usuarioOrigen = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         depositarYTransferirDesdeCuanteOrigen.logOutDesdeOperaciones();
 
         InteraccionesEncadenables controlBalanceUsuarioDestino  = new InteraccionesEncadenables(consoleInputStub,alkeWalletFake)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
                 //.mostrarHistorial();
-        BigDecimal montoTranferido = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getBalance();
+        BigDecimal montoTranferido = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
         controlBalanceUsuarioDestino.logOutDesdeOperaciones();
         BigDecimal balanceTotal = usuarioOrigen.getCuentaRegular().getBalance().add(usuarioDestino.getCuentaRegular().getBalance());
                // .subtract(new BigDecimal("0.10"));
@@ -221,8 +227,8 @@ public class AlkaWallet_Interacciones_Test {
                 .crearUsuario(usuarioCuentaDestino)
                 .logInUsuarioYAsignarCuentaCLPAUsuario(usuarioCuentaDestino)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
-        String numeroCuentaDestino = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
-        Usuario usuarioDestino = alkeWalletFake.contexto.getUsuarioLogueado();
+        String numeroCuentaDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
+        Usuario usuarioDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         creacionUsuarioDestino.logOutDesdeOperaciones();
 
         InteraccionesEncadenables depositarYTransferirDesdeCuanteOrigen = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake)
@@ -233,18 +239,18 @@ public class AlkaWallet_Interacciones_Test {
                 // .mostrarHistorial()
                 .transfACuentaDifMonedaMontoMonedaOrigen(numeroCuentaDestino,tranferenciaStr);
         // .mostrarHistorial();
-        Usuario usuarioOrigen = alkeWalletFake.contexto.getUsuarioLogueado();
+        Usuario usuarioOrigen = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         depositarYTransferirDesdeCuanteOrigen.logOutDesdeOperaciones();
 
         InteraccionesEncadenables controlBalanceUsuarioDestino  = new InteraccionesEncadenables(consoleInputStub,alkeWalletFake)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
         //.mostrarHistorial();
-        BigDecimal montoTranferido = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getBalance();
+        BigDecimal montoTranferido = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
         controlBalanceUsuarioDestino.logOutDesdeOperaciones();
 
         // .subtract(new BigDecimal("0.10"));
-        ConversorMoneda conversorMoneda =new ConversorMoneda();
-        BigDecimal montoReconvertido = conversorMoneda.convertirMoneda(usuarioDestino.getCuentaRegular().getMonedaConvertible(),usuarioOrigen.getCuentaRegular().getMonedaConvertible(),montoTranferido);
+
+        BigDecimal montoReconvertido = new ConversorMoneda().convertirMoneda(usuarioDestino.getCuentaRegular().getMonedaConvertible(),usuarioOrigen.getCuentaRegular().getMonedaConvertible(),montoTranferido);
         BigDecimal diferenciaCicloConversion = transferencia.subtract(montoReconvertido).abs();
         System.out.println("DIFERENCIA: "+diferenciaCicloConversion);
         Assertions.assertAll(
@@ -277,11 +283,11 @@ public class AlkaWallet_Interacciones_Test {
                 .crearUsuario(usuarioCuentaDestino)
                 .logInUsuarioYAsignarCuentaCLPAUsuario(usuarioCuentaDestino)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
-        String numeroCuentaDestino = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
-        Usuario usuarioDestino = alkeWalletFake.contexto.getUsuarioLogueado();
+        String numeroCuentaDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getNumeroCuenta();
+        Usuario usuarioDestino = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         creacionUsuarioDestino.logOutDesdeOperaciones();
 
-        InteraccionesEncadenables depositarYTransferirDesdeCuanteOrigen = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake)
+        InteraccionesEncadenables depositarYTransferirDesdeCuantaOrigen = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake)
                 .crearUsuario(usuarioCuentaOrigen)
                 .logInUsuarioYAsignarCuentaARSAUsuario(usuarioCuentaOrigen)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaOrigen)
@@ -289,23 +295,53 @@ public class AlkaWallet_Interacciones_Test {
                  //.mostrarHistorial()
                 .transfACuentaDifMonedaMontoMonedaDestino(numeroCuentaDestino,tranferenciaStr);
      // .mostrarHistorial();
-        BigDecimal balancePostTransferencia = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getBalance();
-        Usuario usuarioOrigen = alkeWalletFake.contexto.getUsuarioLogueado();
-        depositarYTransferirDesdeCuanteOrigen.logOutDesdeOperaciones();
+        BigDecimal balancePostTransferencia = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
+        Usuario usuarioOrigen = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
+        depositarYTransferirDesdeCuantaOrigen.logOutDesdeOperaciones();
 
         InteraccionesEncadenables controlBalanceUsuarioDestino  = new InteraccionesEncadenables(consoleInputStub,alkeWalletFake)
                 .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuentaDestino);
                // .mostrarHistorial();
-        BigDecimal montoTranferido = alkeWalletFake.contexto.getUsuarioLogueado().getCuentaRegular().getBalance();
+        BigDecimal montoTranferido = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
         controlBalanceUsuarioDestino.logOutDesdeOperaciones();
 
         // .subtract(new BigDecimal("0.10"));
-        ConversorMoneda conversorMoneda =new ConversorMoneda();
-        BigDecimal montoReconvertido = conversorMoneda.convertirMoneda(usuarioDestino.getCuentaRegular().getMonedaConvertible(),usuarioOrigen.getCuentaRegular().getMonedaConvertible(),montoTranferido);
+        BigDecimal montoReconvertido = new ConversorMoneda().convertirMoneda(usuarioDestino.getCuentaRegular().getMonedaConvertible(),usuarioOrigen.getCuentaRegular().getMonedaConvertible(),montoTranferido);
         BigDecimal diferenciaCicloConversion = deposito.subtract(balancePostTransferencia.add(montoReconvertido)).abs();
         System.out.println("DIFERENCIA: "+diferenciaCicloConversion);
         Assertions.assertAll(
                 ()->assertTrue(diferenciaCicloConversion.compareTo(toleranciaRedondeoAlBalancear)<=0,"Lo debitado de una cuenta no coincide con lo acreditado en la otra")
+        );
+
+    }
+    @Test
+    void convertirCuentaAOtraMoneda() {
+        String nombre_usuario_cuenta = "Pedro";
+        String apellido_usuario_cuenta = "Muñoz";
+        String clave_usuario_cuenta  = "Pedromuñoz";
+        Credencial usuarioCuenta = new Credencial(nombre_usuario_cuenta,apellido_usuario_cuenta,clave_usuario_cuenta);
+
+        String depositoStr = RandomBigDecimalValuesGenerator.generarBigDecimal(7500,20000);
+        InteraccionesEncadenables crearCuentaDepositarYConvertir = new InteraccionesEncadenables(consoleInputStub, alkeWalletFake)
+                .crearUsuario(usuarioCuenta)
+                .logInUsuarioYAsignarCuentaARSAUsuario(usuarioCuenta)
+                .logInHastaOperacionesUsuarioExistenteYConCuenta(usuarioCuenta)
+                .depositarEnCuenta(depositoStr)
+                .mostrarHistorial();
+
+        MonedaConvertible monedaOriginal = crearCuentaDepositarYConvertir.alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible();
+        BigDecimal balanceAntesDeConvertir = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
+        MonedaConvertible monedaPesoChileno = RepositorioMonedas.encontrarMonedaPorCodigo("CLP");
+
+        crearCuentaDepositarYConvertir = crearCuentaDepositarYConvertir.convertirCuentaAOtraMoneda(monedaPesoChileno);
+
+        BigDecimal balancePostConversion = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
+
+        crearCuentaDepositarYConvertir.mostrarHistorial().logOutDesdeOperaciones();
+        BigDecimal montoReconvertido = new ConversorMoneda().convertirMoneda(monedaOriginal,monedaPesoChileno,balanceAntesDeConvertir);
+
+        Assertions.assertAll(
+                ()->assertEquals(montoReconvertido,balancePostConversion,"Lo debitado de una cuenta no coincide con lo acreditado en la otra")
         );
 
     }

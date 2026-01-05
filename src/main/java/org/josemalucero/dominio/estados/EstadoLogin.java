@@ -4,37 +4,42 @@ import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.util.Optional;
 
-public class EstadoLogin implements EstadoUsuario {
+public class EstadoLogin extends EstadoUsuario {
+
+    public EstadoLogin(InputProvider inputProvider, OutputProvider outputProvider) {
+        super(inputProvider, outputProvider);
+    }
 
     @Override
     public void mostrarMenu(ContextoUsuario contextoUsuario) {
 
-        System.out.println("1. Iniciar sesión");
-        System.out.println("2. Volver...");
+        outputProvider.println("1. Iniciar sesión");
+        outputProvider.println("2. Volver...");
 
     }
 
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contexto) {
+    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         switch (opcion) {
             case 1:
-                Usuario usuario = autenticarUsuario(contexto);
+                Usuario usuario = autenticarUsuario(contextoUsuario);
                 if (usuario != null) {
-                    contexto.setUsuarioLogueado(usuario);
-                    if (contexto.getUsuarioLogueado().getCuentaRegular() == null) {
-                        System.out.println("AUN NO TIENE UNA CUENTA ASOCIADA");
-                        contexto.cambiarEstado(new EstadoCreacionCuenta());
+                    contextoUsuario.setUsuarioLogueado(usuario);
+                    if (contextoUsuario.getUsuarioLogueado().getCuentaRegular() == null) {
+                        outputProvider.println("AUN NO TIENE UNA CUENTA ASOCIADA");
+                        contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     } else {
-                        contexto.cambiarEstado(new EstadoOperaciones());
+                        contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     }
                 }
                 break;
             case 2:
-                contexto.cambiarEstado(new EstadoEntrada());
+                contextoUsuario.cambiarEstado(new EstadoEntrada(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                 break;
         }
 
@@ -51,13 +56,13 @@ public class EstadoLogin implements EstadoUsuario {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
         //Console console = System.console();
-        System.out.print("Usuario nombre: ");
+        outputProvider.print("Usuario nombre: ");
         String nombre = consoleInputProvider.leerOpcionString();
-        System.out.print("Usuario apellido: ");
+        outputProvider.print("Usuario apellido: ");
         String apellido = consoleInputProvider.leerOpcionString();
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            System.out.println("Ingrese su clave: ");
+            outputProvider.println("Ingrese su clave: ");
             String clave = consoleInputProvider.leerOpcionString();
             /*
             char[] passwordArray = console.readPassword("Contraseña (espacios): ");
@@ -68,14 +73,14 @@ public class EstadoLogin implements EstadoUsuario {
             // Limpiar el array de caracteres por seguridad
 
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){
-                System.out.println("LOGUEO EXITOSO");
+                outputProvider.println("LOGUEO EXITOSO");
                 return  usuarioExistente.get();
             } else {
-                System.out.println("Datos de inicio de sesión no válidos");
+                outputProvider.println("Datos de inicio de sesión no válidos");
             }
 
         } else {
-            System.out.println("El usuario "+nombre+" "+apellido+" no existe en la Base de Datos");
+            outputProvider.println("El usuario "+nombre+" "+apellido+" no existe en la Base de Datos");
         }
 
         return null;

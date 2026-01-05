@@ -5,8 +5,8 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 public class AlkeWalletFake extends AlkeWallet{
     boolean continuar = true;
 
-    public AlkeWalletFake(ContextoUsuario contexto) {
-        super(contexto);
+    public AlkeWalletFake(ContextoUsuario contextoUsuario) {
+        super(contextoUsuario);
     }
 
 
@@ -15,11 +15,11 @@ public class AlkeWalletFake extends AlkeWallet{
     public void run() {
 
 
-            System.out.println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
+        contextoUsuario.getOuputProvider().println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
 
                 try {
-                    contexto.mostrarMenu();
-                    int opcion = this.contexto.getConsoleInputProvider().leerOpcionInt();
+                    contextoUsuario.mostrarMenu();
+                    int opcion = this.contextoUsuario.getConsoleInputProvider().leerOpcionInt();
                     if (opcion==-1) {
                         System.exit(0);
                     }
@@ -27,8 +27,8 @@ public class AlkeWalletFake extends AlkeWallet{
                     procesarOpcion(opcion);
 
                 } catch (Exception e) {
-                    System.out.println("Introduzca una opción válida");
-                    this.contexto.getConsoleInputProvider().leerOpcionString();
+                    contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
+                    this.contextoUsuario.getConsoleInputProvider().leerOpcionString();
                 }
 
 
@@ -38,8 +38,8 @@ public class AlkeWalletFake extends AlkeWallet{
     public void runBySteps(int steps) {
         for (int i = 0; i < steps; i++) {
             try {
-                contexto.mostrarMenu();
-                int opcion = this.contexto.getConsoleInputProvider().leerOpcionInt();
+                contextoUsuario.mostrarMenu();
+                int opcion = this.contextoUsuario.getConsoleInputProvider().leerOpcionInt();
                 if (opcion==-1) {
                     System.exit(0);
                 }
@@ -47,8 +47,8 @@ public class AlkeWalletFake extends AlkeWallet{
                 procesarOpcion(opcion);
 
             } catch (Exception e) {
-                System.out.println("Introduzca una opción válida");
-                this.contexto.getConsoleInputProvider().leerOpcionString();
+               contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
+                this.contextoUsuario.getConsoleInputProvider().leerOpcionString();
             }
         }
 

@@ -1,12 +1,18 @@
 package org.josemalucero.dominio.estados;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
+import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.OutputProvider;
 
-public class EstadoSalir implements EstadoUsuario{
+public class EstadoSalir extends EstadoUsuario{
+
+    public EstadoSalir(InputProvider inputProvider, OutputProvider outputProvider) {
+        super(inputProvider, outputProvider);
+    }
 
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
-        System.out.println("Esperamos vuelva pronto!");
+        outputProvider.println("Esperamos vuelva pronto!");
         System.exit(0);
 
     }

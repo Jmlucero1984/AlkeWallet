@@ -26,7 +26,7 @@ class ConsoleInputProviderTest {
     @Test
     void leerOpcionInt() {
         int inputInt =8 ;
-        input= new Scanner(new ByteArrayInputStream((String.valueOf(inputInt)).getBytes()));
+        input= new Scanner(new ByteArrayInputStream(((String.valueOf(inputInt))+"\n").getBytes()));
         ConsoleInputProvider consoleInputProvider =new ConsoleInputProvider(input);
         int obtenido = consoleInputProvider.leerOpcionInt();
         assertEquals(inputInt,obtenido);

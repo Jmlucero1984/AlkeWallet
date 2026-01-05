@@ -3,6 +3,7 @@ package org.josemalucero.dominio.operacion;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
+import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,8 +11,8 @@ import java.math.RoundingMode;
 public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
     BigDecimal montoEfectivo;
     ConversorMoneda conversorMoneda;
-    public OperacionTransferenciaMonedaDestino(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, ConversorMoneda conversorMoneda) {
-        super(cuentaOrigen, cuentaDestino, monto);
+    public OperacionTransferenciaMonedaDestino(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, ConversorMoneda conversorMoneda, OutputProvider outputProvider) {
+        super(cuentaOrigen, cuentaDestino, monto,outputProvider);
         this.conversorMoneda = conversorMoneda;
         montoEfectivo = convertir(cuentaDestino.getMonedaConvertible(),cuentaOrigen.getMonedaConvertible(),monto);
 
@@ -19,7 +20,7 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
 
     @Override
     public void ejecutar() {
-        System.out.println("EJECUTANDO TRANSFERENCIA EN MONEDA DE DESTINO");
+        outputProvider.println("EJECUTANDO TRANSFERENCIA EN MONEDA DE DESTINO");
         super.registrarEstadoPrevio();
         cuentaRegular.tranfiere(montoEfectivo);
         cuentaDestino.recibeTransferencia(monto);
@@ -54,14 +55,14 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
 
 
         if (monto.compareTo(BigDecimal.ZERO)==0) {
-            System.out.println("No se puede realizar transferencia por monto igual a 0");
+            outputProvider.println("No se puede realizar transferencia por monto igual a 0");
             return false;
         }
         if(montoEfectivo.compareTo(cuentaRegular.getBalance())<=0){
             return true;
 
         } else {
-            System.out.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
             return false;
         }
     }
@@ -73,7 +74,7 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
             return true;
 
         } else {
-            System.out.println("HA FALLADO LA TRANSFERENCIA");
+            outputProvider.println("HA FALLADO LA TRANSFERENCIA");
             return false;
         }
     }

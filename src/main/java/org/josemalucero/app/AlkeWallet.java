@@ -9,17 +9,17 @@ import org.josemalucero.servicio.RepositorioUsuarios;
 public class AlkeWallet {
 
 
-    protected final ContextoUsuario contexto;
+    protected final ContextoUsuario contextoUsuario;
 
-    public AlkeWallet(ContextoUsuario contexto) {
-        this.contexto = contexto;
+    public AlkeWallet(ContextoUsuario contextoUsuario) {
+        this.contextoUsuario = contextoUsuario;
         RepositorioMonedas.crearMonedasBasicas();
         createSomeUsers();
 
     }
 
     public void procesarOpcion(int opcion) {
-        contexto.procesarOpcion(opcion);
+        contextoUsuario.procesarOpcion(opcion);
     }
 
     /**
@@ -31,18 +31,18 @@ public class AlkeWallet {
      */
     public void run() {
 
-        System.out.println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
+        contextoUsuario.getOuputProvider().println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
 
         while (true) {
             try {
-                contexto.mostrarMenu();
-                int opcion = contexto.getConsoleInputProvider().leerOpcionInt();
+                contextoUsuario.mostrarMenu();
+                int opcion = contextoUsuario.getConsoleInputProvider().leerOpcionInt();
 
                 procesarOpcion(opcion);
 
             } catch (Exception e) {
-                System.out.println("Introduzca una opción válida");
-                contexto.getConsoleInputProvider().leerOpcionString();
+                contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
+                contextoUsuario.getConsoleInputProvider().leerOpcionString();
             }
         }
     }
