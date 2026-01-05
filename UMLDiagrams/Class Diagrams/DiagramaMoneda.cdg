@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="main.java.org.josemalucero.dominio.moneda">
+  <ClassDiagramComponents>
+    <Class name="ConversorMoneda" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="31.0" yPosition="610.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="convertirMoneda" returnType="BigDecimal" visibility="public">
+          <Argument type="MonedaConvertible" name="monedaOrigen"/>
+          <Argument type="MonedaConvertible" name="monedaDestino"/>
+          <Argument type="BigDecimal" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Moneda" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="261.0" yPosition="122.0">
+      <Fields>
+        <Field name="codigo" type="String" visibility="protected"/>
+        <Field name="nombre" type="String" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigo" returnType="String" visibility="public"/>
+        <Method name="setCodigo" returnType="void" visibility="public">
+          <Argument type="String" name="codigo"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MonedaConvertible" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="167.0" yPosition="385.0">
+      <Fields>
+        <Field name="ratioDolar" type="BigDecimal" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="BigDecimal" name="ratioDolar"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getRatioDolar" returnType="BigDecimal" visibility="public"/>
+        <Method name="setRatioDolar" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="ratioDolar"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="org.josemalucero.dominio.moneda.MonedaConvertible" target="org.josemalucero.dominio.moneda.Moneda"/>
+    <UseRelation source="org.josemalucero.dominio.moneda.ConversorMoneda" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

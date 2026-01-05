@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="main.java.org.josemalucero.servicio">
+  <ClassDiagramComponents>
+    <Class name="BCryptPasswordEncoderService" package="org.josemalucero.servicio" visibility="public" xPosition="77.0" yPosition="315.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="hash" returnType="String" visibility="public">
+          <Argument type="String" name="rawPassword"/>
+        </Method>
+        <Method name="matches" returnType="boolean" visibility="public">
+          <Argument type="String" name="rawPassword"/>
+          <Argument type="String" name="storedHash"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ConsoleInputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="920.0" yPosition="334.0">
+      <Fields>
+        <Field name="scanner" type="Scanner" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Scanner" name="scanner"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="leerOpcionInt" returnType="int" visibility="public"/>
+        <Method name="leerOpcionString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ConsoleOutputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="548.0" yPosition="315.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="bigDecimal"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="int" name="intNum"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="FormateadorDeRegistroAImprimir" package="org.josemalucero.servicio" visibility="public" xPosition="363.0" yPosition="789.0">
+      <Fields>
+        <Field name="MAX_DESCRIPTION_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_BALANCE_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_MONTO_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_DATE_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="formatearRegistro" returnType="String" visibility="public" isStatic="true">
+          <Argument type="RegistroOperacion" name="registroOperacion"/>
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+        <Method name="generarCabeceras" returnType="String" visibility="public" isStatic="true">
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+        <Method name="alinearTexto" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="espaciosDisponibles"/>
+          <Argument type="String" name="texto"/>
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="RepositorioMonedas" package="org.josemalucero.servicio" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="monedasDB" type="ArrayList&lt;MonedaConvertible&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getMonedasDB" returnType="ArrayList&lt;MonedaConvertible&gt;" visibility="public" isStatic="true"/>
+        <Method name="crearMonedasBasicas" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="encontrarMonedaPorCodigo" returnType="MonedaConvertible" visibility="public" isStatic="true">
+          <Argument type="String" name="codigoMoneda"/>
+        </Method>
+        <Method name="clearMonedasDB" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="RepositorioUsuarios" package="org.josemalucero.servicio" visibility="public" xPosition="524.0" yPosition="552.0">
+      <Fields>
+        <Field name="usuariosDB" type="ArrayList&lt;Usuario&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="consultarUsuario" returnType="Optional&lt;Usuario&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="consultarUsuarioPorCuenta" returnType="Optional&lt;Usuario&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="cuenta"/>
+        </Method>
+        <Method name="agregarUsuario" returnType="Usuario" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+        </Method>
+        <Method name="agregarUsuarioYAsignarCuenta" returnType="Usuario" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+          <Argument type="String" name="codigoMoneda"/>
+        </Method>
+        <Method name="clearUsuariosDB" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="RespositorioCuentas" package="org.josemalucero.servicio" visibility="public" xPosition="77.0" yPosition="535.0">
+      <Fields>
+        <Field name="cuentasDB" type="ArrayList&lt;Cuenta&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="adherirCuenta" returnType="CuentaRegular" visibility="public" isStatic="true">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+        <Method name="clearCuentasDB" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="generarSerial" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="cantBlocks"/>
+          <Argument type="int" name="charsPerBlock"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="InputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="963.0" yPosition="54.0">
+      <Methods>
+        <Method name="leerOpcionInt" returnType="int" visibility="package"/>
+        <Method name="leerOpcionString" returnType="String" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="OutputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="548.0" yPosition="54.0">
+      <Methods>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="bigDecimal"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="int" name="intNum"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="package">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="package">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="PasswordEncoder" package="org.josemalucero.servicio" visibility="public" xPosition="77.0" yPosition="54.0">
+      <Methods>
+        <Method name="hash" returnType="String" visibility="package">
+          <Argument type="String" name="rawPassword"/>
+        </Method>
+        <Method name="matches" returnType="boolean" visibility="package">
+          <Argument type="String" name="rawPassword"/>
+          <Argument type="String" name="storedHash"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.BCryptPasswordEncoderService" target="org.josemalucero.servicio.PasswordEncoder"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleInputProvider" target="org.josemalucero.servicio.InputProvider"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleOutputProvider" target="org.josemalucero.servicio.OutputProvider"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="main.java.org.josemalucero.dominio.usuario">
+  <ClassDiagramComponents>
+    <Class name="ContextoUsuario" package="org.josemalucero.dominio.usuario" visibility="public" xPosition="187.0" yPosition="478.0">
+      <Fields>
+        <Field name="estadoActual" type="EstadoUsuario" visibility="private"/>
+        <Field name="usuarioLogueado" type="Usuario" visibility="private"/>
+        <Field name="consoleInputProvider" type="InputProvider" visibility="private"/>
+        <Field name="consoleOutputProvider" type="OutputProvider" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+          <Argument type="OutputProvider" name="consoleOutputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getOuputProvider" returnType="OutputProvider" visibility="public"/>
+        <Method name="getConsoleInputProvider" returnType="InputProvider" visibility="public"/>
+        <Method name="getEstadoActual" returnType="EstadoUsuario" visibility="public"/>
+        <Method name="cambiarEstado" returnType="void" visibility="public">
+          <Argument type="EstadoUsuario" name="nuevoEstado"/>
+        </Method>
+        <Method name="mostrarMenu" returnType="void" visibility="public"/>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+        </Method>
+        <Method name="getUsuarioLogueado" returnType="Usuario" visibility="public"/>
+        <Method name="setUsuarioLogueado" returnType="void" visibility="public">
+          <Argument type="Usuario" name="usuario"/>
+        </Method>
+        <Method name="cerrarSesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Usuario" package="org.josemalucero.dominio.usuario" visibility="public" xPosition="298.0" yPosition="32.0">
+      <Fields>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="cuentaRegular" type="CuentaRegular" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="crearCuentRegular" returnType="CuentaRegular" visibility="public"/>
+        <Method name="getCuentaRegular" returnType="CuentaRegular" visibility="public"/>
+        <Method name="getNombreCompleto" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="getClave" returnType="String" visibility="public"/>
+        <Method name="setClave" returnType="void" visibility="public">
+          <Argument type="String" name="clave"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="usuarioLogueado" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
