@@ -63,7 +63,7 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     }
 
     @Override
-    public boolean posValidar() {
+    public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(monto)) == 0 &&
                 cuentaDestino.getBalance().compareTo(saldoAnteriorCuentaDestino.add(monto)) == 0) {
             return true;

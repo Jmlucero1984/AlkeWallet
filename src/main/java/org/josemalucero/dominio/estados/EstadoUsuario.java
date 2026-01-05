@@ -8,7 +8,7 @@ import org.josemalucero.servicio.OutputProvider;
 
 
 /**
- La clase abstracta {@code EstadoUsuario} extiende la clase {@code Cuenta} con la propiedades
+ La clase abstracta {@code EstadoUsuario} extiende la clase {@code Cuenta} con las propiedades
  y métodos elementales para registrar el activo digital, en este caso,
  la {@code MonedaConvertible}.
  Implementa las interfaces {@code Depositable},{@code Retirable},{@code Consultable},
@@ -26,7 +26,11 @@ public abstract class EstadoUsuario {
 
     protected InputProvider inputProvider;
     protected OutputProvider outputProvider;
-
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoUsuario(InputProvider inputProvider, OutputProvider outputProvider) {
         this.inputProvider = inputProvider;
         this.outputProvider = outputProvider;
@@ -35,7 +39,10 @@ public abstract class EstadoUsuario {
     public abstract void mostrarMenu(ContextoUsuario contextoUsuario);
 
     public abstract void procesarOpcion(int opcion, ContextoUsuario contextoUsuario);
-
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
     public abstract String getNombreEstado();
 
 }

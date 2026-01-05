@@ -15,15 +15,33 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class EstadoOperaciones extends EstadoUsuario {
+/**
+ * Gestiona en gran medida las principales acciones sobre la cuenta. Dispone de métodos propios para
+ * gestionar cada implementacion concreta de la clase abstracta {@link Operacion} o derivar en otros estados dependiendo
+ * de la complejidad de la operación.
+ *
+ @author José Maria Lucero
+ */
 
+public class EstadoOperaciones extends EstadoUsuario {
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoOperaciones(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
 
+    /**Muestra las operaciones disponibles sobre la cuenta. Siendo un punto central de la interacción durante el ciclo
+     * de vida de la actividad del usuario, el mismo representa un punto de rigidez de la aplicación.
+     *
+     * @param contextoUsuario
+     */
+
     @Override
-    public void mostrarMenu(ContextoUsuario contexto) {
-        outputProvider.println("Bienvenido, " + contexto.getUsuarioLogueado().getNombreCompleto());
+    public void mostrarMenu(ContextoUsuario contextoUsuario) {
+        outputProvider.println("Bienvenido, " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
         outputProvider.println("1. Consultar datos cuenta");
         outputProvider.println("2. Consultar saldo");
         outputProvider.println("3. Depositar dinero");
@@ -36,42 +54,48 @@ public class EstadoOperaciones extends EstadoUsuario {
         outputProvider.print("Seleccione una opción: ");
     }
 
+    /**
+     * Maneja mediante un {@code switch} con el número de opción elegida como entrada, las diferentes
+     * operaciones que se pueden realizar con una cuenta ya creada para un usuario existente y logueado.
+     * @param opcion
+     * @param contextoUsuario
+     */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contexto) {
+    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         switch (opcion) {
             case 1:
-                consultarDatosCuenta(contexto);
+                consultarDatosCuenta(contextoUsuario);
                 break;
             case 2:
-                consultarSaldo(contexto);
+                consultarSaldo(contextoUsuario);
                 break;
 
             case 3:
-                depositarDinero(contexto);
+                depositarDinero(contextoUsuario);
                 break;
 
             case 4:
-                retirarDinero(contexto);
+                retirarDinero(contextoUsuario);
                 break;
 
             case 5:
-                transferirDinero(contexto);
+                transferirDinero(contextoUsuario);
                 break;
 
             case 6:
-                consultarConversionMoneda(contexto);
+                consultarConversionMoneda(contextoUsuario);
                 break;
             case 7:
-                convertirCuentaAOtraMoneda(contexto);
+                convertirCuentaAOtraMoneda(contextoUsuario);
                 break;
 
             case 8:
-                verHistorial(contexto);
+                verHistorial(contextoUsuario);
                 break;
 
             case 9:
                 outputProvider.println("Cerrando sesión...");
-                contexto.cerrarSesion();
+                contextoUsuario.cerrarSesion();
                 break;
 
             default:
@@ -79,18 +103,22 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
-    @Override
-    public String getNombreEstado() {
-        return "OPERACIONES";
-    }
 
-
-
+    /**
+     * Crea una {@link OperacionConsulta} y la ejecuta, mostrando como salida mediante un {@link OutputProvider}el saldo correpondiente
+     * a la cuenta asociada al usuario logueado.
+     * @param contextoUsuario
+     */
     private void consultarSaldo(ContextoUsuario contextoUsuario) {
         OperacionConsulta operacionConsulta = new OperacionConsulta(contextoUsuario.getUsuarioLogueado().getCuentaRegular(),outputProvider);
         operacionConsulta.ejecutar();
     }
 
+    /**
+     * Crea una {@link OperacionDeposito}. La misma requiere de una cifra verificada. Se {@code prevalida} la operación, luego se {@code ejecuta} y
+     * finalmente se {@code postvalida}. De ser exitoso el resultado final, se procede a registrar la operacion mediante {@link RegistroOperacion}.
+     * @param contextoUsuario
+     */
     private void depositarDinero(ContextoUsuario contextoUsuario) {
         outputProvider.println("DEPOSITAR EN CUENTA");
         Optional<BigDecimal> cifraVerificada;
@@ -104,7 +132,7 @@ public class EstadoOperaciones extends EstadoUsuario {
                 OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada.get(),outputProvider);
                 if (operacionDeposito.preValidar()) {
                     operacionDeposito.ejecutar();
-                    if(operacionDeposito.posValidar()){
+                    if(operacionDeposito.postValidar()){
                         operacionExitosa = true;
                         operacionDeposito.registrar(cuentaRegular);
                         outputProvider.println("DEPOSITO REALIZADO");
@@ -115,6 +143,11 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+    /**
+     * Muestra por medio del correspondiente {@link OutputProvider} el nombre completo del usuario logueado, el detalle
+     * del tipo de moneda asociado a la cuenta del usuario y el N° Cuenta, necesario para la {@link OperacionTransferencia}.
+     * @param contextoUsuario
+     */
     private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
         outputProvider.println(contextoUsuario.getUsuarioLogueado().getNombreCompleto());
         outputProvider.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
@@ -142,7 +175,7 @@ public class EstadoOperaciones extends EstadoUsuario {
                 OperacionRetiro operacionRetiro = new OperacionRetiro(cuentaRegular,cifraVerificada.get(),outputProvider);
                 if (operacionRetiro.preValidar()){
                     operacionRetiro.ejecutar();
-                    if(operacionRetiro.posValidar()) {
+                    if(operacionRetiro.postValidar()) {
                         operacionExitosa = true;
                         operacionRetiro.registrar(cuentaRegular);
                         outputProvider.println("RETIRO REALIZADO");
@@ -200,7 +233,7 @@ public class EstadoOperaciones extends EstadoUsuario {
 
         if (operacionTransferencia.preValidar() ){
             operacionTransferencia.ejecutar();
-            if(operacionTransferencia.posValidar()) {
+            if(operacionTransferencia.postValidar()) {
                 operacionTransferencia.registrar(cuentaRegular);
                 outputProvider.println("TRANSFERENCIA REALIZADA");
             } else {
@@ -276,5 +309,13 @@ public class EstadoOperaciones extends EstadoUsuario {
         return  null;
     }
 
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
+    @Override
+    public String getNombreEstado() {
+        return "OPERACIONES";
+    }
 
 }

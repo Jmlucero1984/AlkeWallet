@@ -38,7 +38,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
     }
 
     @Override
-    public boolean posValidar() {
+    public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(monto)) == 0 ) {
             return true;
 

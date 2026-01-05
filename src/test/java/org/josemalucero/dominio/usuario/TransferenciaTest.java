@@ -98,7 +98,7 @@ public class TransferenciaTest {
                 );
 
         operacionTransferenciaMock.ejecutar();
-        assertFalse(operacionTransferenciaMock.posValidar());
+        assertFalse(operacionTransferenciaMock.postValidar());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class TransferenciaTest {
         OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_origen.getCuentaRegular().retirar(new BigDecimal(100.00));
-        boolean resultadoValidacion = operacionTransferencia.posValidar();
+        boolean resultadoValidacion = operacionTransferencia.postValidar();
         operacionTransferencia.restaurarEstadoAnterior();
         assertAll(
                 () -> assertFalse(resultadoValidacion),
@@ -130,7 +130,7 @@ public class TransferenciaTest {
         OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_origen.getCuentaRegular().depositar(new BigDecimal(100.00));
-        boolean resultadoValidacion = operacionTransferencia.posValidar();
+        boolean resultadoValidacion = operacionTransferencia.postValidar();
         operacionTransferencia.restaurarEstadoAnterior();
         assertAll(
                 () -> assertFalse(resultadoValidacion),
@@ -149,7 +149,7 @@ public class TransferenciaTest {
         OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_destino.getCuentaRegular().retirar(new BigDecimal(100.00));
-        boolean resultadoValidacion = operacionTransferencia.posValidar();
+        boolean resultadoValidacion = operacionTransferencia.postValidar();
         operacionTransferencia.restaurarEstadoAnterior();
         assertAll(
                 () -> assertFalse(resultadoValidacion),
@@ -168,7 +168,7 @@ public class TransferenciaTest {
         OperacionTransferencia operacionTransferencia = new OperacionTransferencia(usuario_origen.getCuentaRegular(),usuario_destino.getCuentaRegular(),cantidadATransferir,consoleOutputProvider);
         operacionTransferencia.ejecutar();
         usuario_destino.getCuentaRegular().depositar(new BigDecimal(100.00));
-        boolean resultadoValidacion = operacionTransferencia.posValidar();
+        boolean resultadoValidacion = operacionTransferencia.postValidar();
         operacionTransferencia.restaurarEstadoAnterior();
         assertAll(
                 () -> assertFalse(resultadoValidacion),

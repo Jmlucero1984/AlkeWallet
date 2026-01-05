@@ -8,9 +8,20 @@ import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.util.Optional;
+/**
+ * Permite autenticar un usuario y en caso de éxito se verifica si el mismo tiene una cuenta asociada, de serlo
+ * efectivamente, se cambia al estado {@link EstadoOperaciones}, caso contrario, se deriva al estado {@link EstadoCreacionCuenta}.
+ *  @author José Maria Lucero
+ *
+
+ */
 
 public class EstadoLogin extends EstadoUsuario {
-
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoLogin(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
@@ -46,11 +57,15 @@ public class EstadoLogin extends EstadoUsuario {
 
     }
 
-    @Override
-    public String getNombreEstado() {
-        return "LOGIN";
-    }
 
+    /*
+    Las líneas comentadas dentro del método corresponden a una implementacion para introducir contraseñas sin mostrar los
+    caracteres. La misma se ha deshabilitado por ser necesaria la ejecución desde un terminal propiamente dicho, y no desde
+    la misma salida del IDE.
+
+    Seguramente podría haberse desagregado el Encoder en otro "provider", empleando una interfaz para igualmente desacoplarlo,
+    de manera similar al InputProvider.
+    */
     private Usuario autenticarUsuario(ContextoUsuario contextoUsuario) {
 
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
@@ -84,5 +99,14 @@ public class EstadoLogin extends EstadoUsuario {
         }
 
         return null;
+    }
+
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
+    @Override
+    public String getNombreEstado() {
+        return "LOGIN";
     }
 }

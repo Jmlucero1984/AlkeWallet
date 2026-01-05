@@ -8,9 +8,17 @@ import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
 import java.util.Optional;
+/**
+ La clase {@code EstadoSignIn} es una implmentación concreta de la clase abstracta {@code EstadoUsuario}.
+
+ */
 
 public class EstadoSignIn extends EstadoUsuario {
-
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoSignIn(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
@@ -35,10 +43,14 @@ public class EstadoSignIn extends EstadoUsuario {
         }
     }
 
-    @Override
-    public String getNombreEstado() {
-        return  "REGISTRO DE NUEVO USUARIO";
-    }
+
+
+    /**
+     * Recibe lo que el usuario introduce como su clave y realiza una serie de validaciones mínimas,
+     * como cantidad mínima y máxima de caracteres o prohibición de espacios intermedios.
+     * @param inputProvider
+     * @return {@code String} que cumple con las especificaciones para credenciales de usuario.
+     */
     private String validarClavesDeUsuario(InputProvider inputProvider) {
         String entrada;
 
@@ -53,27 +65,30 @@ public class EstadoSignIn extends EstadoUsuario {
             return null;
         }
 
-        // 2. Validar longitud máxima
         if (entrada.length() > 10) {
             outputProvider.println("[!] No puede ser mayor de 10 caracteres");
             return null;
         }
 
-        // 3. Validar que no tenga espacios intermedios
         if (entrada.contains(" ")) {
             outputProvider.println("[!] No puede contener espacios intermedios");
             return null;
         }
 
-        // Si pasa todas las validaciones, devolver el valor
         return entrada;
     }
 
-    private String validarNombresOApellidosDeUsuarios(InputProvider inputProvider){
-        String entrada;
+    /**
+     * Recibe lo que el usuario introduce como su nombre y apellido y realiza una serie de validaciones mínimas,
+     * como cantidad mínima y máxima de caracteres,prohibición de espacios intermedios, letra inicial en mayúscula
+     * obligatoria y solo caracteres alfabéticos.
+     * @param inputProvider
+     * @return {@code String} que cumple con las especificaciones para credenciales de usuario.
+     */
 
+    private String validarNombresOApellidosDeUsuario(InputProvider inputProvider){
+        String entrada;
         entrada = inputProvider.leerOpcionString().trim();
-        // 1. Validar que no esté vacío
         if (entrada.length() == 0) {
             outputProvider.println("[!] No puede estar vacío");
             return null;
@@ -84,37 +99,45 @@ public class EstadoSignIn extends EstadoUsuario {
             return null;
         }
 
-        // 2. Validar longitud máxima
         if (entrada.length() > 15) {
             outputProvider.println("[!] No puede ser mayor de 15 caracteres");
             return null;
         }
 
-        // 3. Validar que solo tenga letras (sin números ni caracteres especiales)
         if (!entrada.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$")) {
             outputProvider.println("[!] Solo puede contener letras (incluye tildes y ñ)");
             return null;
         }
 
-        // 4. Validar que empiece con mayúscula
         if (!Character.isUpperCase(entrada.charAt(0))) {
             outputProvider.println("[!] Debe empezar con una letra mayúscula");
             return null;
         }
 
-        // 5. Validar que no tenga espacios intermedios
         if (entrada.contains(" ")) {
             outputProvider.println("[!] No puede contener espacios intermedios");
             return null;
         }
 
-        // Si pasa todas las validaciones, devolver el valor
         return entrada;
 
     }
 
+    /*
+    Si bien este método se denomina registrarNuevoUsuario, tal vez lo más adecuado debería haber sido desagregar las
+    operaciones de validación de credenciales por un lado, y la propia incorporación del nuevo usuario a la base de datos
+    por otro.
 
+    Las líneas comentadas dentro del método corresponden a una implementacion para introducir contraseñas sin mostrar los
+    caracteres. La misma se ha deshabilitado por ser necesaria la ejecución desde un terminal propiamente dicho, y no desde
+    la misma salida del IDE.
+     */
 
+    /**
+     *  Verifica los criterios de validación de las credenciales de usuario como así tambien su existencia
+     *  actual en la base de datos de usuarios. Finalmente incorpora el nuevo usuario.
+     * @param contextoUsuario
+     */
     private void registrarNuevoUsuario(ContextoUsuario contextoUsuario) {
         InputProvider consoleInputProvider =  contextoUsuario.getConsoleInputProvider();
         //Console console = System.console();
@@ -123,11 +146,11 @@ public class EstadoSignIn extends EstadoUsuario {
         String apellido=null;
         while(nombre==null){
             outputProvider.print("Nombre de usuario: ");
-            nombre = validarNombresOApellidosDeUsuarios(consoleInputProvider);
+            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
         while(apellido==null){
             outputProvider.print("Apellido de usuario: ");
-            apellido = validarNombresOApellidosDeUsuarios(consoleInputProvider);
+            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
 
 
@@ -176,5 +199,14 @@ public class EstadoSignIn extends EstadoUsuario {
         }
 
         contextoUsuario.cambiarEstado(new EstadoLogin(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+    }
+
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
+    @Override
+    public String getNombreEstado() {
+        return  "REGISTRO DE NUEVO USUARIO";
     }
 }

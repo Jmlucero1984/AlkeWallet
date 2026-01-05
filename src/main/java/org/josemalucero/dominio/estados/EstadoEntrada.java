@@ -4,12 +4,27 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.servicio.OutputProvider;
 
+/**
+ * Punto de entrada al programa siendo este el estado primigenio que da origen a la cadena de estados subsiguiente
+ * a lo largo de la actividad del usuario dentro de la aplicación.
+ @author José Maria Lucero
+ */
 public class EstadoEntrada extends EstadoUsuario{
 
+
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoEntrada(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
 
+    /**
+     * Muestra las opciones para iniciar sesión, registrarse o salir.
+     * @param contexto
+     */
     @Override
     public void mostrarMenu(ContextoUsuario contexto) {
         outputProvider.println("1. Iniciar sesión");
@@ -18,6 +33,11 @@ public class EstadoEntrada extends EstadoUsuario{
         outputProvider.print("Seleccione una opción: ");
     }
 
+    /**
+     * Recibe la opción para derivar en los estados correspondientes.
+     * @param opcion
+     * @param contextoUsuario
+     */
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
 
@@ -39,7 +59,10 @@ public class EstadoEntrada extends EstadoUsuario{
             }
         }
 
-
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
     @Override
     public String getNombreEstado() {
         return "ENTRADA";

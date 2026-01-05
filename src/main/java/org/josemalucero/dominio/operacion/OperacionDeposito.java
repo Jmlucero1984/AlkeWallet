@@ -33,7 +33,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
     }
 
     @Override
-    public boolean posValidar() {
+    public boolean postValidar() {
         if (cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.add(monto)) == 0) {
 
             return true;

@@ -7,17 +7,32 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioMonedas;
+/**
+ Se encarga de hacer la conversión de moneda de la cuenta hacia una moneda elegida por el usuario, corroborando que
+ no sea la misma que la actual asociada a la cuenta.
+ @author José Maria Lucero
 
+ */
 public class EstadoConversionCuenta extends EstadoUsuario{
-
+    /**
+     * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
+     * @param inputProvider
+     * @param outputProvider
+     */
     public EstadoConversionCuenta(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
 
+    /**
+     * Esta implementación particular se encarga de mostrar las monedas disponibles para convertir la cuenta,
+     *  obviando mostrar aquella asociada a la cuenta actual, pero conservando la indexación relativa
+     *  (puesto que se aplica un offset de 1) del repositorio de monedas.
+     * @param contextoUsuario
+     */
     @Override
-    public void mostrarMenu(ContextoUsuario contexto) {
+    public void mostrarMenu(ContextoUsuario contextoUsuario) {
         outputProvider.println("Seleccione moneda a la que desea convertir su cuenta:");
-        MonedaConvertible monedaConvertible = contexto.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible();
+        MonedaConvertible monedaConvertible = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible();
 
         for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
             if(RepositorioMonedas.getMonedasDB().get(i)!=monedaConvertible){
@@ -28,6 +43,13 @@ public class EstadoConversionCuenta extends EstadoUsuario{
         outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". CANCELAR");
     }
 
+    /**
+     *  Verifica que la opción elegida, determinada por el valor numérico asociado, esté dentro del rango permitido,
+     *  que no corresponda exactamente con el indice de la moneda actual de
+     *  la cuenta, o que en última instancia, la elección corresponda a salir del estado actual.
+     * @param opcion
+     * @param contextoUsuario
+     */
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size()+1;
@@ -49,6 +71,11 @@ public class EstadoConversionCuenta extends EstadoUsuario{
         }
 
     }
+
+    /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
 
     @Override
     public String getNombreEstado() {
