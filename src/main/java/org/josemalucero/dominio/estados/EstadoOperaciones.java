@@ -1,5 +1,6 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
@@ -24,6 +25,8 @@ import java.util.Optional;
  */
 
 public class EstadoOperaciones extends EstadoUsuario {
+
+
     /**
      * Constructor de la clase que recibe los objetos para manejar la entrada y salida de datos en la interacción con el usuario.
      * @param inputProvider
@@ -154,13 +157,29 @@ public class EstadoOperaciones extends EstadoUsuario {
         outputProvider.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
     }
 
+    /**
+     * Cambia al estado {@link OperacionDeConversionDeCuenta} para convertir la cuenta actual, esto es, cambiar la moneda asociada a otra designada por
+     * el usuario y la correspondiente conversión del saldo actual.
+     * @param contextoUsuario
+     */
     private void convertirCuentaAOtraMoneda(ContextoUsuario contextoUsuario){
         contextoUsuario.cambiarEstado(new EstadoConversionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
     }
 
+    /**
+     * Cambia al estado {@link EstadoConversionMonedas} para hacer consultas de equivalencias de importes entre monedas diferentes, sin afectar la
+     * cuenta actual, tanto en su moneda como en su saldo.
+     * @param contextoUsuario
+     */
     private void consultarConversionMoneda(ContextoUsuario contextoUsuario){
         contextoUsuario.cambiarEstado(new EstadoConversionMonedas(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
     }
+
+    /**
+     * Crea una {@link OperacionRetiro}. La misma requiere de una cifra verificada. Se {@code prevalida} la operación, luego se {@code ejecuta} y
+     * finalmente se {@code postvalida}. De ser exitoso el resultado final, se procede a registrar la operacion mediante {@link RegistroOperacion}.
+     * @param contextoUsuario
+     */
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
         outputProvider.println("RETIRAR DE CUENTA");
@@ -185,6 +204,12 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+    /**
+     * Busca un {@link Usuario} por su número de cuenta mediante {@link #manejarEntradaDeNumeroCuenta(InputProvider)} y luego de verificar que
+     * efectivamente corresponde a un usuario existente con cuenta continua el proceso de transferencia con {@link #operarSobreCuentaParaTransferir(ContextoUsuario, Usuario)}
+     * @param contextoUsuario
+     */
+
     private void transferirDinero(ContextoUsuario contextoUsuario) {
         outputProvider.println("TRANSFERIR A CUENTA");
         Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getConsoleInputProvider());
@@ -193,6 +218,11 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+    /**
+     *
+     * @param contextoUsuario
+     * @param usuarioDestino
+     */
     private void operarSobreCuentaParaTransferir(ContextoUsuario contextoUsuario,Usuario usuarioDestino){
         outputProvider.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
@@ -206,30 +236,14 @@ public class EstadoOperaciones extends EstadoUsuario {
             outputProvider.println("La cuenta destino no puede recibir transferencias");
             return;
         }
-        int opcion = 0;
+        TipoTransferencia tipoTransferencia =obtenerTipoTransferencia(contextoUsuario,usuarioDestino.getCuentaRegular());
+        if (tipoTransferencia==null) return;
 
-        if(!usuarioDestino.getCuentaRegular().getMonedaConvertible().getCodigo().equals(cuentaRegular.getMonedaConvertible().getCodigo())){
-            outputProvider.println("La cuenta destino está en una moneda diferente ("+cuentaRegular.getMonedaConvertible().getCodigo()+")");
-            String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
-            String titulo = "Seleccione opción para transferencia entre cuentas";
-            int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
-            if(eleccion==-1) return;
-            opcion = eleccion;
-        }
-
-        Optional<BigDecimal> cifraVerificada=null;
-        cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
+        Optional<BigDecimal> cifraVerificada= Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
         if(cifraVerificada==null) {return;}
 
-        OperacionTransferencia operacionTransferencia = new OperacionTransferencia(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),outputProvider);
-        switch (opcion) {
-            case 1:
-                operacionTransferencia = new OperacionTransferenciaMonedaOrigen(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda(),outputProvider);
-                break;
-            case 2:
-                operacionTransferencia = new OperacionTransferenciaMonedaDestino(cuentaRegular, usuarioDestino.getCuentaRegular(), cifraVerificada.get(),new ConversorMoneda(),outputProvider);
-                break;
-        }
+        DatosTransferencia datosTransferencia = new DatosTransferencia(cuentaRegular,usuarioDestino.getCuentaRegular(),cifraVerificada.get(), new ConversorMoneda());
+        OperacionTransferencia operacionTransferencia = obtenerOperacionTransferenciaEspecífica(tipoTransferencia,datosTransferencia,outputProvider);
 
         if (operacionTransferencia.preValidar() ){
             operacionTransferencia.ejecutar();
@@ -242,6 +256,37 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+
+    private TipoTransferencia obtenerTipoTransferencia(ContextoUsuario contextoUsuario,CuentaRegular cuentaDestino){
+        CuentaRegular cuentaOrigen = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
+        if(!cuentaDestino.getMonedaConvertible().getCodigo().equals(cuentaOrigen.getMonedaConvertible().getCodigo())){
+            outputProvider.println("La cuenta destino está en una moneda diferente ("+cuentaOrigen.getMonedaConvertible().getCodigo()+")");
+            String[] opciones = new String[]{"Monto en moneda de su propia cuenta","Monto en moneda de la cuenta destino"};
+            String titulo = "Seleccione opción para transferencia entre cuentas";
+            int eleccion = seleccionMultipleGenerica(contextoUsuario.getConsoleInputProvider(),titulo, opciones);
+            switch (eleccion){
+                case 1: return TipoTransferencia.MONEDA_ORIGEN;
+                case 2: return  TipoTransferencia.MONEDA_DESTINO;
+            }
+        }
+        return TipoTransferencia.IGUAL_MONEDA;
+
+    }
+
+    private OperacionTransferencia obtenerOperacionTransferenciaEspecífica(TipoTransferencia tipoTransferencia,DatosTransferencia datosTransferencia, OutputProvider outputProvider){
+        switch (tipoTransferencia) {
+            case TipoTransferencia.IGUAL_MONEDA -> {
+                return new OperacionTransferencia(datosTransferencia.getCuentaOrigen(), datosTransferencia.getCuentaDestino(), datosTransferencia.getMonto(),outputProvider);
+            }
+            case TipoTransferencia.MONEDA_ORIGEN -> {
+                return new OperacionTransferenciaMonedaOrigen(datosTransferencia.getCuentaOrigen(), datosTransferencia.getCuentaDestino(), datosTransferencia.getMonto(),new ConversorMoneda(),outputProvider);
+            }
+            case TipoTransferencia.MONEDA_DESTINO -> {
+                return new OperacionTransferenciaMonedaDestino(datosTransferencia.getCuentaOrigen(), datosTransferencia.getCuentaDestino(), datosTransferencia.getMonto(),new ConversorMoneda(),outputProvider);
+            }
+        };
+        return null;
+    }
 
 
 
@@ -260,7 +305,6 @@ public class EstadoOperaciones extends EstadoUsuario {
             for(int i=0;i<opciones.length;i++){
                 outputProvider.println((i+1)+". "+opciones[i]);
             }
-
             String textoIntroducido = consoleInputProvider.leerOpcionString();
             if (textoIntroducido.equalsIgnoreCase("ESC")) return -1;
             int opcion;
@@ -308,6 +352,7 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
         return  null;
     }
+
 
     /**
      * Permite obtener el nombre del estado actual.

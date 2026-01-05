@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="AlkeWallet">
+  <ClassDiagramComponents>
+    <Class name="AlkeWallet" package="org.josemalucero.app" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="contextoUsuario" type="ContextoUsuario" visibility="protected" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+        </Method>
+        <Method name="run" returnType="void" visibility="public"/>
+        <Method name="createSomeUsers" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Main" package="org.josemalucero.app" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+        <Method name="runApp" returnType="void" visibility="private" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Interface name="Consultable" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Methods>
+        <Method name="getBalance" returnType="BigDecimal" visibility="package"/>
+        <Method name="getNumeroCuenta" returnType="String" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="Convertible" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Methods>
+        <Method name="convertirAMoneda" returnType="void" visibility="package">
+          <Argument type="MonedaConvertible" name="monedaDestino"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="Cuenta" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialCuenta" type="String" visibility="package"/>
+        <Field name="monedaConvertible" type="MonedaConvertible" visibility="package"/>
+        <Field name="historialOperaciones" type="ArrayList&lt;RegistroOperacion&gt;" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getMonedaConvertible" returnType="MonedaConvertible" visibility="public"/>
+        <Method name="registrarOperacion" returnType="void" visibility="public">
+          <Argument type="RegistroOperacion" name="registroOperacion"/>
+        </Method>
+        <Method name="getHistorialOperaciones" returnType="ArrayList&lt;RegistroOperacion&gt;" visibility="public"/>
+        <Method name="setMoneda" returnType="void" visibility="public">
+          <Argument type="MonedaConvertible" name="monedaConvertible"/>
+        </Method>
+        <Method name="getSerialCuenta" returnType="String" visibility="public"/>
+        <Method name="setSerialCuenta" returnType="void" visibility="public">
+          <Argument type="String" name="serialCuenta"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CuentaRegular" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="cantidadDisponible" type="BigDecimal" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getBalance" returnType="BigDecimal" visibility="public"/>
+        <Method name="getNumeroCuenta" returnType="String" visibility="public"/>
+        <Method name="depositar" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+        <Method name="retirar" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+        <Method name="tranfiere" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+        <Method name="recibeTransferencia" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+        <Method name="convertirAMoneda" returnType="void" visibility="public">
+          <Argument type="MonedaConvertible" name="monedaDestino"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="Depositable" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Methods>
+        <Method name="depositar" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="Retirable" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Methods>
+        <Method name="retirar" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="Transferible" package="org.josemalucero.dominio.cuenta" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Methods>
+        <Method name="tranfiere" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+        <Method name="recibeTransferencia" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="amount"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estados" visibility="public" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="monedaDePartida" type="MonedaConvertible" visibility="private"/>
+        <Field name="monedaDeDestino" type="MonedaConvertible" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="convertir" returnType="BigDecimal" visibility="private">
+          <Argument type="MonedaConvertible" name="origen"/>
+          <Argument type="MonedaConvertible" name="destino"/>
+          <Argument type="BigDecimal" name="monto"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+        <Method name="manejarEntradaDeCifraMonetaria" returnType="BigDecimal" visibility="private">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EstadoLogin" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+        <Method name="autenticarUsuario" returnType="Usuario" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1820.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+        <Method name="consultarSaldo" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="depositarDinero" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="consultarDatosCuenta" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="convertirCuentaAOtraMoneda" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="consultarConversionMoneda" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="retirarDinero" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="transferirDinero" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="operarSobreCuentaParaTransferir" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+          <Argument type="Usuario" name="usuarioDestino"/>
+        </Method>
+        <Method name="verHistorial" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="seleccionMultipleGenerica" returnType="int" visibility="private">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+          <Argument type="String" name="titulo"/>
+          <Argument type="String[]" name="opciones"/>
+        </Method>
+        <Method name="manejarEntradaDeNumeroCuenta" returnType="Optional&lt;Usuario&gt;" visibility="private">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+        </Method>
+        <Method name="manejarEntradaDeCifraMonetaria" returnType="BigDecimal" visibility="private">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EstadoSalir" package="org.josemalucero.dominio.estados" visibility="public" xPosition="2120.0" yPosition="420.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contexto"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estados" visibility="public" xPosition="20.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public"/>
+        <Method name="validarClavesDeUsuario" returnType="String" visibility="private">
+          <Argument type="InputProvider" name="inputProvider"/>
+        </Method>
+        <Method name="validarNombresOApellidosDeUsuario" returnType="String" visibility="private">
+          <Argument type="InputProvider" name="inputProvider"/>
+        </Method>
+        <Method name="registrarNuevoUsuario" returnType="void" visibility="private">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estados" visibility="public" isAbstract="true" xPosition="320.0" yPosition="820.0">
+      <Fields>
+        <Field name="inputProvider" type="InputProvider" visibility="protected"/>
+        <Field name="outputProvider" type="OutputProvider" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="inputProvider"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="mostrarMenu" returnType="void" visibility="public" isAbstract="true">
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="procesarOpcion" returnType="void" visibility="public" isAbstract="true">
+          <Argument type="int" name="opcion"/>
+          <Argument type="ContextoUsuario" name="contextoUsuario"/>
+        </Method>
+        <Method name="getNombreEstado" returnType="String" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="ConversorMoneda" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="620.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="convertirMoneda" returnType="BigDecimal" visibility="public">
+          <Argument type="MonedaConvertible" name="monedaOrigen"/>
+          <Argument type="MonedaConvertible" name="monedaDestino"/>
+          <Argument type="BigDecimal" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Moneda" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="920.0" yPosition="820.0">
+      <Fields>
+        <Field name="codigo" type="String" visibility="protected"/>
+        <Field name="nombre" type="String" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getCodigo" returnType="String" visibility="public"/>
+        <Method name="setCodigo" returnType="void" visibility="public">
+          <Argument type="String" name="codigo"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MonedaConvertible" package="org.josemalucero.dominio.moneda" visibility="public" xPosition="1220.0" yPosition="820.0">
+      <Fields>
+        <Field name="ratioDolar" type="BigDecimal" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="codigo"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="BigDecimal" name="ratioDolar"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getRatioDolar" returnType="BigDecimal" visibility="public"/>
+        <Method name="setRatioDolar" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="ratioDolar"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Operacion" package="org.josemalucero.dominio.operacion" visibility="public" isAbstract="true" xPosition="1520.0" yPosition="820.0">
+      <Fields>
+        <Field name="cuentaRegular" type="CuentaRegular" visibility="protected" isFinal="true"/>
+        <Field name="outputProvider" type="OutputProvider" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="ejecutar" returnType="void" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="OperacionConsulta" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="1820.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="OperacionDeConversionDeCuenta" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="2120.0" yPosition="820.0">
+      <Fields>
+        <Field name="monedaDestino" type="MonedaConvertible" visibility="package"/>
+        <Field name="balanceAntesDeConversion" type="BigDecimal" visibility="package"/>
+        <Field name="monedaAntesDeConversion" type="MonedaConvertible" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+          <Argument type="MonedaConvertible" name="monedaDestino"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionDeMonto" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="20.0" yPosition="1220.0">
+      <Fields>
+        <Field name="monto" type="BigDecimal" visibility="protected" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="OperacionDeposito" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="320.0" yPosition="1220.0">
+      <Fields>
+        <Field name="saldoAnteriorCuentaOrigen" type="BigDecimal" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuenta"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="preValidar" returnType="boolean" visibility="public"/>
+        <Method name="posValidar" returnType="boolean" visibility="public"/>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionRetiro" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="620.0" yPosition="1220.0">
+      <Fields>
+        <Field name="saldoAnteriorCuentaOrigen" type="BigDecimal" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuenta"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="preValidar" returnType="boolean" visibility="public"/>
+        <Method name="posValidar" returnType="boolean" visibility="public"/>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionTransferencia" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="920.0" yPosition="1220.0">
+      <Fields>
+        <Field name="cuentaDestino" type="CuentaRegular" visibility="protected" isFinal="true"/>
+        <Field name="saldoAnteriorCuentaOrigen" type="BigDecimal" visibility="package"/>
+        <Field name="saldoAnteriorCuentaDestino" type="BigDecimal" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaOrigen"/>
+          <Argument type="CuentaRegular" name="cuentaDestino"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="getNombreOperacionReciproca" returnType="String" visibility="public"/>
+        <Method name="registrarEstadoPrevio" returnType="void" visibility="protected"/>
+        <Method name="preValidar" returnType="boolean" visibility="public"/>
+        <Method name="posValidar" returnType="boolean" visibility="public"/>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionTransferenciaMonedaDestino" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="1220.0" yPosition="1220.0">
+      <Fields>
+        <Field name="montoEfectivo" type="BigDecimal" visibility="package"/>
+        <Field name="conversorMoneda" type="ConversorMoneda" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaOrigen"/>
+          <Argument type="CuentaRegular" name="cuentaDestino"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="ConversorMoneda" name="conversorMoneda"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="getNombreOperacionReciproca" returnType="String" visibility="public"/>
+        <Method name="getMontoEfectivo" returnType="BigDecimal" visibility="public"/>
+        <Method name="convertir" returnType="BigDecimal" visibility="private">
+          <Argument type="MonedaConvertible" name="origen"/>
+          <Argument type="MonedaConvertible" name="destino"/>
+          <Argument type="BigDecimal" name="monto"/>
+        </Method>
+        <Method name="preValidar" returnType="boolean" visibility="public"/>
+        <Method name="posValidar" returnType="boolean" visibility="public"/>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionTransferenciaMonedaOrigen" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="1520.0" yPosition="1220.0">
+      <Fields>
+        <Field name="montoEfectivo" type="BigDecimal" visibility="package"/>
+        <Field name="conversorMoneda" type="ConversorMoneda" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="CuentaRegular" name="cuentaOrigen"/>
+          <Argument type="CuentaRegular" name="cuentaDestino"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="ConversorMoneda" name="conversorMoneda"/>
+          <Argument type="OutputProvider" name="outputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getNombreOperacion" returnType="String" visibility="public"/>
+        <Method name="getNombreOperacionReciproca" returnType="String" visibility="public"/>
+        <Method name="ejecutar" returnType="void" visibility="public"/>
+        <Method name="convertir" returnType="BigDecimal" visibility="private">
+          <Argument type="MonedaConvertible" name="origen"/>
+          <Argument type="MonedaConvertible" name="destino"/>
+          <Argument type="BigDecimal" name="monto"/>
+        </Method>
+        <Method name="getMontoEfectivo" returnType="BigDecimal" visibility="public"/>
+        <Method name="preValidar" returnType="boolean" visibility="public"/>
+        <Method name="posValidar" returnType="boolean" visibility="public"/>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="public"/>
+        <Method name="registrar" returnType="void" visibility="public">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="Registrable" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="1820.0" yPosition="1220.0">
+      <Methods>
+        <Method name="registrar" returnType="void" visibility="package">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="RegistroOperacion" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="2120.0" yPosition="1220.0">
+      <Fields>
+        <Field name="descripcion" type="String" visibility="package"/>
+        <Field name="monto" type="BigDecimal" visibility="package"/>
+        <Field name="balance" type="BigDecimal" visibility="package"/>
+        <Field name="dateTimeOperacion" type="LocalDateTime" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="descripcion"/>
+          <Argument type="BigDecimal" name="monto"/>
+          <Argument type="BigDecimal" name="balance"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getFormattedDateTime" returnType="String" visibility="public"/>
+        <Method name="getDescripcion" returnType="String" visibility="public"/>
+        <Method name="getMonto" returnType="BigDecimal" visibility="public"/>
+        <Method name="getBalance" returnType="BigDecimal" visibility="public"/>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="Reversible" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="20.0" yPosition="1620.0">
+      <Methods>
+        <Method name="restaurarEstadoAnterior" returnType="void" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="Validable" package="org.josemalucero.dominio.operacion" visibility="public" xPosition="320.0" yPosition="1620.0">
+      <Methods>
+        <Method name="preValidar" returnType="boolean" visibility="package"/>
+        <Method name="posValidar" returnType="boolean" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Class name="ContextoUsuario" package="org.josemalucero.dominio.usuario" visibility="public" xPosition="620.0" yPosition="1620.0">
+      <Fields>
+        <Field name="estadoActual" type="EstadoUsuario" visibility="private"/>
+        <Field name="usuarioLogueado" type="Usuario" visibility="private"/>
+        <Field name="consoleInputProvider" type="InputProvider" visibility="private"/>
+        <Field name="consoleOutputProvider" type="OutputProvider" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="InputProvider" name="consoleInputProvider"/>
+          <Argument type="OutputProvider" name="consoleOutputProvider"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getOuputProvider" returnType="OutputProvider" visibility="public"/>
+        <Method name="getConsoleInputProvider" returnType="InputProvider" visibility="public"/>
+        <Method name="getEstadoActual" returnType="EstadoUsuario" visibility="public"/>
+        <Method name="cambiarEstado" returnType="void" visibility="public">
+          <Argument type="EstadoUsuario" name="nuevoEstado"/>
+        </Method>
+        <Method name="mostrarMenu" returnType="void" visibility="public"/>
+        <Method name="procesarOpcion" returnType="void" visibility="public">
+          <Argument type="int" name="opcion"/>
+        </Method>
+        <Method name="getUsuarioLogueado" returnType="Usuario" visibility="public"/>
+        <Method name="setUsuarioLogueado" returnType="void" visibility="public">
+          <Argument type="Usuario" name="usuario"/>
+        </Method>
+        <Method name="cerrarSesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Usuario" package="org.josemalucero.dominio.usuario" visibility="public" xPosition="920.0" yPosition="1620.0">
+      <Fields>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="cuentaRegular" type="CuentaRegular" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="crearCuentRegular" returnType="CuentaRegular" visibility="public"/>
+        <Method name="getCuentaRegular" returnType="CuentaRegular" visibility="public"/>
+        <Method name="getNombreCompleto" returnType="String" visibility="public"/>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="getClave" returnType="String" visibility="public"/>
+        <Method name="setClave" returnType="void" visibility="public">
+          <Argument type="String" name="clave"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="BCryptPasswordEncoderService" package="org.josemalucero.servicio" visibility="public" xPosition="1220.0" yPosition="1620.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="hash" returnType="String" visibility="public">
+          <Argument type="String" name="rawPassword"/>
+        </Method>
+        <Method name="matches" returnType="boolean" visibility="public">
+          <Argument type="String" name="rawPassword"/>
+          <Argument type="String" name="storedHash"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="ConsoleInputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="1520.0" yPosition="1620.0">
+      <Fields>
+        <Field name="scanner" type="Scanner" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="Scanner" name="scanner"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="leerOpcionInt" returnType="int" visibility="public"/>
+        <Method name="leerOpcionString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ConsoleOutputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="1820.0" yPosition="1620.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="BigDecimal" name="bigDecimal"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="public">
+          <Argument type="int" name="intNum"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="public">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="FormateadorDeRegistroAImprimir" package="org.josemalucero.servicio" visibility="public" xPosition="2120.0" yPosition="1620.0">
+      <Fields>
+        <Field name="MAX_DESCRIPTION_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_BALANCE_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_MONTO_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="MAX_DATE_CHARS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="formatearRegistro" returnType="String" visibility="public" isStatic="true">
+          <Argument type="RegistroOperacion" name="registroOperacion"/>
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+        <Method name="generarCabeceras" returnType="String" visibility="public" isStatic="true">
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+        <Method name="alinearTexto" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="espaciosDisponibles"/>
+          <Argument type="String" name="texto"/>
+          <Argument type="Alineado" name="alineado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="InputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="20.0" yPosition="2020.0">
+      <Methods>
+        <Method name="leerOpcionInt" returnType="int" visibility="package"/>
+        <Method name="leerOpcionString" returnType="String" visibility="package"/>
+      </Methods>
+    </Interface>
+    <Interface name="OutputProvider" package="org.josemalucero.servicio" visibility="public" xPosition="320.0" yPosition="2020.0">
+      <Methods>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="String" name="string"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="BigDecimal" name="bigDecimal"/>
+        </Method>
+        <Method name="println" returnType="void" visibility="package">
+          <Argument type="int" name="intNum"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="package">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="print" returnType="void" visibility="package">
+          <Argument type="String" name="string"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="PasswordEncoder" package="org.josemalucero.servicio" visibility="public" xPosition="620.0" yPosition="2020.0">
+      <Methods>
+        <Method name="hash" returnType="String" visibility="package">
+          <Argument type="String" name="rawPassword"/>
+        </Method>
+        <Method name="matches" returnType="boolean" visibility="package">
+          <Argument type="String" name="rawPassword"/>
+          <Argument type="String" name="storedHash"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Class name="RepositorioMonedas" package="org.josemalucero.servicio" visibility="public" xPosition="920.0" yPosition="2020.0">
+      <Fields>
+        <Field name="monedasDB" type="ArrayList&lt;MonedaConvertible&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getMonedasDB" returnType="ArrayList&lt;MonedaConvertible&gt;" visibility="public" isStatic="true"/>
+        <Method name="crearMonedasBasicas" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="encontrarMonedaPorCodigo" returnType="MonedaConvertible" visibility="public" isStatic="true">
+          <Argument type="String" name="codigoMoneda"/>
+        </Method>
+        <Method name="clearMonedasDB" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="RepositorioUsuarios" package="org.josemalucero.servicio" visibility="public" xPosition="1220.0" yPosition="2020.0">
+      <Fields>
+        <Field name="usuariosDB" type="ArrayList&lt;Usuario&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="consultarUsuario" returnType="Optional&lt;Usuario&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="consultarUsuarioPorCuenta" returnType="Optional&lt;Usuario&gt;" visibility="public" isStatic="true">
+          <Argument type="String" name="cuenta"/>
+        </Method>
+        <Method name="agregarUsuario" returnType="Usuario" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+        </Method>
+        <Method name="agregarUsuarioYAsignarCuenta" returnType="Usuario" visibility="public" isStatic="true">
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="clave"/>
+          <Argument type="String" name="codigoMoneda"/>
+        </Method>
+        <Method name="clearUsuariosDB" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="RespositorioCuentas" package="org.josemalucero.servicio" visibility="public" xPosition="1520.0" yPosition="2020.0">
+      <Fields>
+        <Field name="cuentasDB" type="ArrayList&lt;Cuenta&gt;" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="adherirCuenta" returnType="CuentaRegular" visibility="public" isStatic="true">
+          <Argument type="CuentaRegular" name="cuentaRegular"/>
+        </Method>
+        <Method name="clearCuentasDB" returnType="void" visibility="public" isStatic="true"/>
+        <Method name="generarSerial" returnType="String" visibility="public" isStatic="true">
+          <Argument type="int" name="cantBlocks"/>
+          <Argument type="int" name="charsPerBlock"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Operacion"/>
+    <HasRelation name="cuentaDestino" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.operacion.OperacionTransferencia"/>
+    <HasRelation name="cuentaRegular" source="org.josemalucero.dominio.operacion.Operacion" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Retirable"/>
+    <HasRelation name="monedaDePartida" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.Registrable" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedaDeDestino" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Validable"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <HasRelation name="conversorMoneda" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.moneda.ConversorMoneda" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.FormateadorDeRegistroAImprimir" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Validable"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Reversible"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.BCryptPasswordEncoderService" target="org.josemalucero.servicio.PasswordEncoder"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="outputProvider" source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Cuenta"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.Usuario" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="usuarioLogueado" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="usuariosDB" source="org.josemalucero.servicio.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Usuario&gt;"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Consultable"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionConsulta" target="org.josemalucero.dominio.operacion.Operacion"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Convertible"/>
+    <HasRelation name="monedaAntesDeConversion" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <UseRelation source="org.josemalucero.dominio.cuenta.Convertible" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.operacion.OperacionTransferencia"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.moneda.MonedaConvertible" target="org.josemalucero.dominio.moneda.Moneda"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="consoleOutputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cuentasDB" source="org.josemalucero.servicio.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.Cuenta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Cuenta&gt;"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedaConvertible" source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedaDestino" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <HasRelation name="conversorMoneda" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.moneda.ConversorMoneda" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="inputProvider" source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.servicio.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Reversible"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Validable"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.OutputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleOutputProvider" target="org.josemalucero.servicio.OutputProvider"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleInputProvider" target="org.josemalucero.servicio.InputProvider"/>
+    <HasRelation name="contextoUsuario" source="org.josemalucero.app.AlkeWallet" target="org.josemalucero.dominio.usuario.ContextoUsuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Reversible"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeMonto" target="org.josemalucero.dominio.operacion.Operacion"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
+    <HasRelation name="outputProvider" source="org.josemalucero.dominio.operacion.Operacion" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Transferible"/>
+    <UseRelation source="org.josemalucero.dominio.moneda.ConversorMoneda" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cuentaRegular" source="org.josemalucero.dominio.usuario.Usuario" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="estadoActual" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.estados.EstadoUsuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="historialOperaciones" source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.operacion.RegistroOperacion" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;RegistroOperacion&gt;"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Depositable"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <HasRelation name="consoleInputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedasDB" source="org.josemalucero.servicio.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;MonedaConvertible&gt;"/>
+    <UseRelation source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

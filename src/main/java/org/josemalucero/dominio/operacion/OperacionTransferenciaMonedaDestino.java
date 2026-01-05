@@ -17,6 +17,12 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
         montoEfectivo = convertir(cuentaDestino.getMonedaConvertible(),cuentaOrigen.getMonedaConvertible(),monto);
 
     }
+    public OperacionTransferenciaMonedaDestino(DatosTransferencia datosTransferencia, OutputProvider outputProvider) {
+        super(datosTransferencia.getCuentaOrigen(), datosTransferencia.getCuentaDestino(), datosTransferencia.getMonto(),outputProvider);
+        this.conversorMoneda = datosTransferencia.getConversorMoneda();
+        montoEfectivo = convertir(datosTransferencia.getCuentaDestino().getMonedaConvertible(),datosTransferencia.getCuentaOrigen().getMonedaConvertible(),datosTransferencia.getMonto());
+
+    }
 
     @Override
     public void ejecutar() {
@@ -68,7 +74,7 @@ public class OperacionTransferenciaMonedaDestino extends OperacionTransferencia{
     }
 
     @Override
-    public boolean posValidar() {
+    public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(montoEfectivo)) == 0 &&
                 cuentaDestino.getBalance().compareTo(saldoAnteriorCuentaDestino.add(monto)) == 0) {
             return true;

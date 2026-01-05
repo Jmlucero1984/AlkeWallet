@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 public class OperacionTransferencia extends OperacionDeMonto implements Reversible,Validable, Registrable{
     protected final CuentaRegular cuentaDestino;
+
     BigDecimal saldoAnteriorCuentaOrigen;
     BigDecimal saldoAnteriorCuentaDestino;
 
@@ -19,6 +20,13 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
         super( cuentaOrigen, monto,outputProvider);
         this.cuentaDestino = cuentaDestino;
+
+    }
+
+    public OperacionTransferencia (DatosTransferencia datosTransferencia, OutputProvider outputProvider) {
+
+        super( datosTransferencia.getCuentaOrigen(), datosTransferencia.getMonto(),outputProvider);
+        this.cuentaDestino = datosTransferencia.getCuentaDestino();
 
     }
 
