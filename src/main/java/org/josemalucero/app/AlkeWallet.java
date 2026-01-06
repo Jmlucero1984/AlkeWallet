@@ -10,9 +10,11 @@ public class AlkeWallet {
 
 
     protected final ContextoUsuario contextoUsuario;
+    public static boolean onConsole;
 
-    public AlkeWallet(ContextoUsuario contextoUsuario) {
+    public AlkeWallet(ContextoUsuario contextoUsuario,boolean runningInConsole ) {
         this.contextoUsuario = contextoUsuario;
+        onConsole = runningInConsole;
         RepositorioMonedas.crearMonedasBasicas();
         createSomeUsers();
 
@@ -31,7 +33,7 @@ public class AlkeWallet {
      */
     public void run() {
 
-        contextoUsuario.getOuputProvider().println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
+
 
         while (true) {
             try {

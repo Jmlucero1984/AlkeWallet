@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/AlkeWallet_jar</output-path>
     <root id="archive" name="AlkeWallet.jar">
       <element id="module-output" name="AlkeWallet" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

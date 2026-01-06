@@ -11,11 +11,11 @@ import java.io.IOException;
 
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
 
-        String string;
-
-         runApp();
+        boolean isConsole = args.length > 0 && args[0].equalsIgnoreCase("console");
+         runApp(isConsole);
 
 
     }
@@ -28,8 +28,8 @@ public class Main {
      * que se imprimiría en la consola.
      * @author José Maria Lucero
      */
-    private static void runApp(){
-        new AlkeWallet(new ContextoUsuario(new ConsoleInputProvider(), new ConsoleOutputProvider())).run();
+    private static void runApp(boolean runningOnConsole){
+        new AlkeWallet(new ContextoUsuario(new ConsoleInputProvider(), new ConsoleOutputProvider()),runningOnConsole).run();
     }
 
 

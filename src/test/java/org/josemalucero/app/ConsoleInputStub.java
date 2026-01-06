@@ -13,14 +13,17 @@ public class ConsoleInputStub implements InputProvider {
     public void addProximaRespuestaInt(int proximaRespuestaInt) {
         respuestasInt.add(proximaRespuestaInt);
     }
+
     public void addSerieDeRespuestasInt(int[] serieDeRespuestas) {
         for (int i = 0; i < serieDeRespuestas.length; i++) {
             respuestasInt.add(serieDeRespuestas[i]);
         }
     }
+
     public void clearRespuestasString(){
         respuestasString.clear();
     }
+
     public void clearRespuestasInt(){
         respuestasInt.clear();
     }

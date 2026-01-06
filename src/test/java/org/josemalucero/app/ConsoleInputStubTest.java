@@ -33,6 +33,7 @@ class ConsoleInputStubTest {
         );
     }
 
+
     @Test
     void verificarSeriesDeEntradasYSalidasConsoleInputStubTest() {
         String elemento_str_a ="aa";

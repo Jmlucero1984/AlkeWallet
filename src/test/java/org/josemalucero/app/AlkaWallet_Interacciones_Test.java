@@ -35,7 +35,7 @@ public class AlkaWallet_Interacciones_Test {
         consoleInputStub = new ConsoleInputStub();
         consoleOutputStub =new ConsoleOutputProvider();// new ConsoleOutputStub();
         contextoUsuario = new ContextoUsuario(consoleInputStub,consoleOutputStub);
-        alkeWalletFake = new AlkeWalletFake(contextoUsuario);
+        alkeWalletFake = new AlkeWalletFake(contextoUsuario, false);
     }
 
     @AfterEach

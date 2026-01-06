@@ -5,33 +5,26 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 public class AlkeWalletFake extends AlkeWallet{
     boolean continuar = true;
 
-    public AlkeWalletFake(ContextoUsuario contextoUsuario) {
-        super(contextoUsuario);
+    public AlkeWalletFake(ContextoUsuario contextoUsuario,boolean runningInConsole) {
+        super(contextoUsuario,runningInConsole);
     }
 
 
 
     @Override
     public void run() {
-
-
         contextoUsuario.getOuputProvider().println("=== BIENVENIDO A BILLETERA VIRTUAL ===");
-
-                try {
-                    contextoUsuario.mostrarMenu();
-                    int opcion = this.contextoUsuario.getConsoleInputProvider().leerOpcionInt();
-                    if (opcion==-1) {
-                        System.exit(0);
-                    }
-
-                    procesarOpcion(opcion);
-
-                } catch (Exception e) {
-                    contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
-                    this.contextoUsuario.getConsoleInputProvider().leerOpcionString();
+            try {
+                contextoUsuario.mostrarMenu();
+                int opcion = this.contextoUsuario.getConsoleInputProvider().leerOpcionInt();
+                if (opcion==-1) {
+                    System.exit(0);
                 }
-
-
+                procesarOpcion(opcion);
+            } catch (Exception e) {
+                contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
+                this.contextoUsuario.getConsoleInputProvider().leerOpcionString();
+            }
         }
 
 
@@ -43,16 +36,11 @@ public class AlkeWalletFake extends AlkeWallet{
                 if (opcion==-1) {
                     System.exit(0);
                 }
-
                 procesarOpcion(opcion);
-
             } catch (Exception e) {
                contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
                 this.contextoUsuario.getConsoleInputProvider().leerOpcionString();
             }
         }
-
-
    }
-
 }

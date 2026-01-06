@@ -26,7 +26,9 @@ public class EstadoSalir extends EstadoUsuario{
      */
     @Override
     public void mostrarMenu(ContextoUsuario contextoUsuario) {
-        outputProvider.println("Esperamos vuelva pronto!");
+        outputProvider.println("─────────────────────────────────");
+        outputProvider.println("♦  Developed by Jose Ma Lucero  ♦");
+        System.exit(0);
 
     }
 
@@ -38,6 +40,7 @@ public class EstadoSalir extends EstadoUsuario{
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contexto) {
 
+
     }
 
     /**
@@ -46,6 +49,6 @@ public class EstadoSalir extends EstadoUsuario{
      */
     @Override
     public String getNombreEstado() {
-        return "SALIENDO";
+        return "¡Esperamos vuelva pronto!";
     }
 }

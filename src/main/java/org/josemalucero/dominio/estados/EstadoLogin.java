@@ -1,5 +1,6 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.app.AlkeWallet;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
@@ -7,6 +8,7 @@ import org.josemalucero.servicio.BCryptPasswordEncoderService;
 import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
+import java.io.Console;
 import java.util.Optional;
 /**
  * Permite autenticar un usuario y en caso de éxito se verifica si el mismo tiene una cuenta asociada, de serlo
@@ -88,7 +90,7 @@ public class EstadoLogin extends EstadoUsuario {
 
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
-        //Console console = System.console();
+
         outputProvider.println("\n[ Ingrese sus datos personales ]");
         outputProvider.print("Nombre de usuario: ");
         String nombre = consoleInputProvider.leerOpcionString();
@@ -97,14 +99,23 @@ public class EstadoLogin extends EstadoUsuario {
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
             outputProvider.println("Ingrese su clave: ");
-            String clave = consoleInputProvider.leerOpcionString();
-            /*
-            char[] passwordArray = console.readPassword("Contraseña (espacios): ");
-            String clave = new String(passwordArray);
-            java.util.Arrays.fill(passwordArray, ' ');
-            */
 
-            // Limpiar el array de caracteres por seguridad
+            String clave;
+
+            if(AlkeWallet.onConsole){
+                Console console = System.console();
+                char[] passwordArray = console.readPassword("[MODO SECRETO]: ");
+                clave = new String(passwordArray);
+                // Limpiar el array de caracteres por seguridad
+                java.util.Arrays.fill(passwordArray, ' ');
+            } else {
+                clave = consoleInputProvider.leerOpcionString();
+            }
+
+
+
+
+
 
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){
                 outputProvider.println("LOGUEO EXITOSO");

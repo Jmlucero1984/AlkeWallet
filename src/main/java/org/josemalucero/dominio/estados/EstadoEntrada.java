@@ -65,6 +65,7 @@ public class EstadoEntrada extends EstadoUsuario{
      */
     @Override
     public String getNombreEstado() {
-        return "ENTRADA";
+        return "BIENVENIDO A BILLETERA VIRTUAL ALKE WALLET";
+
     }
 }

@@ -1,5 +1,6 @@
 package org.josemalucero.dominio.estados;
 
+import org.josemalucero.app.AlkeWallet;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
@@ -7,6 +8,7 @@ import org.josemalucero.servicio.BCryptPasswordEncoderService;
 import org.josemalucero.servicio.OutputProvider;
 import org.josemalucero.servicio.RepositorioUsuarios;
 
+import java.io.Console;
 import java.util.Optional;
 /**
  La clase {@code EstadoSignIn} es una implmentación concreta de la clase abstracta {@code EstadoUsuario}.
@@ -175,26 +177,36 @@ public class EstadoSignIn extends EstadoUsuario {
 
                 while(clave==null){
                     outputProvider.println("Introduzca su clave: ");
-                    clave = validarClavesDeUsuario(consoleInputProvider);
+                    if(AlkeWallet.onConsole){
+                            Console console = System.console();
+                            char[] passwordArray = console.readPassword("[MODO SECRETO]: ");
+                            clave = new String(passwordArray);
+                            // Limpiar el array de caracteres por seguridad
+                            java.util.Arrays.fill(passwordArray, ' ');
+
+                    } else {
+
+                        clave = validarClavesDeUsuario(consoleInputProvider);
+                    }
+
                 }
 
-                /*
-                char[] passwordArray = console.readPassword("Contraseña (espacios): ");
-                clave = new String(passwordArray);
-                */
+
                 String confirmaClave=null;
                 while(confirmaClave==null){
                     outputProvider.print("Confirmar clave: ");
-                    confirmaClave  = validarClavesDeUsuario(consoleInputProvider);
+                    if(AlkeWallet.onConsole){
+                        Console console = System.console();
+                        char[] passwordArray = console.readPassword("[MODO SECRETO]: ");
+                        confirmaClave = new String(passwordArray);
+                        // Limpiar el array de caracteres por seguridad
+                        java.util.Arrays.fill(passwordArray, ' ');
+
+                    } else {
+
+                        confirmaClave = validarClavesDeUsuario(consoleInputProvider);
+                    }
                 }
-
-                /*
-                passwordArray = console.readPassword("Contraseña (espacios): ");
-                String confirmaClave =new String(passwordArray);
-
-                // Limpiar el array de caracteres por seguridad
-                java.util.Arrays.fill(passwordArray, ' ');
-                */
 
                 if(clave.equals(confirmaClave)) {
                     coinciden = true;
