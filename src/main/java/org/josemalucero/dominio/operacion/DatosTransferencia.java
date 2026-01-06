@@ -6,12 +6,19 @@ import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
+/**
+ * Clase auxiliar que sirve para empaquetar todos los datos necesarios para una transferencia, disminuyendo la cantidad de
+ * parametros definidos en la {@link OperacionTransferencia} y evitando una instanciación sobrecargada de argumentos.
+ *@author José Maria Lucero
+ */
 public class DatosTransferencia {
 
     private CuentaRegular cuentaOrigen;
     private CuentaRegular cuentaDestino;
     private BigDecimal monto;
     private ConversorMoneda conversorMoneda;
+
+
 
     public DatosTransferencia(CuentaRegular cuentaOrigen, CuentaRegular cuentaDestino, BigDecimal monto, ConversorMoneda conversorMoneda) {
         this.cuentaOrigen = cuentaOrigen;

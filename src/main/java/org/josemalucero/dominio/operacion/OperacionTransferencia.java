@@ -1,13 +1,12 @@
 package org.josemalucero.dominio.operacion;
 
-import org.josemalucero.dominio.cuenta.Consultable;
-import org.josemalucero.dominio.cuenta.Cuenta;
+
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.cuenta.Transferible;
+
 import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+
 
 public class OperacionTransferencia extends OperacionDeMonto implements Reversible,Validable, Registrable{
     protected final CuentaRegular cuentaDestino;

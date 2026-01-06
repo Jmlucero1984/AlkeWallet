@@ -6,6 +6,11 @@ import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
+/**
+ * Permite realizar la conversión de la cuenta, desde la moneda actual a otra moneda de destino, haciendo
+ * lo propio con el saldo existente y registrando la operación en el historial de la cuenta.
+ * @author José Maria Lucero
+ */
 public class OperacionDeConversionDeCuenta extends Operacion implements Registrable{
     MonedaConvertible monedaDestino;
     BigDecimal balanceAntesDeConversion;

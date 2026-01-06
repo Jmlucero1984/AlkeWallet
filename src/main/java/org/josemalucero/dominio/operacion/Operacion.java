@@ -2,13 +2,16 @@ package org.josemalucero.dominio.operacion;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.servicio.OutputProvider;
 
-import java.math.BigDecimal;
+/**
+ * Entidad básica que modela una operación genérica dentro del sistema, sobre una {@link CuentaRegular}.
+ * @author José Maria Lucero
+ */
 
 public abstract class Operacion {
 
-    //protected final String id;
+
     protected final CuentaRegular cuentaRegular;
-    //protected final LocalDateTime fecha;
+
 
     protected OutputProvider outputProvider;
 
@@ -19,11 +22,17 @@ public abstract class Operacion {
 
     }
 
-
+    /**
+     * Devuelve el nombre de la operación.
+     * @return {@link String} de la descripción de la operación.
+     */
     public String getNombreOperacion(){
         return "OPERACION";
     }
 
+    /**
+     * Permite realizar la propia operación sobre la cuenta.
+     */
     public abstract void ejecutar();
 
 

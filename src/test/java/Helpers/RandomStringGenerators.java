@@ -7,7 +7,7 @@ import java.util.Random;
  * Proporciona una forma de generar nombres y claves
  * aleatorias.
  * </p>
- *
+ *@author José Maria Lucero
  */
 public class RandomStringGenerators {
 

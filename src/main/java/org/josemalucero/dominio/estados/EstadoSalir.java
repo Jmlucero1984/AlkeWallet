@@ -4,7 +4,7 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.InputProvider;
 import org.josemalucero.servicio.OutputProvider;
 
-/**La clase {@code EstadoSalir} es una implmentación concreta de la clase abstracta {@code EstadoUsuario}.
+/**
  * Tiene como única y trivial responsabilidad terminar el programa, mostrando un mensaje de despedida.
  *
  @author José Maria Lucero

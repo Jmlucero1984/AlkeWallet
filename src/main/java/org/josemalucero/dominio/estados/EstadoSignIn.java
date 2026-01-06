@@ -23,6 +23,11 @@ public class EstadoSignIn extends EstadoUsuario {
         super(inputProvider, outputProvider);
     }
 
+    /**
+     * Informa al potencial usuario acerca del proceder sobre la creación de una entidad que lo represente para
+     * poder operar en la plataforma.
+     * @param contextoUsuario
+     */
     @Override
     public void mostrarMenu(ContextoUsuario contextoUsuario) {
 
@@ -32,6 +37,11 @@ public class EstadoSignIn extends EstadoUsuario {
         outputProvider.print("\nSeleccione una opción: ");
     }
 
+    /**
+     * Recibe la opción elegida, sea para registar un nuevo {@link Usuario}, o para retornar al estado anterior, {@link EstadoEntrada}.
+     * @param opcion
+     * @param contextoUsuario
+     */
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         // En este estado, no usamos opciones de menú numéricas
@@ -80,7 +90,7 @@ public class EstadoSignIn extends EstadoUsuario {
 
     /**
      * Recibe lo que el usuario introduce como su nombre y apellido y realiza una serie de validaciones mínimas,
-     * como cantidad mínima y máxima de caracteres,prohibición de espacios intermedios, letra inicial en mayúscula
+     * como cantidad mínima y máxima de caracteres, prohibición de espacios intermedios, letra inicial en mayúscula
      * obligatoria y solo caracteres alfabéticos.
      * @param inputProvider
      * @return {@code String} que cumple con las especificaciones para credenciales de usuario.
