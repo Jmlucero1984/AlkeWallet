@@ -2,7 +2,15 @@ package org.josemalucero.servicio;
 
 import java.math.BigDecimal;
 
+/**
+ * Clase que funciona como un proxy, ya que redirige los objetos y datos a imprimir sin
+ * agregar lógica adicional.
+ * @author José María Lucero
+ */
+
 public class ConsoleOutputProvider implements OutputProvider{
+
+
     @Override
     public void println(Object object) {
         System.out.println(object);

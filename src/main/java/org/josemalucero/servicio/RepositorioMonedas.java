@@ -1,20 +1,27 @@
 package org.josemalucero.servicio;
 
-import org.josemalucero.dominio.moneda.Moneda;
-import org.josemalucero.dominio.moneda.MonedaConvertible;
-import org.josemalucero.dominio.usuario.Usuario;
 
+import org.josemalucero.dominio.moneda.MonedaConvertible;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Provee un recurso de almacenamiento y consulta de monedas para toda la aplicación.
+ * @author José María Lucero
+ */
+
 public class RepositorioMonedas {
+
+    private static ArrayList<MonedaConvertible> monedasDB= new ArrayList<>();
+
     public static ArrayList<MonedaConvertible> getMonedasDB() {
         return monedasDB;
     }
 
-    private static ArrayList<MonedaConvertible> monedasDB= new ArrayList<>();
-
+    /**
+     * Crea las monedas básicas para poder operar en la plataforma.
+     */
     public static void crearMonedasBasicas(){
 
         MonedaConvertible pesoChileno = new MonedaConvertible("CLP","Peso Chileno", new BigDecimal("0.0011"));
@@ -27,9 +34,17 @@ public class RepositorioMonedas {
 
     }
 
+    /**
+     * Busca una determinada moneda por su código y la devuelve.
+     * @param codigoMoneda
+     * @return {@link MonedaConvertible} encontrada.
+     */
     public static MonedaConvertible encontrarMonedaPorCodigo(String codigoMoneda){
         return monedasDB.stream().filter(t->t.getCodigo().equals(codigoMoneda)).findAny().get();
     }
+    /**
+     * Vacía el repositorio de Monedas.
+     */
 
     public static void clearMonedasDB(){
         monedasDB.clear();

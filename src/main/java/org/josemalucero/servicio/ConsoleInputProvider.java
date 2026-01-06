@@ -22,7 +22,10 @@ public class ConsoleInputProvider  implements InputProvider{
         this.scanner = scanner;
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public int leerOpcionInt() {
         int entrada = scanner.nextInt();
@@ -31,6 +34,11 @@ public class ConsoleInputProvider  implements InputProvider{
 
 
     }
+
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
 
     @Override
     public String leerOpcionString() {

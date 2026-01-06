@@ -12,13 +12,13 @@ import org.josemalucero.servicio.RespositorioCuentas;
 public class Usuario {
     private String nombre;
     private String apellido;
-    private String clave;
+    private String claveHasheada;
     private CuentaRegular cuentaRegular;
 
-    public Usuario(String nombre,String apellido, String clave) {
+    public Usuario(String nombre,String apellido, String claveHasheada) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.clave = clave;
+        this.claveHasheada = claveHasheada;
 
     }
 
@@ -58,10 +58,10 @@ public class Usuario {
     }
 
     public String getClave() {
-        return clave;
+        return claveHasheada;
     }
 
-    public void setClave(String clave) {
-        this.clave = clave;
+    public void setClave(String claveHasheada) {
+        this.claveHasheada = claveHasheada;
     }
 }
