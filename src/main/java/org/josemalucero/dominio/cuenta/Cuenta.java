@@ -7,18 +7,9 @@ import org.josemalucero.dominio.operacion.RegistroOperacion;
 import java.util.ArrayList;
 
 /**
-La clase {@code Cuenta} es la entidad básica con la propiedades
- y métodos elementales para registrar el activo digital, en este caso,
- la {@code MonedaConvertible}.
- <blockquote><b>Propiedades</b></blockquote>
- <li> {@code String serialCuenta} una cadena que permite identificar univocamente la cuenta.</li>
- <li> {@code MonedaConvertible monedaConvertible} representa una determinada moneda, indispensable para
- poder hacer conversiones futuras.</li>
- <li> {@code  ArrayList<RegistroOperacion> historialOperaciones} permite llevar el registro de
- todas las operaciones que se ejecutan sobre la cuenta.</li>
-    @author José Maria Lucero
-*/
-
+ * Entidad más básica que modela una cuenta, definiendo su identificador, el tipo de moneda y un historial de operaciones
+ *  @author José Maria Lucero
+ */
 
 public class Cuenta {
 

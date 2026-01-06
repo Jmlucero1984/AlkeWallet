@@ -1,14 +1,15 @@
 package org.josemalucero.dominio.operacion;
 
-import org.josemalucero.dominio.cuenta.Consultable;
-import org.josemalucero.dominio.cuenta.Cuenta;
+
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.cuenta.Transferible;
+
 import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
+/** Permite la realización de transferencias de montos {@link BigDecimal} de una cuenta a otra, ambas con la misma moneda.
+ * @author Jose María Lucero
+ */
 public class OperacionTransferencia extends OperacionDeMonto implements Reversible,Validable, Registrable{
     protected final CuentaRegular cuentaDestino;
 
@@ -23,6 +24,11 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
     }
 
+    /**
+     * Constructor sobrecargado para la recepción de {@link DatosTransferencia}.
+     * @param datosTransferencia
+     * @param outputProvider
+     */
     public OperacionTransferencia (DatosTransferencia datosTransferencia, OutputProvider outputProvider) {
 
         super( datosTransferencia.getCuentaOrigen(), datosTransferencia.getMonto(),outputProvider);
@@ -30,6 +36,12 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
     }
 
+    /**
+     * Ejecuta la operación de transferencia, previo registro del estado actual, necesario al momento de restaurar las cuentas
+     * involucradas al estadío previo. A continuación llama al método {@link CuentaRegular#tranfiere(BigDecimal)} de la cuenta de origen
+     * por el monto indicado de la operación, y al método {@link CuentaRegular#recibeTransferencia(BigDecimal)} de la cuenta de destino por
+     * el respectivo e idéntico valor.
+     */
     @Override
     public void ejecutar() {
         registrarEstadoPrevio();
@@ -44,6 +56,11 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
         return "TRANSFERENCIA A OTRA CUENTA DE IGUAL MONEDA";
     }
 
+    /**
+     * Devuelve la descripción de la operacion para el registro en la cuenta destino de la transferencia.
+     * @return {@link String} descripción de la operación en la cuenta destino.
+     */
+
     public String getNombreOperacionReciproca() {
         return "TRANSFERENCIA DESDE CUENTA DE IGUAL MONEDA";
     }
@@ -55,6 +72,11 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
         saldoAnteriorCuentaDestino = cuentaDestino.getBalance();
     }
 
+    /**
+     *Realiza las comprobaciones necesarias para realizar una transferencia significativa y efectiva.
+     * @return {@code bool} que indica la posibilidad de ejecutar la transferencia, sea por los fondos disponibles o
+     * por la introducción de una cifra monetario no trivial.
+     */
     @Override
     public boolean preValidar() {
         if (monto.compareTo(BigDecimal.ZERO)==0) {
@@ -70,6 +92,12 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
         }
     }
 
+    /**
+     * Realiza las comprobaciones comparando los saldos anteriores  de cada cuenta involucrada
+     *   con sendos montos debitados y acreditados.
+     *
+     * @return {@code bool} que indica que la operación ha sido exitosa o ha fallado.
+     */
     @Override
     public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(monto)) == 0 &&
@@ -82,6 +110,10 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
         }
     }
 
+    /**
+     * Devuelve las cuentas involucradas en la operacion a sus estados previos a la misma, realizando
+     * debitaciones y acreditaciones adecuadas.
+     */
     @Override
     public void restaurarEstadoAnterior() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen)<0){
@@ -97,6 +129,11 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
 
     }
+
+    /**
+     * Realiza el registro correspondiente en cada cuenta involucrada en la operación.
+     * @param cuentaRegular
+     */
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));

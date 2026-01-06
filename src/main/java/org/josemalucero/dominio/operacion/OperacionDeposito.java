@@ -5,11 +5,17 @@ import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
+/** Permite la realización de depósitos en la cuenta relacionada. Permite validar la operación y en caso de ser efectiva,
+ * realiza el registro de la misma en el historial de la cuenta.
+ * @author Jose María Lucero
+ */
 public class OperacionDeposito extends OperacionDeMonto implements Validable,Reversible, Registrable{
+    BigDecimal saldoAnteriorCuentaOrigen;
+
     public OperacionDeposito(CuentaRegular cuenta, BigDecimal monto, OutputProvider outputProvider) {
         super( cuenta, monto,outputProvider);
     }
-    BigDecimal saldoAnteriorCuentaOrigen;
+
     @Override
     public void ejecutar() {
         saldoAnteriorCuentaOrigen = cuentaRegular.getBalance();
@@ -32,6 +38,11 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         }
     }
 
+    /**
+     * Realiza la validación del depósito comparando el balance actual contra el balance previo más la suma
+     * indicada como depósito.
+     * @return {@code boolean} que indica el éxito o error en la operación.
+     */
     @Override
     public boolean postValidar() {
         if (cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.add(monto)) == 0) {
@@ -43,7 +54,9 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
             return false;
         }
     }
-
+    /**
+     * @TODO Implementar los pasos necesarios para revertir esta operación y devolver la cuenta a su estado anterior.
+     */
     @Override
     public void restaurarEstadoAnterior() {
         outputProvider.println("ROLLBACK");

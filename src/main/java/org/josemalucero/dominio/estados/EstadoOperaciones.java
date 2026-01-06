@@ -219,6 +219,11 @@ public class EstadoOperaciones extends EstadoUsuario {
     }
 
     /**
+     * Muestra a quien pertenece la cuenta. Si la cuenta obtenida por el N° Cuenta pertenece al mismo usuario, muestra un mensaje y se termina
+     * la operación. Si no es el caso, pero aun así la cuenta no implementa la interfaz {@link Transferible}, se informa con un mensaje y se
+     * termina la operación. Finalmente, de darse las condiciones necesarias, se elige el tipo de transferencia, se ingresa el monto de la misma.
+     * Se {@code prevalida} la operación, luego se {@code ejecuta} y finalmente se {@code postvalida}. De ser exitoso el resultado final,
+     * se procede a registrar la operacion mediante {@link RegistroOperacion}
      *
      * @param contextoUsuario
      * @param usuarioDestino
@@ -256,7 +261,15 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
-
+    /**
+     * Verifica si los tipos de monedas de la cuenta de origen y de destino coinciden. Si así lo es, retorna {@code TipoTransferencia.IGUAL_MONEDA},
+     * en caso contrario, se da la posibilidad al usuario de elegir si prefiere hacer una transferencia por el monto ingresado sobre la base de
+     * la moneda actual de la cuenta, o en la moneda de la cuenta destino. En ese caso se retorna {@code TipoTransferencia.MONEDA_ORIGEN} o
+     * {@code TipoTransferencia.MONEDA_DESTINO} según el caso.
+     * @param contextoUsuario
+     * @param cuentaDestino
+     * @return {@link TipoTransferencia} Enum que identifica el tipo de transferencia a realizar.
+     */
     private TipoTransferencia obtenerTipoTransferencia(ContextoUsuario contextoUsuario,CuentaRegular cuentaDestino){
         CuentaRegular cuentaOrigen = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         if(!cuentaDestino.getMonedaConvertible().getCodigo().equals(cuentaOrigen.getMonedaConvertible().getCodigo())){
@@ -273,6 +286,15 @@ public class EstadoOperaciones extends EstadoUsuario {
 
     }
 
+    /**
+     * Devuelve una determinada instancia de {@link OperacionTransferencia} o subclases {@link OperacionTransferenciaMonedaOrigen} y
+     * {@link OperacionTransferenciaMonedaDestino}  creadas con los datos propios de la operación requerida.
+     * @param tipoTransferencia
+     * @param datosTransferencia
+     * @param outputProvider
+     * @return {@link OperacionTransferencia} que representa la operación de transferencia determinada por el {@link TipoTransferencia}
+     */
+
     private OperacionTransferencia obtenerOperacionTransferenciaEspecífica(TipoTransferencia tipoTransferencia,DatosTransferencia datosTransferencia, OutputProvider outputProvider){
         switch (tipoTransferencia) {
             case TipoTransferencia.IGUAL_MONEDA -> {
@@ -288,7 +310,12 @@ public class EstadoOperaciones extends EstadoUsuario {
         return null;
     }
 
-
+    /**
+     * Obtiene el registro histórico de operaciones de la cuenta actual del usuario. Presenta todos los registros mediante el {@link OutputProvider},
+     * generando en primera instancia las cabeceras con los titulos de cada columna, según un {@link  org.josemalucero.servicio.FormateadorDeRegistroAImprimir.Alineado}
+     * específico y a continuación cada operación histórica en orden temporal descendente.
+     * @param contextoUsuario
+     */
 
     private void verHistorial(ContextoUsuario contextoUsuario) {
         outputProvider.println("Mostrando historial...");
@@ -298,7 +325,14 @@ public class EstadoOperaciones extends EstadoUsuario {
 
     }
 
-
+    /**
+     * Provee una forma sencilla de presentar un título, una serie de opciones con un indice asociado sobre las cuales se puede
+     * elegir, o retornar la negativa a la posibilidad mencionada.
+     * @param consoleInputProvider
+     * @param titulo
+     * @param opciones
+     * @return {@code int} que representa el índice de una determinada elección o un valor -1 para una operación particular no especificada en las opciones.
+     */
     private int seleccionMultipleGenerica(InputProvider consoleInputProvider,String titulo,String[] opciones){
         while(true) {
             outputProvider.println(titulo+" | ESC para salir.");
@@ -321,6 +355,13 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+    /**
+     * Obtiene un {@link Usuario} por el N° de Cuenta ingresado mediante {@link InputProvider}.
+     * @param consoleInputProvider
+     * @return {@link Optional<Usuario>} si logra encontrar un usuario o {@code null} en caso contrario o si se
+     * cancela la operación.
+     */
+
     private Optional<Usuario> manejarEntradaDeNumeroCuenta(InputProvider consoleInputProvider){
         boolean cuentaValida = false;
         while(!cuentaValida){
@@ -337,6 +378,13 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
         return  null;
     }
+
+    /**
+     * Permite al usurio introducir una cantidad monetaria, validada mediante REGEX, o la negativa de continuar
+     * con la operación.
+     * @param consoleInputProvider
+     * @return {@link BigDecimal} que representa el monto ingresado por medio del {@link InputProvider}
+     */
 
     private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
         boolean cantidadVálida = false;

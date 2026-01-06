@@ -3,6 +3,10 @@ package org.josemalucero.dominio.operacion;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Representa un registro con la información necesaria para hacer la trazabilidad de las operaciones sobre una cuenta.
+ * @author Jose María Lucero
+ */
 public class RegistroOperacion {
     String descripcion;
     BigDecimal monto;
@@ -16,6 +20,11 @@ public class RegistroOperacion {
         this.dateTimeOperacion = LocalDateTime.now();
     }
 
+    /**
+     * Permite la obtención de la fecha y hora precisa del registro de una operación, en un formato
+     * adecuado y acotado para presentarlo en pantalla.
+     * @return {@link String} de una fecha y hora con un formato específico.
+     */
     public String getFormattedDateTime(){
         return String.format("%02d",dateTimeOperacion.getDayOfMonth())+"."+
                 dateTimeOperacion.getMonth()+"."+

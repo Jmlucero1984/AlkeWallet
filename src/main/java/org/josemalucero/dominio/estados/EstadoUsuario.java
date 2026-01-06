@@ -8,18 +8,8 @@ import org.josemalucero.servicio.OutputProvider;
 
 
 /**
- La clase abstracta {@code EstadoUsuario} extiende la clase {@code Cuenta} con las propiedades
- y métodos elementales para registrar el activo digital, en este caso,
- la {@code MonedaConvertible}.
- Implementa las interfaces {@code Depositable},{@code Retirable},{@code Consultable},
- {@code Transferible} y {@code Convertible},
- <blockquote><b>Propiedades</b></blockquote>
- <li> {@code InputProvider inputProvider} inyectado mediante constructor, provee un medio para leer las opciones elegidas.</li>
- <li> {@code OutputProvider outputProvider} inyectado mediante constructor, provee un medio para dar salida a los mensajes.</li>
- <blockquote><b>Métodos</b></blockquote>
- <li> {@code abstract void mostrarMenu(ContextoUsuario contextoUsuario)} permitirá mostrar las opciones a elegir.</li>
- <li> {@code abstract void procesarOpcion(int opcion, ContextoUsuario contextoUsuario)} permitirá ejecutar acciones acorde a las elecciones del usuario.</li>
- <li> {@code abstract String getNombreEstado()} devolverá una cadena de texto descriptiva de cada estado que de esta extienda.</li>
+ Representa la entidad básica que modela los diferentes estados posibles del sistema durante la actividad del usuario en
+ la plataforma.
  @author José Maria Lucero
  */
 public abstract class EstadoUsuario {
@@ -36,8 +26,19 @@ public abstract class EstadoUsuario {
         this.outputProvider = outputProvider;
     }
 
+    /**
+     * Mostrará cualquier tipo de información que el usuario requiera para poder tomar decisiones sobre como proceder
+     * en la plataforma.
+     * @param contextoUsuario
+     */
     public abstract void mostrarMenu(ContextoUsuario contextoUsuario);
 
+    /**
+     * Permitirá realizar operaciones de acuerdo a lo elegido por el usuario en cada estado particular durante la actividad en
+     * la plataforma.
+     * @param opcion
+     * @param contextoUsuario
+     */
     public abstract void procesarOpcion(int opcion, ContextoUsuario contextoUsuario);
     /**
      * Permite obtener el nombre del estado actual.

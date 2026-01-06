@@ -5,6 +5,9 @@ import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 
+/** Clase particular de {@link Operacion} que permite operar sobre montos {@link BigDecimal}.
+ * @author José Maria Lucero
+ */
 public class OperacionDeMonto extends Operacion{
     protected final BigDecimal monto;
 

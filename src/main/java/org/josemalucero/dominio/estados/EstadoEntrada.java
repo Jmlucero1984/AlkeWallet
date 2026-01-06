@@ -23,10 +23,10 @@ public class EstadoEntrada extends EstadoUsuario{
 
     /**
      * Muestra las opciones para iniciar sesión, registrarse o salir.
-     * @param contexto
+     * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contexto) {
+    public void mostrarMenu(ContextoUsuario contextoUsuario) {
         outputProvider.println("1. Iniciar sesión");
         outputProvider.println("2. Registrarse (Sign In)");
         outputProvider.println("3. Salir");

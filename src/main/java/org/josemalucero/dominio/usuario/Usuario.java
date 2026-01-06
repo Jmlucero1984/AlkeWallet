@@ -1,9 +1,14 @@
 package org.josemalucero.dominio.usuario;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.moneda.MonedaConvertible;
+
 import org.josemalucero.servicio.RespositorioCuentas;
 
+
+/**
+ * Esta clase modela al usuario potencial que hará uso de la plataforma.
+ * @author Jose María Lucero
+ */
 public class Usuario {
     private String nombre;
     private String apellido;
@@ -17,6 +22,11 @@ public class Usuario {
 
     }
 
+    /**
+     * Crea una {@link CuentaRegular} indispensable para que el usuario pueda hacer uso de la plataforma. Posteriormente la adhiere
+     * al {@link org.josemalucero.servicio.RepositorioUsuarios}.
+     * @return {@link CuentaRegular} la cuenta recientemente creada y adherida.
+     */
     public CuentaRegular crearCuentRegular(){
         this.cuentaRegular = new CuentaRegular();
         return RespositorioCuentas.adherirCuenta(this.cuentaRegular );

@@ -6,8 +6,12 @@ import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
+/** Permite la realización de transferencias de montos {@link BigDecimal} de una cuenta a otra, pero indicando que la suma
+ * indicada está en términos de la moneda de la cuenta de origen, por lo que la cuenta de destino recibirá un monto que previamente
+ * deberá ser obtenido mediante una conversión.
+ * @author Jose María Lucero
+ */
 public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
     BigDecimal montoEfectivo;
     ConversorMoneda conversorMoneda;
@@ -17,9 +21,18 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
         montoEfectivo = convertir(cuentaOrigen.getMonedaConvertible(),cuentaDestino.getMonedaConvertible(),monto);
 
     }
+
+    /**
+     * Constructor sobrecargado para la recepción de {@link DatosTransferencia}.
+     * <p>
+     * El <b>montoEfectivo</b> representa en moneda de la cuenta de destino el equivalente al monto ingresado, que fué especificado
+     * sobre la base de la moneda de la propia cuenta.
+     * </p>
+     * @param datosTransferencia
+     * @param outputProvider
+     */
     public OperacionTransferenciaMonedaOrigen(DatosTransferencia datosTransferencia, OutputProvider outputProvider) {
         super(datosTransferencia.getCuentaOrigen(), datosTransferencia.getCuentaDestino(), datosTransferencia.getMonto(), outputProvider);
-        this.conversorMoneda = conversorMoneda;
         montoEfectivo = convertir(datosTransferencia.getCuentaOrigen().getMonedaConvertible(),datosTransferencia.getCuentaDestino().getMonedaConvertible(),datosTransferencia.getMonto());
 
     }
@@ -29,11 +42,18 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
         return "TRANSFERENCIA A CUENTA DE DISTINTA MONEDA";
     }
 
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public String getNombreOperacionReciproca() {
         return "TRANSFERENCIA DESDE CUENTA DE DISTINTA MONEDA";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ejecutar() {
         outputProvider.println("EJECUTANDO TRANSFERENCIA EN MONEDA DE ORIGEN");
@@ -45,12 +65,17 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
 
     private BigDecimal convertir(MonedaConvertible origen, MonedaConvertible destino, BigDecimal monto) {
         return conversorMoneda.convertirMoneda(origen, destino, monto);
-       // return  origen.getRatioDolar().divide(destino.getRatioDolar(),10, RoundingMode.HALF_UP).multiply(monto).setScale(2,RoundingMode.HALF_UP);
 
     }
+
     public BigDecimal getMontoEfectivo(){
         return montoEfectivo;
     }
+
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public boolean preValidar() {
         //valorMoneda.multiply(ratio).setScale(2, RoundingMode.HALF_UP));
@@ -69,6 +94,10 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
     @Override
     public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(monto)) == 0 &&
@@ -81,12 +110,17 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
         }
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void restaurarEstadoAnterior() {
         super.restaurarEstadoAnterior();
     }
 
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));

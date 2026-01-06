@@ -26,6 +26,10 @@ public class EstadoLogin extends EstadoUsuario {
         super(inputProvider, outputProvider);
     }
 
+    /**
+     * Muestra nuevamente a modo de confirmación la opción de Iniciar sesión o Volver.
+     * @param contextoUsuario
+     */
     @Override
     public void mostrarMenu(ContextoUsuario contextoUsuario) {
 
@@ -34,6 +38,13 @@ public class EstadoLogin extends EstadoUsuario {
 
     }
 
+    /**
+     * Realiza la aunteticación del usuario según las credenciales ingresadas. De ser efectiva dicha verificación,
+     * controla si el usuario ya tiene una cuenta asocida, lo que implica derivar hacia {@link EstadoOperaciones}, caso contrario
+     * redirije a {@link EstadoCreacionCuenta}. Si el usuario opta por Volver, se redirige al estado {@link EstadoEntrada}.
+     * @param opcion
+     * @param contextoUsuario
+     */
     @Override
     public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
         switch (opcion) {
@@ -66,6 +77,13 @@ public class EstadoLogin extends EstadoUsuario {
     Seguramente podría haberse desagregado el Encoder en otro "provider", empleando una interfaz para igualmente desacoplarlo,
     de manera similar al InputProvider.
     */
+
+    /**
+     * Solicita las credenciales del usuario que solicita loquearse para ser auntenticadas. En caso de no encontrarse usuario
+     * cuyas credenciales coincidan con las ingresadas, se informa media el correspondiente {@link OutputProvider}.
+     * @param contextoUsuario
+     * @return Usuario si las credenciales son auntenticadas, {@code null} en caso de no existir un usuario con tales credenciales.
+     */
     private Usuario autenticarUsuario(ContextoUsuario contextoUsuario) {
 
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();

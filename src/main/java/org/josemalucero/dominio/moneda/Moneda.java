@@ -1,7 +1,10 @@
 package org.josemalucero.dominio.moneda;
 
 
-
+/**
+ * Representa la más básica entidad monetaria.
+ *  @author José Maria Lucero
+ */
 public class Moneda {
     protected String codigo;
     protected String nombre;
