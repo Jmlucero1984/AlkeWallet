@@ -60,6 +60,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
             contextoUsuario.getUsuarioLogueado().crearCuentRegular();
             contextoUsuario.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas.getMonedasDB().get(opcion-1));
             registrar(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
+            contextoUsuario.confirmaContinuar();
             contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         }
     }

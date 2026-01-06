@@ -3,9 +3,9 @@ package Helpers;
 import java.util.Random;
 
 /**
- * Fábrica para generar valores BigDecimal aleatorios.
+ * Fábrica para generar valores {@link java.math.BigDecimal} aleatorios.
  * <p>
- * Proporciona una forma de generar números BidDecimal
+ * Proporciona una forma de generar números {@link java.math.BigDecimal}
  * aleatorios dentro de rangos específicos.
  * </p>
  *  @author José María Lucero

@@ -90,6 +90,7 @@ public class EstadoConversionMonedas extends EstadoUsuario {
                 if(!cifraVerificada.isEmpty()){
                   BigDecimal resultado =convertir(monedaDePartida,monedaDeDestino,cifraVerificada.get());
                   outputProvider.println(cifraVerificada.get()+" "+monedaDePartida.getCodigo()+" -> "+resultado+" "+monedaDeDestino.getCodigo());
+                  contextoUsuario.confirmaContinuar();
                   contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                 }
             }

@@ -34,7 +34,7 @@ public class EstadoSignIn extends EstadoUsuario {
         outputProvider.println("A continuación creará un nuevo usuario, desea continuar?\n");
         outputProvider.println("1. Si");
         outputProvider.println("2. NO, volver");
-        outputProvider.print("\nSeleccione una opción: ");
+        outputProvider.print("Seleccione una opción: ");
     }
 
     /**
@@ -154,6 +154,7 @@ public class EstadoSignIn extends EstadoUsuario {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         String nombre=null;
         String apellido=null;
+        outputProvider.println("\n[ Ingrese sus datos personales ]");
         while(nombre==null){
             outputProvider.print("Nombre de usuario: ");
             nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);

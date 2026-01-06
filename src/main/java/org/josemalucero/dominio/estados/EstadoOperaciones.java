@@ -106,6 +106,18 @@ public class EstadoOperaciones extends EstadoUsuario {
         }
     }
 
+    /**
+     * Muestra por medio del correspondiente {@link OutputProvider} el nombre completo del usuario logueado, el detalle
+     * del tipo de moneda asociado a la cuenta del usuario y el N° Cuenta, necesario para la {@link OperacionTransferencia}.
+     * @param contextoUsuario
+     */
+    private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
+        outputProvider.println("\n"+contextoUsuario.getUsuarioLogueado().getNombreCompleto());
+        outputProvider.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
+        outputProvider.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+        contextoUsuario.confirmaContinuar();;
+
+    }
 
     /**
      * Crea una {@link OperacionConsulta} y la ejecuta, mostrando como salida mediante un {@link OutputProvider}el saldo correpondiente
@@ -115,6 +127,7 @@ public class EstadoOperaciones extends EstadoUsuario {
     private void consultarSaldo(ContextoUsuario contextoUsuario) {
         OperacionConsulta operacionConsulta = new OperacionConsulta(contextoUsuario.getUsuarioLogueado().getCuentaRegular(),outputProvider);
         operacionConsulta.ejecutar();
+        contextoUsuario.confirmaContinuar();
     }
 
     /**
@@ -123,56 +136,28 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param contextoUsuario
      */
     private void depositarDinero(ContextoUsuario contextoUsuario) {
-        outputProvider.println("DEPOSITAR EN CUENTA");
-        Optional<BigDecimal> cifraVerificada;
+        outputProvider.println("\nDEPOSITAR EN CUENTA");
+        BigDecimal cifraVerificada;
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
         while(!operacionExitosa) {
-            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
-            if(cifraVerificada.isEmpty()){
+            cifraVerificada = manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider());
+            if(cifraVerificada==null){
                 return;
             } else {
-                OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada.get(),outputProvider);
+                OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada,outputProvider);
                 if (operacionDeposito.preValidar()) {
                     operacionDeposito.ejecutar();
                     if(operacionDeposito.postValidar()){
                         operacionExitosa = true;
                         operacionDeposito.registrar(cuentaRegular);
                         outputProvider.println("DEPOSITO REALIZADO");
+                        contextoUsuario.confirmaContinuar();
                     }
 
                 }
             }
         }
-    }
-
-    /**
-     * Muestra por medio del correspondiente {@link OutputProvider} el nombre completo del usuario logueado, el detalle
-     * del tipo de moneda asociado a la cuenta del usuario y el N° Cuenta, necesario para la {@link OperacionTransferencia}.
-     * @param contextoUsuario
-     */
-    private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
-        outputProvider.println(contextoUsuario.getUsuarioLogueado().getNombreCompleto());
-        outputProvider.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
-        outputProvider.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
-    }
-
-    /**
-     * Cambia al estado {@link OperacionDeConversionDeCuenta} para convertir la cuenta actual, esto es, cambiar la moneda asociada a otra designada por
-     * el usuario y la correspondiente conversión del saldo actual.
-     * @param contextoUsuario
-     */
-    private void convertirCuentaAOtraMoneda(ContextoUsuario contextoUsuario){
-        contextoUsuario.cambiarEstado(new EstadoConversionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
-    }
-
-    /**
-     * Cambia al estado {@link EstadoConversionMonedas} para hacer consultas de equivalencias de importes entre monedas diferentes, sin afectar la
-     * cuenta actual, tanto en su moneda como en su saldo.
-     * @param contextoUsuario
-     */
-    private void consultarConversionMoneda(ContextoUsuario contextoUsuario){
-        contextoUsuario.cambiarEstado(new EstadoConversionMonedas(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
     }
 
     /**
@@ -182,7 +167,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
-        outputProvider.println("RETIRAR DE CUENTA");
+        outputProvider.println("\nRETIRAR DE CUENTA");
         Optional<BigDecimal> cifraVerificada;
         CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         boolean operacionExitosa=false;
@@ -198,6 +183,7 @@ public class EstadoOperaciones extends EstadoUsuario {
                         operacionExitosa = true;
                         operacionRetiro.registrar(cuentaRegular);
                         outputProvider.println("RETIRO REALIZADO");
+                        contextoUsuario.confirmaContinuar();
                     }
                 }
             }
@@ -219,6 +205,39 @@ public class EstadoOperaciones extends EstadoUsuario {
     }
 
     /**
+     * Cambia al estado {@link EstadoConversionMonedas} para hacer consultas de equivalencias de importes entre monedas diferentes, sin afectar la
+     * cuenta actual, tanto en su moneda como en su saldo.
+     * @param contextoUsuario
+     */
+    private void consultarConversionMoneda(ContextoUsuario contextoUsuario){
+        contextoUsuario.cambiarEstado(new EstadoConversionMonedas(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+    }
+
+    /**
+     * Cambia al estado {@link OperacionDeConversionDeCuenta} para convertir la cuenta actual, esto es, cambiar la moneda asociada a otra designada por
+     * el usuario y la correspondiente conversión del saldo actual.
+     * @param contextoUsuario
+     */
+    private void convertirCuentaAOtraMoneda(ContextoUsuario contextoUsuario){
+        contextoUsuario.cambiarEstado(new EstadoConversionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+    }
+
+    /**
+     * Obtiene el registro histórico de operaciones de la cuenta actual del usuario. Presenta todos los registros mediante el {@link OutputProvider},
+     * generando en primera instancia las cabeceras con los titulos de cada columna, según un {@link  org.josemalucero.servicio.FormateadorDeRegistroAImprimir.Alineado}
+     * específico y a continuación cada operación histórica en orden temporal descendente.
+     * @param contextoUsuario
+     */
+
+    private void verHistorial(ContextoUsuario contextoUsuario) {
+        outputProvider.println("\nMostrando historial...");
+        ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
+        outputProvider.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
+        operacionesHistoricas.forEach(t->outputProvider.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
+        contextoUsuario.confirmaContinuar();
+    }
+
+    /**
      * Muestra a quien pertenece la cuenta. Si la cuenta obtenida por el N° Cuenta pertenece al mismo usuario, muestra un mensaje y se termina
      * la operación. Si no es el caso, pero aun así la cuenta no implementa la interfaz {@link Transferible}, se informa con un mensaje y se
      * termina la operación. Finalmente, de darse las condiciones necesarias, se elige el tipo de transferencia, se ingresa el monto de la misma.
@@ -231,7 +250,7 @@ public class EstadoOperaciones extends EstadoUsuario {
     private void operarSobreCuentaParaTransferir(ContextoUsuario contextoUsuario,Usuario usuarioDestino){
         outputProvider.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        outputProvider.println("");
+
         if(usuarioDestino.equals(contextoUsuario.getUsuarioLogueado())){
             outputProvider.println("|||| No le parece sin sentido transferirse a usted mismo? ||||");
             return;
@@ -244,10 +263,10 @@ public class EstadoOperaciones extends EstadoUsuario {
         TipoTransferencia tipoTransferencia =obtenerTipoTransferencia(contextoUsuario,usuarioDestino.getCuentaRegular());
         if (tipoTransferencia==null) return;
 
-        Optional<BigDecimal> cifraVerificada= Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
-        if(cifraVerificada==null) {return;}
+        BigDecimal cifraVerificada= manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider());
+        if(cifraVerificada==null) return;
 
-        DatosTransferencia datosTransferencia = new DatosTransferencia(cuentaRegular,usuarioDestino.getCuentaRegular(),cifraVerificada.get(), new ConversorMoneda());
+        DatosTransferencia datosTransferencia = new DatosTransferencia(cuentaRegular,usuarioDestino.getCuentaRegular(),cifraVerificada, new ConversorMoneda());
         OperacionTransferencia operacionTransferencia = obtenerOperacionTransferenciaEspecífica(tipoTransferencia,datosTransferencia,outputProvider);
 
         if (operacionTransferencia.preValidar() ){
@@ -255,9 +274,13 @@ public class EstadoOperaciones extends EstadoUsuario {
             if(operacionTransferencia.postValidar()) {
                 operacionTransferencia.registrar(cuentaRegular);
                 outputProvider.println("TRANSFERENCIA REALIZADA");
+                contextoUsuario.confirmaContinuar();
             } else {
                 operacionTransferencia.restaurarEstadoAnterior();
+                contextoUsuario.confirmaContinuar();
             }
+        } else {
+            contextoUsuario.confirmaContinuar();
         }
     }
 
@@ -281,8 +304,10 @@ public class EstadoOperaciones extends EstadoUsuario {
                 case 1: return TipoTransferencia.MONEDA_ORIGEN;
                 case 2: return  TipoTransferencia.MONEDA_DESTINO;
             }
+        } else {
+            return  TipoTransferencia.IGUAL_MONEDA;
         }
-        return TipoTransferencia.IGUAL_MONEDA;
+        return null;
 
     }
 
@@ -310,20 +335,7 @@ public class EstadoOperaciones extends EstadoUsuario {
         return null;
     }
 
-    /**
-     * Obtiene el registro histórico de operaciones de la cuenta actual del usuario. Presenta todos los registros mediante el {@link OutputProvider},
-     * generando en primera instancia las cabeceras con los titulos de cada columna, según un {@link  org.josemalucero.servicio.FormateadorDeRegistroAImprimir.Alineado}
-     * específico y a continuación cada operación histórica en orden temporal descendente.
-     * @param contextoUsuario
-     */
 
-    private void verHistorial(ContextoUsuario contextoUsuario) {
-        outputProvider.println("Mostrando historial...");
-        ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
-        outputProvider.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
-        operacionesHistoricas.forEach(t->outputProvider.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
-
-    }
 
     /**
      * Provee una forma sencilla de presentar un título, una serie de opciones con un indice asociado sobre las cuales se puede
@@ -340,7 +352,7 @@ public class EstadoOperaciones extends EstadoUsuario {
                 outputProvider.println((i+1)+". "+opciones[i]);
             }
             String textoIntroducido = consoleInputProvider.leerOpcionString();
-            if (textoIntroducido.equalsIgnoreCase("ESC")) return -1;
+            if (textoIntroducido.equalsIgnoreCase("esc")) return -1;
             int opcion;
             try {
                 opcion =  Integer.parseInt(textoIntroducido);
@@ -391,7 +403,7 @@ public class EstadoOperaciones extends EstadoUsuario {
         while(!cantidadVálida){
             outputProvider.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
             String cantidadIntroducida = consoleInputProvider.leerOpcionString();
-            if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
+            if(cantidadIntroducida.equalsIgnoreCase("esc")) return null;
             cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
             if (cantidadVálida) {
                 return new BigDecimal(cantidadIntroducida);

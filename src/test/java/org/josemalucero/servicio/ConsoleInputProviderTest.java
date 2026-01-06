@@ -25,7 +25,7 @@ class ConsoleInputProviderTest {
     }
     @Test
     void leerOpcionInt() {
-        int inputInt =8 ;
+        int inputInt =new Random().nextInt(9) ;
         input= new Scanner(new ByteArrayInputStream(((String.valueOf(inputInt))+"\n").getBytes()));
         ConsoleInputProvider consoleInputProvider =new ConsoleInputProvider(input);
         int obtenido = consoleInputProvider.leerOpcionInt();

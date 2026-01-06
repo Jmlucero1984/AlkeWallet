@@ -40,6 +40,7 @@ public abstract class EstadoUsuario {
      * @param contextoUsuario
      */
     public abstract void procesarOpcion(int opcion, ContextoUsuario contextoUsuario);
+
     /**
      * Permite obtener el nombre del estado actual.
      * @return {@code String} del nombre del estado.

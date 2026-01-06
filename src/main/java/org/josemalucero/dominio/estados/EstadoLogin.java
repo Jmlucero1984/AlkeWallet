@@ -35,7 +35,7 @@ public class EstadoLogin extends EstadoUsuario {
 
         outputProvider.println("1. Iniciar sesión");
         outputProvider.println("2. Volver...");
-
+        outputProvider.print("Seleccione una opción: ");
     }
 
     /**
@@ -53,7 +53,7 @@ public class EstadoLogin extends EstadoUsuario {
                 if (usuario != null) {
                     contextoUsuario.setUsuarioLogueado(usuario);
                     if (contextoUsuario.getUsuarioLogueado().getCuentaRegular() == null) {
-                        outputProvider.println("AUN NO TIENE UNA CUENTA ASOCIADA");
+                        outputProvider.println("[!] AÚN NO TIENE UNA CUENTA ASOCIADA");
                         contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     } else {
                         contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
@@ -89,9 +89,10 @@ public class EstadoLogin extends EstadoUsuario {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
         //Console console = System.console();
-        outputProvider.print("Usuario nombre: ");
+        outputProvider.println("\n[ Ingrese sus datos personales ]");
+        outputProvider.print("Nombre de usuario: ");
         String nombre = consoleInputProvider.leerOpcionString();
-        outputProvider.print("Usuario apellido: ");
+        outputProvider.print("Apellido de usuario: ");
         String apellido = consoleInputProvider.leerOpcionString();
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){

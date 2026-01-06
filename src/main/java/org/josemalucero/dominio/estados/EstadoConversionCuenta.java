@@ -66,6 +66,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
             operacionDeConversionDeCuenta.ejecutar();
             operacionDeConversionDeCuenta.registrar(cuantaDeUsuario);
             outputProvider.println("CONVERSIÓN REALIZADA");
+            contextoUsuario.confirmaContinuar();
             contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
 
         }

@@ -76,4 +76,12 @@ public class ContextoUsuario {
         this.usuarioLogueado = null;
         cambiarEstado(new EstadoLogin(consoleInputProvider,consoleOutputProvider));
     }
+
+    /**
+     * Espera un la confirmación del usuario para continuar.
+     */
+    public void confirmaContinuar(){
+        consoleOutputProvider.println("\nPresione Enter para continuar...");
+        consoleInputProvider.leerOpcionString();
+    }
 }
