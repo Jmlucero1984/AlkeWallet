@@ -2,7 +2,7 @@
 
 <ClassDiagram name="Multi-package class diagram">
   <ClassDiagramComponents>
-    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="994.0" yPosition="61.0">
+    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="994.0" yPosition="61.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -21,7 +21,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estados" visibility="public" xPosition="300.0" yPosition="42.0">
+    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estado" visibility="public" xPosition="300.0" yPosition="42.0">
       <Fields>
         <Field name="monedaDePartida" type="MonedaConvertible" visibility="private"/>
         <Field name="monedaDeDestino" type="MonedaConvertible" visibility="private"/>
@@ -51,7 +51,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1068.0" yPosition="734.0">
+    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1068.0" yPosition="734.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -73,7 +73,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estados" visibility="public" xPosition="170.0" yPosition="634.0">
+    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estado" visibility="public" xPosition="170.0" yPosition="634.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -92,7 +92,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoLogin" package="org.josemalucero.dominio.estados" visibility="public" xPosition="136.0" yPosition="333.0">
+    <Class name="EstadoLogin" package="org.josemalucero.dominio.estado" visibility="public" xPosition="136.0" yPosition="333.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -114,7 +114,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1304.0" yPosition="294.0">
+    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1304.0" yPosition="294.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -172,7 +172,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoSalir" package="org.josemalucero.dominio.estados" visibility="public" xPosition="223.0" yPosition="1076.0">
+    <Class name="EstadoSalir" package="org.josemalucero.dominio.estado" visibility="public" xPosition="223.0" yPosition="1076.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -191,7 +191,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estados" visibility="public" xPosition="726.0" yPosition="972.0">
+    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estado" visibility="public" xPosition="726.0" yPosition="972.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -219,7 +219,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estados" visibility="public" isAbstract="true" xPosition="774.0" yPosition="435.0">
+    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estado" visibility="public" isAbstract="true" xPosition="774.0" yPosition="435.0">
       <Fields>
         <Field name="inputProvider" type="InputProvider" visibility="protected"/>
         <Field name="outputProvider" type="OutputProvider" visibility="protected"/>
@@ -484,19 +484,19 @@
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionConsulta" target="org.josemalucero.dominio.operacion.Operacion"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSalir" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.operacion.OperacionTransferencia"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Operacion"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Registrable"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Validable"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeMonto" target="org.josemalucero.dominio.operacion.Operacion"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Validable"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Reversible"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Registrable"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
@@ -504,11 +504,11 @@
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.operacion.OperacionTransferencia"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Validable"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Reversible"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoLogin" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Reversible"/>
   </ClassDiagramRelations>
 </ClassDiagram>

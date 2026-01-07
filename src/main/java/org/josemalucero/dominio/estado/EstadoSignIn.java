@@ -1,12 +1,12 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
 import org.josemalucero.app.AlkeWallet;
-import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
-import org.josemalucero.servicio.BCryptPasswordEncoderService;
-import org.josemalucero.servicio.OutputProvider;
-import org.josemalucero.servicio.RepositorioUsuarios;
+import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
 import java.io.Console;
 import java.util.Optional;

@@ -1,16 +1,15 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
-import org.josemalucero.dominio.moneda.MonedaConvertible;
-import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.formatters.FormateadorDeRegistroAImprimir;
+import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.cuenta.Transferible;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
-import org.josemalucero.servicio.FormateadorDeRegistroAImprimir;
-import org.josemalucero.servicio.OutputProvider;
-import org.josemalucero.servicio.RepositorioUsuarios;
+import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -44,17 +43,20 @@ public class EstadoOperaciones extends EstadoUsuario {
 
     @Override
     public void mostrarMenu(ContextoUsuario contextoUsuario) {
+
         outputProvider.println("Bienvenido, " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
-        outputProvider.println("1. Consultar datos cuenta");
-        outputProvider.println("2. Consultar saldo");
-        outputProvider.println("3. Depositar dinero");
-        outputProvider.println("4. Retirar dinero");
-        outputProvider.println("5. Transferir dinero");
-        outputProvider.println("6. Consultar conversión entre monedas");
-        outputProvider.println("7. Convertir cuenta a otra moneda");
-        outputProvider.println("8. Ver historial de transacciones");
-        outputProvider.println("9. Cerrar sesión (Sign Out)");
-        outputProvider.print("Seleccione una opción: ");
+        outputProvider.println(
+            "1. Consultar datos cuenta\n"+
+            "2. Consultar saldo\n"+
+            "3. Depositar dinero\n"+
+            "4. Retirar dinero\n"+
+            "5. Transferir dinero\n"+
+            "6. Consultar conversión entre monedas\n"+
+            "7. Convertir cuenta a otra moneda\n"+
+            "8. Ver historial de transacciones\n"+
+            "9. Cerrar sesión (Sign Out)\n"+
+            "Seleccione una opción: "
+        );
     }
 
     /**
@@ -224,7 +226,7 @@ public class EstadoOperaciones extends EstadoUsuario {
 
     /**
      * Obtiene el registro histórico de operaciones de la cuenta actual del usuario. Presenta todos los registros mediante el {@link OutputProvider},
-     * generando en primera instancia las cabeceras con los titulos de cada columna, según un {@link  org.josemalucero.servicio.FormateadorDeRegistroAImprimir.Alineado}
+     * generando en primera instancia las cabeceras con los titulos de cada columna, según un {@link  FormateadorDeRegistroAImprimir.Alineado}
      * específico y a continuación cada operación histórica en orden temporal descendente.
      * @param contextoUsuario
      */

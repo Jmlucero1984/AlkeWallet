@@ -1,6 +1,6 @@
 package org.josemalucero.dominio.operacion;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 /**
  * Entidad básica que modela una operación genérica dentro del sistema, sobre una {@link CuentaRegular}.

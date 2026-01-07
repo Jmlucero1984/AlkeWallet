@@ -1,12 +1,12 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.InputProvider;
-import org.josemalucero.servicio.OutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
+import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 /**
  Se encarga de hacer la conversión de moneda de la cuenta hacia una moneda elegida por el usuario, corroborando que
  no sea la misma que la actual asociada a la cuenta.

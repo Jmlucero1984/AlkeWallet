@@ -1,8 +1,6 @@
 package org.josemalucero.app;
 
-import org.josemalucero.dominio.estados.EstadoUsuario;
-
-import java.math.BigDecimal;
+import org.josemalucero.dominio.estado.EstadoUsuario;
 
 public class Interacciones {
     ConsoleInputStub consoleInputStub;

@@ -2,7 +2,6 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
-import org.josemalucero.servicio.OutputProvider;
 
 import java.math.BigDecimal;
 

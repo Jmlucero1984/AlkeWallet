@@ -1,9 +1,9 @@
 package org.josemalucero.app;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.BCryptPasswordEncoderService;
-import org.josemalucero.servicio.RepositorioMonedas;
-import org.josemalucero.servicio.RepositorioUsuarios;
+import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
 
 public class AlkeWallet {

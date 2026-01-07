@@ -1,11 +1,11 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
-import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.OutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
+import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 
 import java.math.BigDecimal;
 import java.util.Optional;

@@ -2,7 +2,7 @@ package org.josemalucero.dominio.operacion;
 
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
 /** Permite la realización de retiros de la cuenta relacionada. Permite validar la operación y en caso de ser efectiva,

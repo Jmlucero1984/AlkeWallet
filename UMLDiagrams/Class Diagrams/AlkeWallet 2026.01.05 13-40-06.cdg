@@ -115,7 +115,7 @@
         </Method>
       </Methods>
     </Interface>
-    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="320.0" yPosition="420.0">
+    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="320.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -134,7 +134,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estados" visibility="public" xPosition="620.0" yPosition="420.0">
+    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estado" visibility="public" xPosition="620.0" yPosition="420.0">
       <Fields>
         <Field name="monedaDePartida" type="MonedaConvertible" visibility="private"/>
         <Field name="monedaDeDestino" type="MonedaConvertible" visibility="private"/>
@@ -164,7 +164,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="920.0" yPosition="420.0">
+    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="920.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -186,7 +186,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1220.0" yPosition="420.0">
+    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1220.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -205,7 +205,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoLogin" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1520.0" yPosition="420.0">
+    <Class name="EstadoLogin" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1520.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -227,7 +227,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1820.0" yPosition="420.0">
+    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1820.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -285,7 +285,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoSalir" package="org.josemalucero.dominio.estados" visibility="public" xPosition="2120.0" yPosition="420.0">
+    <Class name="EstadoSalir" package="org.josemalucero.dominio.estado" visibility="public" xPosition="2120.0" yPosition="420.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -304,7 +304,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estados" visibility="public" xPosition="20.0" yPosition="820.0">
+    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estado" visibility="public" xPosition="20.0" yPosition="820.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -332,7 +332,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estados" visibility="public" isAbstract="true" xPosition="320.0" yPosition="820.0">
+    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estado" visibility="public" isAbstract="true" xPosition="320.0" yPosition="820.0">
       <Fields>
         <Field name="inputProvider" type="InputProvider" visibility="protected"/>
         <Field name="outputProvider" type="OutputProvider" visibility="protected"/>
@@ -882,8 +882,8 @@
   </ClassDiagramComponents>
   <ClassDiagramRelations>
     <UseRelation source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoConversionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Operacion"/>
     <HasRelation name="cuentaDestino" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
@@ -891,90 +891,90 @@
     <HasRelation name="cuentaRegular" source="org.josemalucero.dominio.operacion.Operacion" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Retirable"/>
-    <HasRelation name="monedaDePartida" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedaDePartida" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.operacion.Registrable" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="monedaDeDestino" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedaDeDestino" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Validable"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSalir" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <HasRelation name="conversorMoneda" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.moneda.ConversorMoneda" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.servicio.FormateadorDeRegistroAImprimir" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.servicio.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.formatters.FormateadorDeRegistroAImprimir" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.repositorios.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Validable"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Reversible"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.BCryptPasswordEncoderService" target="org.josemalucero.servicio.PasswordEncoder"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.passwords.BCryptPasswordEncoderService" target="org.josemalucero.servicio.passwords.PasswordEncoder"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="outputProvider" source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="outputProvider" source="org.josemalucero.dominio.estado.EstadoUsuario" target="org.josemalucero.servicio.providers.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.servicio.providers.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
     <IsRelation name="is" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Cuenta"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
     <UseRelation source="org.josemalucero.dominio.usuario.Usuario" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="usuarioLogueado" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="usuariosDB" source="org.josemalucero.servicio.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Usuario&gt;"/>
+    <HasRelation name="usuariosDB" source="org.josemalucero.servicio.repositorios.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Usuario&gt;"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Consultable"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionConsulta" target="org.josemalucero.dominio.operacion.Operacion"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Registrable"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Convertible"/>
     <HasRelation name="monedaAntesDeConversion" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.servicio.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.repositorios.RepositorioUsuarios" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.operacion.Registrable"/>
     <UseRelation source="org.josemalucero.dominio.cuenta.Convertible" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.servicio.providers.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.operacion.OperacionTransferencia"/>
     <IsRelation name="is" source="org.josemalucero.dominio.moneda.MonedaConvertible" target="org.josemalucero.dominio.moneda.Moneda"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="consoleOutputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="cuentasDB" source="org.josemalucero.servicio.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.Cuenta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Cuenta&gt;"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="consoleOutputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.providers.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cuentasDB" source="org.josemalucero.servicio.repositorios.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.Cuenta" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Cuenta&gt;"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoUsuario" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="monedaConvertible" source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoSalir" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="monedaDestino" source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <HasRelation name="conversorMoneda" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.moneda.ConversorMoneda" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoLogin" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="inputProvider" source="org.josemalucero.dominio.estados.EstadoUsuario" target="org.josemalucero.servicio.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <HasRelation name="inputProvider" source="org.josemalucero.dominio.estado.EstadoUsuario" target="org.josemalucero.servicio.providers.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Reversible"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Validable"/>
-    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.OutputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleOutputProvider" target="org.josemalucero.servicio.OutputProvider"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleInputProvider" target="org.josemalucero.servicio.InputProvider"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.providers.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoLogin" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <UseRelation source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.providers.OutputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.providers.ConsoleOutputProvider" target="org.josemalucero.servicio.providers.OutputProvider"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.providers.ConsoleInputProvider" target="org.josemalucero.servicio.providers.InputProvider"/>
     <HasRelation name="contextoUsuario" source="org.josemalucero.app.AlkeWallet" target="org.josemalucero.dominio.usuario.ContextoUsuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Reversible"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionDeMonto" target="org.josemalucero.dominio.operacion.Operacion"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
-    <HasRelation name="outputProvider" source="org.josemalucero.dominio.operacion.Operacion" target="org.josemalucero.servicio.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="outputProvider" source="org.josemalucero.dominio.operacion.Operacion" target="org.josemalucero.servicio.providers.OutputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Transferible"/>
     <UseRelation source="org.josemalucero.dominio.moneda.ConversorMoneda" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="cuentaRegular" source="org.josemalucero.dominio.usuario.Usuario" target="org.josemalucero.dominio.cuenta.CuentaRegular" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="estadoActual" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.estados.EstadoUsuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="estadoActual" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.dominio.estado.EstadoUsuario" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.servicio.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.servicio.providers.InputProvider" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="historialOperaciones" source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.operacion.RegistroOperacion" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;RegistroOperacion&gt;"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.Registrable"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Depositable"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionDeposito" target="org.josemalucero.dominio.operacion.Registrable"/>
-    <HasRelation name="consoleInputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="monedasDB" source="org.josemalucero.servicio.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;MonedaConvertible&gt;"/>
+    <HasRelation name="consoleInputProvider" source="org.josemalucero.dominio.usuario.ContextoUsuario" target="org.josemalucero.servicio.providers.InputProvider" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="monedasDB" source="org.josemalucero.servicio.repositorios.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;MonedaConvertible&gt;"/>
     <UseRelation source="org.josemalucero.dominio.cuenta.Cuenta" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.servicio.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.servicio.repositorios.RepositorioMonedas" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>

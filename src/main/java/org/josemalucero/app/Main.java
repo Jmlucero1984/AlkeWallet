@@ -4,8 +4,10 @@ package org.josemalucero.app;
 
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.ConsoleInputProvider;
-import org.josemalucero.servicio.ConsoleOutputProvider;
+import org.josemalucero.servicio.providers.ConsoleInputProvider;
+import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.io.IOException;
 
@@ -21,10 +23,10 @@ public class Main {
     }
     /**
      * Se instancia la clase AlkeWallet pasando como argumentos un objeto
-     * que implementa la interfaz {@link org.josemalucero.servicio.InputProvider}
+     * que implementa la interfaz {@link InputProvider}
      * (para controlar lo que el
      * programa recibiría como entrada por teclado) y otro objeto que implementa
-     * la interfaz {@link org.josemalucero.servicio.OutputProvider}, para hacer lo propio con lo
+     * la interfaz {@link OutputProvider}, para hacer lo propio con lo
      * que se imprimiría en la consola.
      * @author José Maria Lucero
      */

@@ -1,6 +1,7 @@
 package org.josemalucero.servicio;
 
 import Helpers.RandomStringGenerators;
+import org.josemalucero.servicio.providers.ConsoleInputProvider;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

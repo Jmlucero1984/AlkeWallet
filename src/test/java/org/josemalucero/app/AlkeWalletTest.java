@@ -1,17 +1,13 @@
 package org.josemalucero.app;
 
-import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.operacion.OperacionTransferencia;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.ConsoleOutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
-import org.josemalucero.servicio.RepositorioUsuarios;
-import org.josemalucero.servicio.RespositorioCuentas;
+import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
+import org.josemalucero.servicio.repositorios.RespositorioCuentas;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 

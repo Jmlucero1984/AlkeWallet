@@ -1,8 +1,8 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.InputProvider;
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 /**
  * Tiene como única y trivial responsabilidad terminar el programa, mostrando un mensaje de despedida.

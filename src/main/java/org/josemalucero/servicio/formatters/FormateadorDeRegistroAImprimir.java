@@ -1,4 +1,4 @@
-package org.josemalucero.servicio;
+package org.josemalucero.servicio.formatters;
 
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 

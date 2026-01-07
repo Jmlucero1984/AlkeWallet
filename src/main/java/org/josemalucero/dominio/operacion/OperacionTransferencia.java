@@ -3,7 +3,7 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
 

@@ -1,9 +1,8 @@
 package org.josemalucero.app;
 
-import org.josemalucero.dominio.estados.EstadoUsuario;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.Credencial;
-import org.josemalucero.servicio.RepositorioMonedas;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 
 public class InteraccionesEncadenables{
     ConsoleInputStub consoleInputStub;

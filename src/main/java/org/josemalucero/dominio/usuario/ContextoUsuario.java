@@ -1,11 +1,10 @@
 package org.josemalucero.dominio.usuario;
 
-import org.josemalucero.servicio.ConsoleOutputProvider;
-import org.josemalucero.servicio.InputProvider;
-import org.josemalucero.dominio.estados.EstadoEntrada;
-import org.josemalucero.dominio.estados.EstadoLogin;
-import org.josemalucero.dominio.estados.EstadoUsuario;
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.dominio.estado.EstadoEntrada;
+import org.josemalucero.dominio.estado.EstadoLogin;
+import org.josemalucero.dominio.estado.EstadoUsuario;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 /**
  * Esta clase representa lo que el contexto de la sesión del usuario activo necesita para su correcta experiencia.

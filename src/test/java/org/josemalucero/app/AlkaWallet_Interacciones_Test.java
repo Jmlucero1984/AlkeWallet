@@ -2,20 +2,19 @@ package org.josemalucero.app;
 
 import Helpers.RandomBigDecimalValuesGenerator;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.dominio.estados.EstadoUsuario;
+import org.josemalucero.dominio.estado.EstadoUsuario;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Credencial;
 import org.josemalucero.dominio.usuario.Usuario;
-import org.josemalucero.servicio.ConsoleOutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
-import org.josemalucero.servicio.RepositorioUsuarios;
-import org.josemalucero.servicio.RespositorioCuentas;
+import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
+import org.josemalucero.servicio.repositorios.RespositorioCuentas;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
-import java.time.MonthDay;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

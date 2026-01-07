@@ -175,8 +175,8 @@
     </Interface>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.BCryptPasswordEncoderService" target="org.josemalucero.servicio.PasswordEncoder"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleInputProvider" target="org.josemalucero.servicio.InputProvider"/>
-    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.ConsoleOutputProvider" target="org.josemalucero.servicio.OutputProvider"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.passwords.BCryptPasswordEncoderService" target="org.josemalucero.servicio.passwords.PasswordEncoder"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.providers.ConsoleInputProvider" target="org.josemalucero.servicio.providers.InputProvider"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.servicio.providers.ConsoleOutputProvider" target="org.josemalucero.servicio.providers.OutputProvider"/>
   </ClassDiagramRelations>
 </ClassDiagram>

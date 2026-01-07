@@ -1,7 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
-import org.josemalucero.servicio.OutputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
 
 /** Permite obtener el saldo actual de la {@link CuentaRegular} asociada, mostrando además el tipo de moneda.
  * @author José Maria Lucero

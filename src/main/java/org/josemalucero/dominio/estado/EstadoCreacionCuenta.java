@@ -1,12 +1,12 @@
-package org.josemalucero.dominio.estados;
+package org.josemalucero.dominio.estado;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.Registrable;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.InputProvider;
-import org.josemalucero.servicio.OutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
+import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 
 import java.math.BigDecimal;
 

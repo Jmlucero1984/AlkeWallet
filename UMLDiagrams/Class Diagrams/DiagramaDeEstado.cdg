@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ClassDiagram name="main.java.org.josemalucero.dominio.estados">
+<ClassDiagram name="main.java.org.josemalucero.dominio.estado">
   <ClassDiagramComponents>
-    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="188.0" yPosition="800.0">
+    <Class name="EstadoConversionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="188.0" yPosition="800.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -21,7 +21,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estados" visibility="public" xPosition="136.0" yPosition="426.0">
+    <Class name="EstadoConversionMonedas" package="org.josemalucero.dominio.estado" visibility="public" xPosition="136.0" yPosition="426.0">
       <Fields>
         <Field name="monedaDePartida" type="MonedaConvertible" visibility="private"/>
         <Field name="monedaDeDestino" type="MonedaConvertible" visibility="private"/>
@@ -51,7 +51,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estados" visibility="public" xPosition="195.0" yPosition="116.0">
+    <Class name="EstadoCreacionCuenta" package="org.josemalucero.dominio.estado" visibility="public" xPosition="195.0" yPosition="116.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -73,7 +73,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estados" visibility="public" xPosition="758.0" yPosition="135.0">
+    <Class name="EstadoEntrada" package="org.josemalucero.dominio.estado" visibility="public" xPosition="758.0" yPosition="135.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -92,7 +92,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoLogin" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1337.0" yPosition="116.0">
+    <Class name="EstadoLogin" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1337.0" yPosition="116.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -114,7 +114,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estados" visibility="public" xPosition="776.0" yPosition="800.0">
+    <Class name="EstadoOperaciones" package="org.josemalucero.dominio.estado" visibility="public" xPosition="776.0" yPosition="800.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -172,7 +172,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoSalir" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1493.0" yPosition="426.0">
+    <Class name="EstadoSalir" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1493.0" yPosition="426.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -191,7 +191,7 @@
         <Method name="getNombreEstado" returnType="String" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estados" visibility="public" xPosition="1493.0" yPosition="726.0">
+    <Class name="EstadoSignIn" package="org.josemalucero.dominio.estado" visibility="public" xPosition="1493.0" yPosition="726.0">
       <Fields/>
       <Constructors>
         <Constructor visibility="public">
@@ -219,7 +219,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estados" visibility="public" isAbstract="true" xPosition="844.0" yPosition="447.0">
+    <Class name="EstadoUsuario" package="org.josemalucero.dominio.estado" visibility="public" isAbstract="true" xPosition="844.0" yPosition="447.0">
       <Fields>
         <Field name="inputProvider" type="InputProvider" visibility="protected"/>
         <Field name="outputProvider" type="OutputProvider" visibility="protected"/>
@@ -243,13 +243,13 @@
     </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoLogin" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSalir" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoCreacionCuenta" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoEntrada" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoOperaciones" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoSignIn" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estados.EstadoConversionMonedas" target="org.josemalucero.dominio.estados.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoLogin" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSalir" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
   </ClassDiagramRelations>
 </ClassDiagram>

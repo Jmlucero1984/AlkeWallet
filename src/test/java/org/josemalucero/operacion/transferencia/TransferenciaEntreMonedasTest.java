@@ -5,7 +5,7 @@ import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino;
 import org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen;
-import org.josemalucero.servicio.ConsoleOutputProvider;
+import org.josemalucero.servicio.providers.ConsoleOutputProvider;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

@@ -2,7 +2,8 @@ package org.josemalucero.dominio.usuario;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 
-import org.josemalucero.servicio.RespositorioCuentas;
+import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
+import org.josemalucero.servicio.repositorios.RespositorioCuentas;
 
 
 /**
@@ -24,7 +25,7 @@ public class Usuario {
 
     /**
      * Crea una {@link CuentaRegular} indispensable para que el usuario pueda hacer uso de la plataforma. Posteriormente la adhiere
-     * al {@link org.josemalucero.servicio.RepositorioUsuarios}.
+     * al {@link RepositorioUsuarios}.
      * @return {@link CuentaRegular} la cuenta recientemente creada y adherida.
      */
     public CuentaRegular crearCuentRegular(){

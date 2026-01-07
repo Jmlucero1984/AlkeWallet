@@ -1,13 +1,11 @@
 package org.josemalucero.dominio.usuario;
 
-import Helpers.RandomStringGenerators;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.OperacionTransferencia;
-import org.josemalucero.servicio.ConsoleOutputProvider;
-import org.josemalucero.servicio.RepositorioMonedas;
+import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.junit.jupiter.api.*;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;

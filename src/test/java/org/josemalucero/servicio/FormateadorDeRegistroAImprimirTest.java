@@ -1,7 +1,7 @@
 package org.josemalucero.servicio;
 
 import Helpers.RandomStringGenerators;
-import org.junit.jupiter.api.BeforeEach;
+import org.josemalucero.servicio.formatters.FormateadorDeRegistroAImprimir;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

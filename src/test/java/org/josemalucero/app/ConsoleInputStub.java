@@ -1,6 +1,6 @@
 package org.josemalucero.app;
 
-import org.josemalucero.servicio.InputProvider;
+import org.josemalucero.servicio.providers.InputProvider;
 
 import java.util.LinkedList;
 import java.util.Queue;

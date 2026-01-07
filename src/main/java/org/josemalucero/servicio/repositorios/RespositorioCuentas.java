@@ -1,4 +1,4 @@
-package org.josemalucero.servicio;
+package org.josemalucero.servicio.repositorios;
 
 import org.josemalucero.dominio.cuenta.Cuenta;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
