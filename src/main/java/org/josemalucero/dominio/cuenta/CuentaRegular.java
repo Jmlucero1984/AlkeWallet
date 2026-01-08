@@ -21,16 +21,16 @@ public class CuentaRegular extends Cuenta implements Depositable,Retirable,Consu
     }
     public void incrementar_cantidad_depositos_historicos(){
 
-        cantidad_depositos_historicos+=1;
+        cantidad_depositos_historicos++;
 
     }
 
     public void incrementar_cantidad_retiros_historicos(){
-        cantidad_retiros_historicos+=1;
+        cantidad_retiros_historicos++;
     }
 
     public void incrementar_cantidad_transferencias_historicas(){
-        cantidad_transferencias_historicas+=1;
+        cantidad_transferencias_historicas++;
     }
 
     public int getCantidad_depositos_historicos() {

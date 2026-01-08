@@ -144,9 +144,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param contextoUsuario
      */
     private void depositarDinero(ContextoUsuario contextoUsuario) {
-        System.out.println("CANTIDAD DE DEPOSITO POR SESION: "+contextoUsuario.getDepositos_por_sesion());
-        System.out.println("CANTIDAD DE DEPOSITO POR CUENTA: "+contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_depositos_historicos());
-        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_depositos_historicos()>=ConstantesFiscalesBancarias.LIMITE_DEPOSITOS_POR_CUENTA){
+        if(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getCantidad_depositos_historicos()>=ConstantesFiscalesBancarias.LIMITE_DEPOSITOS_POR_CUENTA){
             outputProvider.println("\n"+Messages.get("alerta.limite.depositos.por.cuenta"));
 
             contextoUsuario.confirmaContinuar();
@@ -165,7 +163,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
-        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_retiros_historicos()>=ConstantesFiscalesBancarias.LIMITE_RETIROS_POR_CUENTA){
+        if(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getCantidad_retiros_historicos()>=ConstantesFiscalesBancarias.LIMITE_RETIROS_POR_CUENTA){
             outputProvider.println("\n"+Messages.get("alerta.limite.retiros.por.cuenta"));
 
             contextoUsuario.confirmaContinuar();
@@ -184,7 +182,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void transferirDinero(ContextoUsuario contextoUsuario) {
-        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_transferencias_historicas()>=ConstantesFiscalesBancarias.LIMITE_TRANSFERENCIAS_POR_CUENTA){
+        if(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getCantidad_transferencias_historicas()>=ConstantesFiscalesBancarias.LIMITE_TRANSFERENCIAS_POR_CUENTA){
             outputProvider.println("\n"+Messages.get("alerta.limite.transferencias.por.cuenta"));
 
             contextoUsuario.confirmaContinuar();
