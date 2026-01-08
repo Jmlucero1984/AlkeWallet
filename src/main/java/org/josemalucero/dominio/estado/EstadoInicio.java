@@ -5,6 +5,8 @@ import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
+import java.util.Locale;
+
 /**
  * Punto de entrada al programa siendo este el estado primigenio que da origen a la cadena de estados subsiguiente
  * a lo largo de la actividad del usuario dentro de la aplicación.
@@ -31,7 +33,13 @@ public class EstadoInicio extends EstadoUsuario{
 
         outputProvider.println("1. "+Messages.get("opcion.iniciar.sesion"));
         outputProvider.println("2. "+Messages.get("opcion.registrarse"));
-        outputProvider.println("3. "+Messages.get("salir"));
+
+        if(Messages.getCurrentLocale().toLanguageTag().equals("en")){
+            outputProvider.println("3. Cambiar lenguaje a español");
+        } else {
+            outputProvider.println("3. Change to english language");
+        }
+        outputProvider.println("4. "+Messages.get("salir"));
         outputProvider.print(Messages.get("seleccione.opcion")+" ");
     }
 
@@ -53,14 +61,12 @@ public class EstadoInicio extends EstadoUsuario{
                 case 2:
                     contextoUsuario.cambiarEstado(new EstadoSignIn(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
                     break;
-
                 case 3:
-                    outputProvider.println("\n   "+Messages.get("esperamos.vuelva.pronto")+"\n");
-                    outputProvider.println("─────────────────────────────────");
-                    outputProvider.println(Messages.get("desarrollado.por"));
-                    System.exit(0);
+                    cambiarLenguaje();
                     break;
-
+                case 4:
+                    mostrarMensajeDespedida();
+                    System.exit(0);
                 default:
                     outputProvider.printlnAlert(Messages.get("opcion.invalida"));
             }
@@ -68,6 +74,24 @@ public class EstadoInicio extends EstadoUsuario{
         } catch (NumberFormatException e) {
             outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
+    }
+
+
+    /**
+     * Detecta cual es lenguaje actual de la app y lo cambia por su alternativa
+     */
+    private void cambiarLenguaje(){
+        if(Messages.getCurrentLocale().toLanguageTag().equals("en")){
+            Messages.init(Locale.forLanguageTag("es"));
+        } else{
+            Messages.init(Locale.forLanguageTag("en"));
+        }
+    }
+
+    private void mostrarMensajeDespedida(){
+        outputProvider.println("\n   "+Messages.get("esperamos.vuelva.pronto")+"\n");
+        outputProvider.println("─────────────────────────────────");
+        outputProvider.println(Messages.get("desarrollado.por"));
     }
 
 

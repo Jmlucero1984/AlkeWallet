@@ -79,10 +79,14 @@ public class EstadoTransferencias extends EstadoUsuario {
         }
         if(tipoTransferencia==TipoTransferencia.UNDEFINED) {
             usuarioDestino = manejarEntradaDeNumeroCuenta(opcion);
+
             if(usuarioDestino!=null){
-                tipoTransferencia=definirMonedasDeOrigenYDestinoDeTransferencia(contextoUsuario,outputProvider,usuarioDestino);
-                if(tipoTransferencia==null) {
+
+                TipoTransferencia tipoTransferenciaRecibida=definirMonedasDeOrigenYDestinoDeTransferencia(contextoUsuario,outputProvider,usuarioDestino);
+                if(tipoTransferenciaRecibida==null) {
                     usuarioDestino=null;
+                } else {
+                    tipoTransferencia = tipoTransferenciaRecibida;
                 }
             } else {
                 outputProvider.printlnAlert(Messages.get("numero.cuenta.inexistente.intente.nuevamente"));
@@ -114,7 +118,10 @@ public class EstadoTransferencias extends EstadoUsuario {
      */
 
     private TipoTransferencia definirMonedasDeOrigenYDestinoDeTransferencia(ContextoUsuario contextoUsuario,OutputProvider outputProvider,Usuario usuarioDestino){
+
         outputProvider.println(Messages.get("usuario.encontrado"));
+        String nombreMonedaCuentaDestino = usuarioDestino.getCuentaRegular().getMonedaConvertible().getNombre();
+        outputProvider.println(Messages.get("la.cuenta.en")+" "+nombreMonedaCuentaDestino+" "+Messages.get("pertenece.a")+" "+usuarioDestino.getNombreCompleto());
         if(usuarioDestino==contextoUsuario.getUsuarioLogueado()){
             outputProvider.printlnAlert(Messages.get("alerta.autotransferencia"));
             return null;
@@ -181,7 +188,7 @@ public class EstadoTransferencias extends EstadoUsuario {
      */
     private void incrementarTransferenciasConsumidas(ContextoUsuario contextoUsuario){
         contextoUsuario.incrementar_transferencias_por_sesion();
-        contextoUsuario.getUsuarioLogueado().crearCuentRegular().incrementar_cantidad_transferencias_historicas();
+        contextoUsuario.getUsuarioLogueado().getCuentaRegular().incrementar_cantidad_transferencias_historicas();
     }
 
     /**
@@ -217,8 +224,6 @@ public class EstadoTransferencias extends EstadoUsuario {
 
             Optional<Usuario> usuario = RepositorioUsuarios.consultarUsuarioPorCuenta(numero);
             if (usuario.isPresent()) {
-
-                outputProvider.println(usuario.get().getNombreCompleto());
                 return usuario.get();
             }
 

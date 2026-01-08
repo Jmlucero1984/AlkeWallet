@@ -213,7 +213,7 @@ public class EstadoSignIn extends EstadoUsuario {
                 }
             }
 
-            Usuario nuevoUsuario = RepositorioUsuarios.agregarUsuario(nombre,apellido,bCryptPasswordEncoderService.hash(clave));
+            Usuario nuevoUsuario = RepositorioUsuarios.crearYAgregarUsuario(nombre,apellido,bCryptPasswordEncoderService.hash(clave));
             outputProvider.println(Messages.get("el.usuario")+" "+nuevoUsuario.getNombreCompleto() + " "+Messages.get("ha.sido.creado"));
         }
 

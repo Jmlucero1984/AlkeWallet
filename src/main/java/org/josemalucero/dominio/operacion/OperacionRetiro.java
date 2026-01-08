@@ -70,9 +70,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
      */
     @Override
     public void restaurarEstadoAnterior() {
-
         outputProvider.println(Messages.get("rollback"));
-
     }
 
     /**
@@ -82,5 +80,14 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
+    @Override
+    public String getNombreOperacion() {
+        return Messages.get("operacion.retiro");
     }
 }

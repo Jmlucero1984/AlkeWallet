@@ -20,6 +20,14 @@ public class RepositorioUsuarios {
     private static ArrayList<Usuario> usuariosDB= new ArrayList<>();
 
     /**
+     * Agrega el usuario al {@code ArrayList<Usuario>}.
+     * @param usuario
+     */
+    public static void agregarUsuario(Usuario usuario) {
+        usuariosDB.add(usuario);
+    }
+
+    /**
      * Busca un determinado usuario por su nombre y apellido.
      * @param nombre
      * @param apellido
@@ -49,7 +57,7 @@ public class RepositorioUsuarios {
      * @param claveHasheada
      * @return {@link Usuario} que ha sido agregado.
      */
-    public static Usuario agregarUsuario(String nombre,String apellido, String claveHasheada) {
+    public static Usuario crearYAgregarUsuario(String nombre, String apellido, String claveHasheada) {
         Usuario usuario = new Usuario(nombre, apellido, claveHasheada);
         usuariosDB.add(usuario);
         return usuario;
@@ -64,7 +72,7 @@ public class RepositorioUsuarios {
      * @param codigoMoneda
      * @return {@link Usuario} que ha sido agregado.
      */
-    public static Usuario agregarUsuarioYAsignarCuenta(String nombre,String apellido, String claveHasheada, String codigoMoneda) {
+    public static Usuario crearYAgregarUsuarioYAsignarCuenta(String nombre, String apellido, String claveHasheada, String codigoMoneda) {
         Usuario usuario = new Usuario(nombre, apellido, claveHasheada);
         MonedaConvertible moneda = RepositorioMonedas.encontrarMonedaPorCodigo(codigoMoneda);
         usuario.crearCuentRegular().setMoneda(moneda);
@@ -80,7 +88,7 @@ public class RepositorioUsuarios {
      * @param codigoMoneda
      * @return {@link Usuario} que ha sido agregado.
      */
-    public static Usuario agregarUsuarioYAsignarCuenta(Credencial credencial,String codigoMoneda) {
+    public static Usuario crearYAgregarUsuarioYAsignarCuenta(Credencial credencial, String codigoMoneda) {
 
         Usuario usuario = new Usuario(credencial.getNombre(), credencial.getApellido(), new BCryptPasswordEncoderService().hash(credencial.getClave()));
         MonedaConvertible moneda = RepositorioMonedas.encontrarMonedaPorCodigo(codigoMoneda);
@@ -98,9 +106,9 @@ public class RepositorioUsuarios {
 
     public static void createSomeUsers() {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
-        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
-        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
     }
 
     /**

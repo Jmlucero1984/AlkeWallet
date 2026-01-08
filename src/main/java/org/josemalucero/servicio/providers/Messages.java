@@ -11,12 +11,19 @@ import java.util.ResourceBundle;
 
 public class Messages {
     private static ResourceBundle bundle;
+    private static Locale currentLocale;
 
     public static void init(Locale locale) {
+        currentLocale=locale;
         bundle = ResourceBundle.getBundle("messages", locale);
     }
 
     public static String get(String key) {
         return bundle.getString(key);
     }
+
+    public static Locale getCurrentLocale() {
+        return currentLocale;
+    }
+
 }

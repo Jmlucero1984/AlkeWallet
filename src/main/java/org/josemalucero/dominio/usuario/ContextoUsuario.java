@@ -20,6 +20,15 @@ public class ContextoUsuario {
     private int depositos_por_sesion=0;
     private int retiros_por_sesion=0;
 
+
+    public ContextoUsuario(InputProvider consoleInputProvider, OutputProvider consoleOutputProvider) {
+        // Estado inicial: Login
+
+        this.consoleInputProvider = consoleInputProvider;
+        this.consoleOutputProvider = consoleOutputProvider;
+        this.estadoActual = new EstadoInicio(consoleInputProvider, consoleOutputProvider);
+
+    }
     public int getTransferencias_por_sesion() {
         return transferencias_por_sesion;
     }
@@ -37,14 +46,6 @@ public class ContextoUsuario {
         transferencias_por_sesion=0;
     }
 
-    public ContextoUsuario(InputProvider consoleInputProvider, OutputProvider consoleOutputProvider) {
-        // Estado inicial: Login
-
-        this.consoleInputProvider = consoleInputProvider;
-        this.consoleOutputProvider = consoleOutputProvider;
-        this.estadoActual = new EstadoInicio(consoleInputProvider, consoleOutputProvider);
-
-    }
 
     public void incrementar_retiros_por_session(){
         retiros_por_sesion++;

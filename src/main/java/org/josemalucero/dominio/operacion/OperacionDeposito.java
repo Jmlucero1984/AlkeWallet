@@ -23,10 +23,9 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         cuentaRegular.depositar(monto);
 
     }
-    @Override
-    public String getNombreOperacion() {
-        return Messages.get("operacion.deposito") ;
-    }
+
+
+
 
     /**
      *
@@ -71,10 +70,25 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         outputProvider.println(Messages.get("rollback"));
     }
 
+    /***
+     * {@inheritDoc}
+     * @param cuentaRegular
+     */
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
     }
+
+    /**
+     * {@inheritDoc}
+     * @return {@inheritDoc}
+     */
+    @Override
+    public String getNombreOperacion() {
+        return Messages.get("operacion.deposito") ;
+    }
+
+
 
 
 }

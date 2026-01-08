@@ -2,17 +2,15 @@ package org.josemalucero.app;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Credencial;
-import org.josemalucero.servicio.providers.ConsoleOutputProvider;
 import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 import org.junit.jupiter.api.*;
 
-import java.math.BigDecimal;
 import java.util.Locale;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class AlkeWallet_Interacciones_Excepciones_Test {
+public class AlkeWallet_Interacciones_Alerts_Test {
 
     ConsoleInputStub consoleInputStub;
     ConsoleOutputStub consoleOutputStub;
@@ -47,8 +45,8 @@ public class AlkeWallet_Interacciones_Excepciones_Test {
 
 
         RepositorioMonedas.crearMonedasBasicas();
-        RepositorioUsuarios.agregarUsuarioYAsignarCuenta(credencial_usr_ars,"ARS");
-        RepositorioUsuarios.agregarUsuarioYAsignarCuenta(credencial_usr_clp,"CLP");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta(credencial_usr_ars,"ARS");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta(credencial_usr_clp,"CLP");
 
     }
 
@@ -66,6 +64,7 @@ public class AlkeWallet_Interacciones_Excepciones_Test {
         interacciones=null;
         consoleOutputStub.clearStack();
     }
+
     @Test
     void deposito_valido() {
 
@@ -83,7 +82,6 @@ public class AlkeWallet_Interacciones_Excepciones_Test {
 
     @Test
     void deposito_no_negativos() {
-
         String depositoStr = "-1.00";
         interacciones.depositarEnCuenta(depositoStr);
         Assertions.assertEquals(Messages.get("alerta.no.puede.ingresar.numeros.negativos") +". "+Messages.get("intente.nuevamente"),consoleOutputStub.popAlert());
