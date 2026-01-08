@@ -4,6 +4,7 @@ import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 
@@ -38,16 +39,16 @@ public class EstadoConversionMonedas extends EstadoUsuario {
      * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
         if(monedaDePartida==null) {
-            outputProvider.println("Moneda de PARTIDA-> para convertir");
+            outputProvider.println(Messages.get("moneda.partida.para.convertir"));
             for ( int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
                 outputProvider.println("" + (i + 1) + ". " + RepositorioMonedas.getMonedasDB().get(i).getNombre()
                         + " | " + RepositorioMonedas.getMonedasDB().get(i).getCodigo());
             }
 
         } else {
-            outputProvider.println("Moneda de ->DESTINO para convertir");
+            outputProvider.println(Messages.get("moneda.destino.para.convertir"));
             for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
                 if(RepositorioMonedas.getMonedasDB().get(i)==monedaDePartida) continue;
                 outputProvider.println("" + (i + 1) + ". " + RepositorioMonedas.getMonedasDB().get(i).getNombre()
@@ -55,8 +56,8 @@ public class EstadoConversionMonedas extends EstadoUsuario {
             }
 
         }
-        outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". CANCELAR");
-        outputProvider.print("Seleccione una opción: ");
+        outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". "+Messages.get("cancelar"));
+        outputProvider.print(Messages.get("seleccione.opcion"+" "));
 
     }
 
@@ -64,36 +65,43 @@ public class EstadoConversionMonedas extends EstadoUsuario {
      * Define ambas monedas,tanto la de origen como la de destino de la conversión monetaria, verificando si la
      * primera ya ha sido definida. Finalmente, luego de verificar que la cifra introducida
      *  sea válida, realiza la conversión especificada.
-     * @param opcion
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
 
-        if(opcion==RepositorioMonedas.getMonedasDB().size()+1)  contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
-        int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size();
-        if (monedaDePartida != null) cantidadDeOpciones--;
-        if (opcion <= 0 || opcion > cantidadDeOpciones || (monedaDePartida != null && opcion ==RepositorioMonedas.getMonedasDB().indexOf(monedaDePartida)+1 )) {
-            outputProvider.println("Opción inválida");
-        } else if (opcion==cantidadDeOpciones){
-            contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
-        } else {
-            MonedaConvertible eleccion = RepositorioMonedas.getMonedasDB().get(opcion - 1);
-            outputProvider.println("Seleccionó " + eleccion.getNombre());
-
-            if (monedaDePartida == null) {
-                monedaDePartida = eleccion;
+        try{
+            int opcion=Integer.parseInt(opcionStr);
+            if(opcion==RepositorioMonedas.getMonedasDB().size()+1)  contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+            int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size();
+            if (monedaDePartida != null) cantidadDeOpciones--;
+            if (opcion <= 0 || opcion > cantidadDeOpciones || (monedaDePartida != null && opcion ==RepositorioMonedas.getMonedasDB().indexOf(monedaDePartida)+1 )) {
+                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+            } else if (opcion==cantidadDeOpciones){
+                contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
             } else {
-                monedaDeDestino = eleccion;
-                Optional<BigDecimal> cifraVerificada;
-                cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
-                if(!cifraVerificada.isEmpty()){
-                  BigDecimal resultado =convertir(monedaDePartida,monedaDeDestino,cifraVerificada.get());
-                  outputProvider.println(cifraVerificada.get()+" "+monedaDePartida.getCodigo()+" -> "+resultado+" "+monedaDeDestino.getCodigo());
-                  contextoUsuario.confirmaContinuar();
-                  contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                MonedaConvertible eleccion = RepositorioMonedas.getMonedasDB().get(opcion - 1);
+                outputProvider.println(Messages.get("selecciono")+" " + eleccion.getNombre());
+
+                if (monedaDePartida == null) {
+                    monedaDePartida = eleccion;
+                } else {
+                    monedaDeDestino = eleccion;
+                    Optional<BigDecimal> cifraVerificada;
+                    cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
+                    if(!cifraVerificada.isEmpty()){
+                      BigDecimal resultado =convertir(monedaDePartida,monedaDeDestino,cifraVerificada.get());
+                      outputProvider.println("------------------------------------------------------------");
+                      outputProvider.println("     "+cifraVerificada.get()+" "+monedaDePartida.getCodigo()+" -> "+resultado+" "+monedaDeDestino.getCodigo());
+                      outputProvider.println("------------------------------------------------------------");
+                      contextoUsuario.confirmaContinuar();
+                      contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                    }
                 }
             }
+        } catch (NumberFormatException e){
+            outputProvider.println(Messages.get("introduzca.opcion.valida"));
         }
     }
 
@@ -125,14 +133,14 @@ public class EstadoConversionMonedas extends EstadoUsuario {
         boolean cantidadVálida = false;
 
         while(!cantidadVálida){
-            outputProvider.println("Introducir cantidad con enteros y centavos $$$.$$ | ESC para salir.");
+            outputProvider.println(Messages.get("introduzca.cant.enteros.centavos")+" | "+Messages.get("escape.comando")+" para salir.");
             String cantidadIntroducida = consoleInputProvider.leerOpcionString();
-            if(cantidadIntroducida.equalsIgnoreCase("ESC")) return null;
+            if(cantidadIntroducida.equalsIgnoreCase(Messages.get("escape.comando"))) return null;
             cantidadVálida=cantidadIntroducida.matches("^\\d+\\.\\d{2}$");
             if (cantidadVálida) {
                 return new BigDecimal(cantidadIntroducida);
             }
-            outputProvider.println("Cantidad inválida, intente nuevamente...");
+            outputProvider.printlnAlert(Messages.get("cantidad.invalida"));
         }
         return  null;
     }
@@ -143,8 +151,8 @@ public class EstadoConversionMonedas extends EstadoUsuario {
      */
     @Override
     public String getNombreEstado() {
-        return "CONVERSIÓN DE MONEDAS";
+        return Messages.get("nombre.estado.conversion.monedas");
     }
 
-
 }
+

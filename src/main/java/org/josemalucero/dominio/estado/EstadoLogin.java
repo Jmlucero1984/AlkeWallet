@@ -5,6 +5,7 @@ import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
@@ -33,38 +34,47 @@ public class EstadoLogin extends EstadoUsuario {
      * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
 
-        outputProvider.println("1. Iniciar sesión");
-        outputProvider.println("2. Volver...");
-        outputProvider.print("Seleccione una opción: ");
+        outputProvider.println("1. "+Messages.get("opcion.iniciar.sesion"));
+        outputProvider.println("2. "+Messages.get("volver"));
+        outputProvider.print(Messages.get("seleccione.opcion")+" ");
     }
 
     /**
      * Realiza la aunteticación del usuario según las credenciales ingresadas. De ser efectiva dicha verificación,
      * controla si el usuario ya tiene una cuenta asocida, lo que implica derivar hacia {@link EstadoOperaciones}, caso contrario
-     * redirije a {@link EstadoCreacionCuenta}. Si el usuario opta por Volver, se redirige al estado {@link EstadoEntrada}.
-     * @param opcion
+     * redirije a {@link EstadoCreacionCuenta}. Si el usuario opta por Volver, se redirige al estado {@link EstadoInicio}.
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
+        try {
+            int opcion = Integer.parseInt(opcionStr);
         switch (opcion) {
             case 1:
                 Usuario usuario = autenticarUsuario(contextoUsuario);
                 if (usuario != null) {
                     contextoUsuario.setUsuarioLogueado(usuario);
+                    contextoUsuario.reset_operaciones_por_sesion();
                     if (contextoUsuario.getUsuarioLogueado().getCuentaRegular() == null) {
-                        outputProvider.println("[!] AÚN NO TIENE UNA CUENTA ASOCIADA");
-                        contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                        outputProvider.printlnAlert(Messages.get("aun.no.tiene.cuenta.asociada"));
+                        contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(),
+                                contextoUsuario.getOuputProvider()));
                     } else {
-                        contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                        contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(),
+                                contextoUsuario.getOuputProvider()));
                     }
                 }
                 break;
             case 2:
-                contextoUsuario.cambiarEstado(new EstadoEntrada(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                contextoUsuario.cambiarEstado(new EstadoInicio(contextoUsuario.getConsoleInputProvider(),
+                        contextoUsuario.getOuputProvider()));
                 break;
+            }
+        } catch (NumberFormatException e) {
+            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
 
 
@@ -91,20 +101,20 @@ public class EstadoLogin extends EstadoUsuario {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
 
-        outputProvider.println("\n[ Ingrese sus datos personales ]");
-        outputProvider.print("Nombre de usuario: ");
+
+        outputProvider.print(Messages.get("nombre.usuario")+" ");
         String nombre = consoleInputProvider.leerOpcionString();
-        outputProvider.print("Apellido de usuario: ");
+        outputProvider.print(Messages.get("apellido.usuario")+" ");
         String apellido = consoleInputProvider.leerOpcionString();
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            outputProvider.println("Ingrese su clave: ");
+            outputProvider.println(Messages.get("ingrese.clave")+" ");
 
             String clave;
 
             if(AlkeWallet.onConsole){
                 Console console = System.console();
-                char[] passwordArray = console.readPassword("[MODO SECRETO]: ");
+                char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");
                 clave = new String(passwordArray);
                 // Limpiar el array de caracteres por seguridad
                 java.util.Arrays.fill(passwordArray, ' ');
@@ -112,20 +122,15 @@ public class EstadoLogin extends EstadoUsuario {
                 clave = consoleInputProvider.leerOpcionString();
             }
 
-
-
-
-
-
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){
-                outputProvider.println("LOGUEO EXITOSO");
+                outputProvider.println(Messages.get("logueo.exitoso"));
                 return  usuarioExistente.get();
             } else {
-                outputProvider.println("Datos de inicio de sesión no válidos");
+                outputProvider.println(Messages.get("datos.inicio.sesion.no.validos"));
             }
 
         } else {
-            outputProvider.println("El usuario "+nombre+" "+apellido+" no existe en la Base de Datos");
+            outputProvider.println( Messages.get("el.usuario")+" "+nombre+" "+apellido+" "+Messages.get("no.existe.en.base.de.datos"));
         }
 
         return null;
@@ -137,6 +142,6 @@ public class EstadoLogin extends EstadoUsuario {
      */
     @Override
     public String getNombreEstado() {
-        return "LOGIN";
+        return Messages.get("nombre.estado.login");
     }
 }

@@ -5,6 +5,7 @@ import org.josemalucero.dominio.operacion.Registrable;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 
@@ -33,13 +34,13 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
      */
 
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
-        outputProvider.println("Seleccione su tipo de cuenta");
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
+        outputProvider.println(Messages.get("seleccione.tipo.de.cuenta"));
         for(int i =0;i< RepositorioMonedas.getMonedasDB().size();i++) {
-            outputProvider.println(""+(i+1)+". Cuenta en "+RepositorioMonedas.getMonedasDB().get(i).getNombre()
-                    +" | "+RepositorioMonedas.getMonedasDB().get(i).getCodigo());
+            outputProvider.println(""+(i+1)+". "+Messages.get("cuenta.en")+" "+RepositorioMonedas.getMonedasDB()
+                    .get(i).getNombre() +" | "+RepositorioMonedas.getMonedasDB().get(i).getCodigo());
         }
-        outputProvider.print("Seleccione una opción: ");
+        outputProvider.print(Messages.get("seleccione.opcion"));
 
     }
 
@@ -48,20 +49,30 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
      * máximo de monedas existentes en el sistema; crea la cuenta, que por defecto es una cuenta regular; le asigna una moneda, la que
      * resulta de la consulta mediante la búsqueda del index en el {@link RepositorioMonedas}; registra la operación de creación de la cuenta en
      * el historial y finalmente cambia al estado {@link EstadoOperaciones}.
-     * @param opcion
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
-        if(opcion<=0 || opcion>RepositorioMonedas.getMonedasDB().size()){
-            outputProvider.println("Opción inválida");
-        } else {
-            outputProvider.println("Usted ha seleccionado cuenta en "+RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
-            contextoUsuario.getUsuarioLogueado().crearCuentRegular();
-            contextoUsuario.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas.getMonedasDB().get(opcion-1));
-            registrar(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
-            contextoUsuario.confirmaContinuar();
-            contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
+
+
+        try{
+            int opcion=Integer.parseInt(opcionStr);
+            if(opcion<=0 || opcion>RepositorioMonedas.getMonedasDB().size()){
+                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+            } else {
+                outputProvider.println(Messages.get("usted.ha.seleccionad.cuenta.en")+" "
+                        +RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
+                contextoUsuario.getUsuarioLogueado().crearCuentRegular();
+                contextoUsuario.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas
+                        .getMonedasDB().get(opcion-1));
+                registrar(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
+                contextoUsuario.confirmaContinuar();
+                contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(),
+                        contextoUsuario.getOuputProvider()));
+            }
+        } catch (NumberFormatException e){
+            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
     }
 
@@ -72,7 +83,8 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         String monedaCuenta = cuentaRegular.getMonedaConvertible().getNombre();
-        cuentaRegular.registrarOperacion(new RegistroOperacion("Apertura Cuenta Regular en "+monedaCuenta, BigDecimal.ZERO,BigDecimal.ZERO));
+        cuentaRegular.registrarOperacion(new RegistroOperacion(Messages.get("apertura.cuenta.regular.en")
+                +" "+monedaCuenta, BigDecimal.ZERO,BigDecimal.ZERO));
     }
 
     /**
@@ -81,7 +93,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
      */
     @Override
     public String getNombreEstado() {
-        return "SELECCIÓN TIPO DE CUENTA";
+        return Messages.get("nombre.estado.creacion.cuenta");
     }
 
 

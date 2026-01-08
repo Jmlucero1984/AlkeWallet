@@ -16,80 +16,77 @@ public class InteraccionesEncadenables{
     }
 
     public InteraccionesEncadenables crearUsuario(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{2, 1, 2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"2","1",credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave(),"2"});
         alkeWalletFake.runBySteps(3);
         return  this;
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaCLPAUsuario(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),"\n"});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",credencial.getNombre(), credencial.getApellido(), credencial.getClave(),"1","\n","9","2",});
         alkeWalletFake.runBySteps(5);
         return  this;
     }
     public InteraccionesEncadenables logInUsuarioYAsignarCuentaARSAUsuario(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),"\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",credencial.getNombre(), credencial.getApellido(), credencial.getClave(),"2","\n","9","2",});
         alkeWalletFake.runBySteps(5);
         return  this;
     }
 
     public InteraccionesEncadenables transfACuentaMismaMoneda(String numeroCuenta, String monto) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{5});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{numeroCuenta,monto,"\n"});
-        alkeWalletFake.runBySteps(1);
+        consoleInputStub.clearRespuestasString();
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"5",numeroCuenta,monto,"\n"});
+        alkeWalletFake.runBySteps(3);
         return  this;
     }
 
     public InteraccionesEncadenables mostrarHistorial() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{8});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"\n"});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"8","\n"});
         alkeWalletFake.runBySteps(1);
         return  this;
     }
 
     public InteraccionesEncadenables transfACuentaDifMonedaMontoMonedaOrigen(String numeroCuenta, String monto) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{5});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{numeroCuenta,"1",monto,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"5",numeroCuenta,"1",monto,"\n"});
+        alkeWalletFake.runBySteps(4);
         return  this;
     }
     public InteraccionesEncadenables transfACuentaDifMonedaMontoMonedaDestino(String numeroCuenta, String monto) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{5});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{numeroCuenta,"2",monto,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"5",numeroCuenta,"2",monto,"\n"});
+        alkeWalletFake.runBySteps(4);
         return  this;
     }
 
     public InteraccionesEncadenables logInHastaOperacionesUsuarioExistenteYConCuenta(Credencial credencial) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1,1});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{credencial.getNombre(), credencial.getApellido(), credencial.getClave(),credencial.getClave()});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",credencial.getNombre(), credencial.getApellido(), credencial.getClave()});
         alkeWalletFake.runBySteps(2);
         return  this;
     }
     public InteraccionesEncadenables depositarEnCuenta(String monto) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{3});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{monto,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"3",monto,"\n"});
+        alkeWalletFake.runBySteps(2);
         return  this;
     }
 
     public InteraccionesEncadenables retirarDeCuenta(String monto) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{4});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{monto,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"4",monto,"\n"});
+        alkeWalletFake.runBySteps(2);
         return  this;
     }
 
     public InteraccionesEncadenables convertirCuentaAOtraMoneda(MonedaConvertible monedaConvertible) {
         int opcionDeMonedaDeDestino = RepositorioMonedas.getMonedasDB().indexOf(monedaConvertible)+1;
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{7,opcionDeMonedaDeDestino});
-        consoleInputStub.setProximaRespuestaString("\n");
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"7",String.valueOf(opcionDeMonedaDeDestino),"\n"});
         alkeWalletFake.runBySteps(2);
         return  this;
     }
     public InteraccionesEncadenables logOutDesdeOperaciones() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{9,2});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"9","2"});
         alkeWalletFake.runBySteps(2);
         return  this;
     }

@@ -1,5 +1,6 @@
 package org.josemalucero.dominio.operacion;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 /**
@@ -27,7 +28,7 @@ public abstract class Operacion {
      * @return {@link String} de la descripción de la operación.
      */
     public String getNombreOperacion(){
-        return "OPERACION";
+        return Messages.get("nombre.operacion");
     }
 
     /**

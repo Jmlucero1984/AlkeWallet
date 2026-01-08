@@ -1,7 +1,10 @@
 package org.josemalucero.app;
 
+import org.josemalucero.servicio.providers.Messages;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,6 +13,8 @@ class ConsoleInputStubTest {
         ConsoleInputStub consoleInputStub;
     @Test
     void verificarEntradasYSalidasConsoleInputStubTest() {
+        Locale locale =Locale.forLanguageTag("es");
+        Messages.init(locale);
         String elemento_str_a ="aa";
         String elemento_str_b ="bb";
         String elemento_str_c="cc";
@@ -18,11 +23,11 @@ class ConsoleInputStubTest {
         int elemento_int_c = 6;
         consoleInputStub = new ConsoleInputStub();
         consoleInputStub.addProximaRespuestaInt(elemento_int_a);
-        consoleInputStub.setProximaRespuestaString(elemento_str_a);
+        consoleInputStub.addProximaRespuestaString(elemento_str_a);
         consoleInputStub.addProximaRespuestaInt(elemento_int_b);
-        consoleInputStub.setProximaRespuestaString(elemento_str_b);
+        consoleInputStub.addProximaRespuestaString(elemento_str_b);
         consoleInputStub.addProximaRespuestaInt(elemento_int_c);
-        consoleInputStub.setProximaRespuestaString(elemento_str_c);
+        consoleInputStub.addProximaRespuestaString(elemento_str_c);
         Assertions.assertAll(
                 ()->assertEquals(consoleInputStub.leerOpcionInt(),elemento_int_a),
                 ()->assertEquals(consoleInputStub.leerOpcionInt(),elemento_int_b),
@@ -36,6 +41,8 @@ class ConsoleInputStubTest {
 
     @Test
     void verificarSeriesDeEntradasYSalidasConsoleInputStubTest() {
+        Locale locale =Locale.forLanguageTag("es");
+        Messages.init(locale);
         String elemento_str_a ="aa";
         String elemento_str_b ="bb";
         String elemento_str_c="cc";

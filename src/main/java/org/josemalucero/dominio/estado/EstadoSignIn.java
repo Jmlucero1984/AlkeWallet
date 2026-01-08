@@ -5,6 +5,7 @@ import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
@@ -31,27 +32,32 @@ public class EstadoSignIn extends EstadoUsuario {
      * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
 
-        outputProvider.println("A continuación creará un nuevo usuario, desea continuar?\n");
-        outputProvider.println("1. Si");
-        outputProvider.println("2. NO, volver");
-        outputProvider.print("Seleccione una opción: ");
+        outputProvider.println(Messages.get("a.continuacion.creara.nuevo.usuario.desea.continuar")+"\n");
+        outputProvider.println("1. "+Messages.get("si"));
+        outputProvider.println("2. "+Messages.get("no.volver"));
+        outputProvider.print(Messages.get("seleccione.opcion"));
     }
 
     /**
-     * Recibe la opción elegida, sea para registar un nuevo {@link Usuario}, o para retornar al estado anterior, {@link EstadoEntrada}.
-     * @param opcion
+     * Recibe la opción elegida, sea para registar un nuevo {@link Usuario}, o para retornar al estado anterior, {@link EstadoInicio}.
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
-        // En este estado, no usamos opciones de menú numéricas
-        // sino que procesamos el flujo de registro completo
-        if(opcion==1) {
-            registrarNuevoUsuario(contextoUsuario);
-        } else {
-            contextoUsuario.cambiarEstado(new EstadoEntrada(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
+        try {
+            int opcion = Integer.parseInt(opcionStr);
+            // En este estado, no usamos opciones de menú numéricas
+            // sino que procesamos el flujo de registro completo
+            if (opcion == 1) {
+                registrarNuevoUsuario(contextoUsuario);
+            } else {
+                contextoUsuario.cambiarEstado(new EstadoInicio(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+            }
+        } catch (NumberFormatException e) {
+            outputProvider.println(Messages.get("introduzca.opcion.valida"));
         }
     }
 
@@ -68,22 +74,22 @@ public class EstadoSignIn extends EstadoUsuario {
 
         entrada = inputProvider.leerOpcionString().trim();
         if (entrada.length() == 0) {
-            outputProvider.println("[!] No puede estar vacío");
+            outputProvider.println(Messages.get("validacion.no.puede.estar.vacio"));
             return null;
         }
 
         if (entrada.length() <6) {
-            outputProvider.println("[!] Deber tener al menos 6 caracteres");
+            outputProvider.println(Messages.get("validacion.tener.al.menos")+" "+6+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.length() > 10) {
-            outputProvider.println("[!] No puede ser mayor de 10 caracteres");
+            outputProvider.println(Messages.get("validacion.tener.no.mas")+" "+10+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.contains(" ")) {
-            outputProvider.println("[!] No puede contener espacios intermedios");
+            outputProvider.println(Messages.get("validacion.no.espacios.intermedios"));
             return null;
         }
 
@@ -102,32 +108,32 @@ public class EstadoSignIn extends EstadoUsuario {
         String entrada;
         entrada = inputProvider.leerOpcionString().trim();
         if (entrada.length() == 0) {
-            outputProvider.println("[!] No puede estar vacío");
+            outputProvider.println(Messages.get("validacion.no.puede.estar.vacio"));
             return null;
         }
 
         if (entrada.length() < 3) {
-            outputProvider.println("[!] Deber tener al menos 3 caracteres");
+            outputProvider.println(Messages.get("validacion.tener.al.menos")+" "+3+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.length() > 15) {
-            outputProvider.println("[!] No puede ser mayor de 15 caracteres");
+            outputProvider.println(Messages.get("validacion.tener.no.mas")+" "+15+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (!entrada.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$")) {
-            outputProvider.println("[!] Solo puede contener letras (incluye tildes y ñ)");
+            outputProvider.println(Messages.get("validacion.contrasena.solo.contener"));
             return null;
         }
 
         if (!Character.isUpperCase(entrada.charAt(0))) {
-            outputProvider.println("[!] Debe empezar con una letra mayúscula");
+            outputProvider.println(Messages.get("validacion.debe.empezar.con.mayuscula"));
             return null;
         }
 
         if (entrada.contains(" ")) {
-            outputProvider.println("[!] No puede contener espacios intermedios");
+            outputProvider.println(Messages.get("validacion.no.espacios.intermedios"));
             return null;
         }
 
@@ -156,30 +162,30 @@ public class EstadoSignIn extends EstadoUsuario {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         String nombre=null;
         String apellido=null;
-        outputProvider.println("\n[ Ingrese sus datos personales ]");
+        outputProvider.println("\n"+Messages.get("ingrese.sus.datos.personales"));
         while(nombre==null){
-            outputProvider.print("Nombre de usuario: ");
+            outputProvider.print(Messages.get("nombre.usuario")+" ");
             nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
         while(apellido==null){
-            outputProvider.print("Apellido de usuario: ");
+            outputProvider.print(Messages.get("apellido.usuario")+" ");
             apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
 
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            outputProvider.println("Ya existe un usuario con el nombre: "+usuarioExistente.get().getNombreCompleto());
+            outputProvider.println(Messages.get("ya.existe.usuario.con.nombre")+" "+usuarioExistente.get().getNombreCompleto());
         } else {
             String clave =null;
             boolean coinciden = false;
             while(!coinciden){
 
                 while(clave==null){
-                    outputProvider.println("Introduzca su clave: ");
+                    outputProvider.println(Messages.get("ingrese.clave")+" ");
                     if(AlkeWallet.onConsole){
                             Console console = System.console();
-                            char[] passwordArray = console.readPassword("[MODO SECRETO]: ");
+                            char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");;
                             clave = new String(passwordArray);
                             // Limpiar el array de caracteres por seguridad
                             java.util.Arrays.fill(passwordArray, ' ');
@@ -211,14 +217,14 @@ public class EstadoSignIn extends EstadoUsuario {
                 if(clave.equals(confirmaClave)) {
                     coinciden = true;
                 } else {
-                    outputProvider.println("Las constraseñas no coincide");
+                    outputProvider.println(Messages.get("validacion.las.contrasenas.no.coinciden"));
                     clave=null;
 
                 }
             }
 
             Usuario nuevoUsuario = RepositorioUsuarios.agregarUsuario(nombre,apellido,bCryptPasswordEncoderService.hash(clave));
-            outputProvider.println("El usuario "+nuevoUsuario.getNombreCompleto() + " ha sido creado");
+            outputProvider.println(Messages.get("el.usuario")+" "+nuevoUsuario.getNombreCompleto() + " "+Messages.get("ha.sido.creado"));
         }
 
         contextoUsuario.cambiarEstado(new EstadoLogin(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
@@ -230,6 +236,6 @@ public class EstadoSignIn extends EstadoUsuario {
      */
     @Override
     public String getNombreEstado() {
-        return  "REGISTRO DE NUEVO USUARIO";
+        return Messages.get("nombre.estado.registro.nuevo.usuario");
     }
 }

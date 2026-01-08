@@ -2,6 +2,7 @@ package org.josemalucero.app;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
@@ -12,15 +13,18 @@ public class AlkeWallet {
     protected final ContextoUsuario contextoUsuario;
     public static boolean onConsole;
 
-    public AlkeWallet(ContextoUsuario contextoUsuario,boolean runningInConsole ) {
+    public AlkeWallet(ContextoUsuario contextoUsuario,boolean runningInConsole,boolean createBasicEntities) {
         this.contextoUsuario = contextoUsuario;
         onConsole = runningInConsole;
-        RepositorioMonedas.crearMonedasBasicas();
-        createSomeUsers();
+        if(createBasicEntities) {
+            RepositorioMonedas.crearMonedasBasicas();
+            RepositorioUsuarios.createSomeUsers();
+        }
+
 
     }
 
-    public void procesarOpcion(int opcion) {
+    public void procesarOpcion(String opcion) {
         contextoUsuario.procesarOpcion(opcion);
     }
 
@@ -33,33 +37,18 @@ public class AlkeWallet {
      */
     public void run() {
 
-
+        contextoUsuario.getOuputProvider().println("\n"+ Messages.get("bienvenido.a.alke.wallet"));
 
         while (true) {
-            try {
-                contextoUsuario.mostrarMenu();
-                int opcion = contextoUsuario.getConsoleInputProvider().leerOpcionInt();
-
+                contextoUsuario.mostrarInformacionContextual();
+                String opcion = contextoUsuario.getConsoleInputProvider().leerOpcionString();
                 procesarOpcion(opcion);
 
-            } catch (Exception e) {
-                contextoUsuario.getOuputProvider().println("Introduzca una opción válida");
-                contextoUsuario.getConsoleInputProvider().leerOpcionString();
-            }
         }
     }
 
-    /**
-     * Genera algunos usuarios ficticios para poder
-     * hacer uso de la app con una base mínima.
-     * @author José Maria Lucero
-     */
-       private void createSomeUsers() {
-            BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
-            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
-            RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
-        }
+
+
 
 
 }

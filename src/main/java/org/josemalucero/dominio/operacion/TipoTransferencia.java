@@ -6,7 +6,9 @@ package org.josemalucero.dominio.operacion;
  * @author Jose María Lucero
  */
 public enum TipoTransferencia {
+    UNDEFINED,
     IGUAL_MONEDA,
+    DISTINTA_MONEDA,
     MONEDA_ORIGEN,
     MONEDA_DESTINO
 }

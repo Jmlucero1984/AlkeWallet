@@ -3,6 +3,7 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -53,7 +54,7 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
 
     @Override
     public String getNombreOperacion() {
-        return "TRANSFERENCIA A OTRA CUENTA DE IGUAL MONEDA";
+        return Messages.get("operacion.transferencia.a.cuenta.igual.moneda");
     }
 
     /**
@@ -62,7 +63,7 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
      */
 
     public String getNombreOperacionReciproca() {
-        return "TRANSFERENCIA DESDE CUENTA DE IGUAL MONEDA";
+        return Messages.get("operacion.transferencia.desde.cuenta.igual.moneda");
     }
 
 
@@ -80,14 +81,18 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     @Override
     public boolean preValidar() {
         if (monto.compareTo(BigDecimal.ZERO)==0) {
-            outputProvider.println("No se puede realizar transferencia por monto igual a 0");
+            outputProvider.println(Messages.get("alert.no.transferir.monto.nulo"));
             return false;
         }
         if(monto.compareTo(cuentaRegular.getBalance())<=0){
+            if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_TRANSFERENCIA)>0){
+                outputProvider.println(Messages.get("alerta.no.se.puede.transferir.cantidad.limite.sii"));
+                return false;
+            }
             return true;
 
         } else {
-            outputProvider.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println(Messages.get("no.se.puede.transferir.cantidad")+". "+Messages.get("fondos.insuficientes"));
             return false;
         }
     }
@@ -102,10 +107,11 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     public boolean postValidar() {
         if(cuentaRegular.getBalance().compareTo(saldoAnteriorCuentaOrigen.subtract(monto)) == 0 &&
                 cuentaDestino.getBalance().compareTo(saldoAnteriorCuentaDestino.add(monto)) == 0) {
+
             return true;
 
         } else {
-            outputProvider.println("HA FALLADO LA TRANSFERENCIA");
+            outputProvider.println(Messages.get("ha.fallado.la.transferencia"));
             return false;
         }
     }
@@ -137,6 +143,6 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
-        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",monto,cuentaDestino.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" ("+Messages.get("c.n")+" "+cuentaRegular.getSerialCuenta()+")",monto,cuentaDestino.getBalance()));
     }
 }

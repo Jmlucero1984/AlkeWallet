@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 /** Permite obtener el saldo actual de la {@link CuentaRegular} asociada, mostrando además el tipo de moneda.
@@ -17,7 +18,7 @@ public class OperacionConsulta extends Operacion{
      */
     @Override
     public void ejecutar() {
-        outputProvider.println("\nEL SALDO DE LA CUENTA EN "+cuentaRegular.getMonedaConvertible().getNombre().toUpperCase()+" ES :");
+        outputProvider.println("\n"+ Messages.get("el.saldo.de.la.cuenta.en") +" "+cuentaRegular.getMonedaConvertible().getNombre().toUpperCase()+" "+Messages.get("es"));
         outputProvider.println(cuentaRegular.getBalance()+" "+cuentaRegular.getMonedaConvertible().getCodigo());
 
     }

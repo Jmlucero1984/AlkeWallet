@@ -2,6 +2,8 @@ package org.josemalucero.servicio.repositorios;
 
 
 import org.josemalucero.dominio.moneda.MonedaConvertible;
+import org.josemalucero.servicio.providers.Messages;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +26,8 @@ public class RepositorioMonedas {
      */
     public static void crearMonedasBasicas(){
 
-        MonedaConvertible pesoChileno = new MonedaConvertible("CLP","Peso Chileno", new BigDecimal("0.0011"));
-        MonedaConvertible pesoArgentino = new MonedaConvertible("ARS","Peso Argentino", new BigDecimal("0.00069"));
+        MonedaConvertible pesoChileno = new MonedaConvertible("CLP",Messages.get("peso.chileno"), new BigDecimal("0.0011"));
+        MonedaConvertible pesoArgentino = new MonedaConvertible("ARS", Messages.get("peso.argentino"), new BigDecimal("0.00069"));
         MonedaConvertible euro = new MonedaConvertible("EUR","Euro", new BigDecimal("1.18"));
         MonedaConvertible dolar = new MonedaConvertible("USD","Dólar", new BigDecimal("1.00"));
         MonedaConvertible yuan = new MonedaConvertible("CNH","Yuan", new BigDecimal("0.14"));

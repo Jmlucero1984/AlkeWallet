@@ -2,6 +2,7 @@ package org.josemalucero.dominio.operacion;
 
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
 
     @Override
     public String getNombreOperacion() {
-        return "RETIRO DE CUENTA";
+        return Messages.get("operacion.retiro");
     }
 
     /**
@@ -36,10 +37,14 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
     @Override
     public boolean preValidar() {
         if(monto.compareTo(cuentaRegular.getBalance())<=0){
+            if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_RETIRO)>0){
+                outputProvider.println(Messages.get("alerta.no.se.puede.retirar.cantidad.limite.bancario"));
+                return false;
+            }
             return true;
 
         } else {
-            outputProvider.println("No se puede retirar la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println(Messages.get("no.se.puede.retirar.cantidad")+". "+Messages.get("fondos.insuficientes"));
             return false;
         }
     }
@@ -55,7 +60,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
             return true;
 
         } else {
-            outputProvider.println("HA FALLADO EL RETIRO");
+            outputProvider.println(Messages.get("ha.fallado.retiro"));
             return false;
         }
     }
@@ -66,7 +71,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
     @Override
     public void restaurarEstadoAnterior() {
 
-        outputProvider.println("ROLLBACK");
+        outputProvider.println(Messages.get("rollback"));
 
     }
 

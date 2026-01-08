@@ -9,12 +9,14 @@ import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Credencial;
 import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 import org.josemalucero.servicio.repositorios.RespositorioCuentas;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,10 +33,12 @@ public class AlkaWallet_Interacciones_Test {
 
     @BeforeEach
     void setUp(){
+        Locale locale =Locale.forLanguageTag("es");
+        Messages.init(locale);
         consoleInputStub = new ConsoleInputStub();
         consoleOutputStub =new ConsoleOutputProvider();// new ConsoleOutputStub();
         contextoUsuario = new ContextoUsuario(consoleInputStub,consoleOutputStub);
-        alkeWalletFake = new AlkeWalletFake(contextoUsuario, false);
+        alkeWalletFake = new AlkeWalletFake(contextoUsuario, false,true);
     }
 
     @AfterEach
@@ -51,7 +55,7 @@ public class AlkaWallet_Interacciones_Test {
 
         Assertions.assertAll(
                 ()->assertTrue(RepositorioUsuarios.consultarUsuario("Pedro","Muñoz").isPresent()),
-                ()->assertEquals(estadoActual.getNombreEstado(),"ENTRADA")
+                ()->assertEquals(estadoActual.getNombreEstado(),Messages.get("nombre.estado.inicio"))
         );
     }
 
@@ -64,7 +68,7 @@ public class AlkaWallet_Interacciones_Test {
         Assertions.assertAll(
                 ()->assertTrue(usuarioCreado.isPresent()),
                 ()->assertTrue(usuarioCreado.get().getCuentaRegular().getMonedaConvertible().getCodigo().equals("CLP")),
-                ()->assertEquals(estadoActual.getNombreEstado(),"ENTRADA")
+                ()->assertEquals(estadoActual.getNombreEstado(),Messages.get("nombre.estado.inicio"))
         );
     }
 
@@ -77,9 +81,9 @@ public class AlkaWallet_Interacciones_Test {
         interacciones.crearUsuario(nombre, apellido, clave);
         interacciones.logInUsuarioYAsignarCuentaCLPAUsuario(nombre, apellido, clave);
         EstadoUsuario estadoUsuario = interacciones.logInHastaOperacionesUsuarioExistenteYConCuenta(nombre,apellido,clave);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario = interacciones.logOutDesdeOperaciones();
-        Assertions.assertEquals("ENTRADA",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.inicio"),estadoUsuario.getNombreEstado());
 
     }
 
@@ -94,12 +98,12 @@ public class AlkaWallet_Interacciones_Test {
         interacciones.crearUsuario(nombre, apellido, clave);
         interacciones.logInUsuarioYAsignarCuentaCLPAUsuario(nombre, apellido, clave);
         EstadoUsuario estadoUsuario = interacciones.logInHastaOperacionesUsuarioExistenteYConCuenta(nombre,apellido,clave);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario= interacciones.depositarEnCuenta(depositoStr);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario = interacciones.logOutDesdeOperaciones();
         CuentaRegular cuentaRegular = RepositorioUsuarios.consultarUsuario(nombre,apellido).get().getCuentaRegular();
-        Assertions.assertEquals("ENTRADA",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.inicio"),estadoUsuario.getNombreEstado());
         Assertions.assertEquals(deposito,cuentaRegular.getBalance());
     }
 
@@ -117,14 +121,14 @@ public class AlkaWallet_Interacciones_Test {
         interacciones.crearUsuario(nombre, apellido, clave);
         interacciones.logInUsuarioYAsignarCuentaCLPAUsuario(nombre, apellido, clave);
         EstadoUsuario estadoUsuario = interacciones.logInHastaOperacionesUsuarioExistenteYConCuenta(nombre,apellido,clave);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario= interacciones.depositarEnCuenta(depositoStr);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario=interacciones.retirarDeCuenta(retiroStr);
-        Assertions.assertEquals("OPERACIONES",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.operaciones"),estadoUsuario.getNombreEstado());
         estadoUsuario = interacciones.logOutDesdeOperaciones();
         CuentaRegular cuentaRegular = RepositorioUsuarios.consultarUsuario(nombre,apellido).get().getCuentaRegular();
-        Assertions.assertEquals("ENTRADA",estadoUsuario.getNombreEstado());
+        Assertions.assertEquals(Messages.get("nombre.estado.inicio"),estadoUsuario.getNombreEstado());
         Assertions.assertEquals(balanceEsperado,cuentaRegular.getBalance());
     }
 
@@ -184,6 +188,7 @@ public class AlkaWallet_Interacciones_Test {
                // .mostrarHistorial()
                 .transfACuentaMismaMoneda(numeroCuentaDestino,tranferenciaStr);
                // .mostrarHistorial();
+
         Usuario usuarioOrigen = alkeWalletFake.contextoUsuario.getUsuarioLogueado();
         depositarYTransferirDesdeCuanteOrigen.logOutDesdeOperaciones();
 
@@ -192,6 +197,7 @@ public class AlkaWallet_Interacciones_Test {
                 //.mostrarHistorial();
         BigDecimal montoTranferido = alkeWalletFake.contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance();
         controlBalanceUsuarioDestino.logOutDesdeOperaciones();
+
         BigDecimal balanceTotal = usuarioOrigen.getCuentaRegular().getBalance().add(usuarioDestino.getCuentaRegular().getBalance());
                // .subtract(new BigDecimal("0.10"));
         Assertions.assertAll(
@@ -273,7 +279,7 @@ public class AlkaWallet_Interacciones_Test {
         String clave_usuario_cuenta_destino = "Javierita";
         Credencial usuarioCuentaDestino = new Credencial(nombre_usuario_cuenta_destino,apellido_usuario_cuenta_destino,clave_usuario_cuenta_destino);
 
-        String depositoStr = RandomBigDecimalValuesGenerator.generarBigDecimal(7500,20000);
+        String depositoStr = RandomBigDecimalValuesGenerator.generarBigDecimal(30000,50000);
         BigDecimal deposito = new BigDecimal(depositoStr);
 
         String tranferenciaStr = RandomBigDecimalValuesGenerator.generarBigDecimal(5000,7500);

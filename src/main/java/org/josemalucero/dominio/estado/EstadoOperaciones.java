@@ -8,6 +8,7 @@ import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.operacion.*;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 
@@ -42,69 +43,74 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
 
-        outputProvider.println("Bienvenido, " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
+        outputProvider.println(Messages.get("bienvenido")+", " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
         outputProvider.println(
-            "1. Consultar datos cuenta\n"+
-            "2. Consultar saldo\n"+
-            "3. Depositar dinero\n"+
-            "4. Retirar dinero\n"+
-            "5. Transferir dinero\n"+
-            "6. Consultar conversión entre monedas\n"+
-            "7. Convertir cuenta a otra moneda\n"+
-            "8. Ver historial de transacciones\n"+
-            "9. Cerrar sesión (Sign Out)\n"+
-            "Seleccione una opción: "
+            "1. "+Messages.get("opcion.consultar.datos.cuenta")+"\n"+
+            "2. "+Messages.get("opcion.consultar.saldo")+"\n"+
+            "3. "+Messages.get("opcion.depositar.dinero")+"\n"+
+            "4. "+Messages.get("opcion.retirar.dinero")+"\n"+
+            "5. "+Messages.get("opcion.transferir.dinero")+"\n"+
+            "6. "+Messages.get("opcion.consultar.conversion.monedas")+"\n"+
+            "7. "+Messages.get("opcion.convertir.cuenta")+"\n"+
+            "8. "+Messages.get("opcion.ver.historial")+"\n"+
+            "9. "+Messages.get("opcion.cerrar.sesion")+"\n"+
+                    Messages.get("seleccione.opcion")+" "
         );
     }
 
     /**
      * Maneja mediante un {@code switch} con el número de opción elegida como entrada, las diferentes
      * operaciones que se pueden realizar con una cuenta ya creada para un usuario existente y logueado.
-     * @param opcion
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
-        switch (opcion) {
-            case 1:
-                consultarDatosCuenta(contextoUsuario);
-                break;
-            case 2:
-                consultarSaldo(contextoUsuario);
-                break;
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
+        try {
+            int opcion = Integer.parseInt(opcionStr);
+            switch (opcion) {
+                case 1:
+                    consultarDatosCuenta(contextoUsuario);
+                    break;
+                case 2:
+                    consultarSaldo(contextoUsuario);
+                    break;
 
-            case 3:
-                depositarDinero(contextoUsuario);
-                break;
+                case 3:
+                    depositarDinero(contextoUsuario);
+                    break;
 
-            case 4:
-                retirarDinero(contextoUsuario);
-                break;
+                case 4:
+                    retirarDinero(contextoUsuario);
+                    break;
 
-            case 5:
-                transferirDinero(contextoUsuario);
-                break;
+                case 5:
+                    transferirDinero(contextoUsuario);
+                    break;
 
-            case 6:
-                consultarConversionMoneda(contextoUsuario);
-                break;
-            case 7:
-                convertirCuentaAOtraMoneda(contextoUsuario);
-                break;
+                case 6:
+                    consultarConversionMoneda(contextoUsuario);
+                    break;
+                case 7:
+                    convertirCuentaAOtraMoneda(contextoUsuario);
+                    break;
 
-            case 8:
-                verHistorial(contextoUsuario);
-                break;
+                case 8:
+                    verHistorial(contextoUsuario);
+                    break;
 
-            case 9:
-                outputProvider.println("Cerrando sesión...");
-                contextoUsuario.cerrarSesion();
-                break;
+                case 9:
+                    outputProvider.println(Messages.get("cerrando.sesion"));
+                    contextoUsuario.cerrarSesion();
+                    break;
 
-            default:
-                outputProvider.println("Opción inválida");
+                default:
+                    outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+            }
+        } catch (NumberFormatException e) {
+            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
     }
 
@@ -115,9 +121,9 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
     private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
         outputProvider.println("\n"+contextoUsuario.getUsuarioLogueado().getNombreCompleto());
-        outputProvider.println("Cuenta en "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
-        outputProvider.println("N° Cuenta: "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
-        contextoUsuario.confirmaContinuar();;
+        outputProvider.println(Messages.get("cuenta.en")+" "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
+        outputProvider.println(Messages.get("n.cuenta")+" "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+        contextoUsuario.confirmaContinuar();
 
     }
 
@@ -138,27 +144,17 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param contextoUsuario
      */
     private void depositarDinero(ContextoUsuario contextoUsuario) {
-        outputProvider.println("\nDEPOSITAR EN CUENTA");
-        BigDecimal cifraVerificada;
-        CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        boolean operacionExitosa=false;
-        while(!operacionExitosa) {
-            cifraVerificada = manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider());
-            if(cifraVerificada==null){
-                return;
-            } else {
-                OperacionDeposito operacionDeposito = new OperacionDeposito(cuentaRegular,cifraVerificada,outputProvider);
-                if (operacionDeposito.preValidar()) {
-                    operacionDeposito.ejecutar();
-                    if(operacionDeposito.postValidar()){
-                        operacionExitosa = true;
-                        operacionDeposito.registrar(cuentaRegular);
-                        outputProvider.println("DEPOSITO REALIZADO");
-                        contextoUsuario.confirmaContinuar();
-                    }
+        System.out.println("CANTIDAD DE DEPOSITO POR SESION: "+contextoUsuario.getDepositos_por_sesion());
+        System.out.println("CANTIDAD DE DEPOSITO POR CUENTA: "+contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_depositos_historicos());
+        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_depositos_historicos()>=ConstantesFiscalesBancarias.LIMITE_DEPOSITOS_POR_CUENTA){
+            outputProvider.println("\n"+Messages.get("alerta.limite.depositos.por.cuenta"));
 
-                }
-            }
+            contextoUsuario.confirmaContinuar();
+        } else if(contextoUsuario.getDepositos_por_sesion()>=ConstantesFiscalesBancarias.LIMITE_DEPOSITOS_POR_SESION){
+            outputProvider.println("\n"+Messages.get("alerta.limite.depositos.por.sesion"));
+            contextoUsuario.confirmaContinuar();
+        } else {
+            contextoUsuario.cambiarEstado(new EstadoDeposito(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         }
     }
 
@@ -169,26 +165,15 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void retirarDinero(ContextoUsuario contextoUsuario) {
-        outputProvider.println("\nRETIRAR DE CUENTA");
-        Optional<BigDecimal> cifraVerificada;
-        CuentaRegular cuentaRegular = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        boolean operacionExitosa=false;
-        while(!operacionExitosa) {
-            cifraVerificada = Optional.ofNullable(manejarEntradaDeCifraMonetaria(contextoUsuario.getConsoleInputProvider()));
-            if(cifraVerificada.isEmpty()){
-                return;
-            } else  {
-                OperacionRetiro operacionRetiro = new OperacionRetiro(cuentaRegular,cifraVerificada.get(),outputProvider);
-                if (operacionRetiro.preValidar()){
-                    operacionRetiro.ejecutar();
-                    if(operacionRetiro.postValidar()) {
-                        operacionExitosa = true;
-                        operacionRetiro.registrar(cuentaRegular);
-                        outputProvider.println("RETIRO REALIZADO");
-                        contextoUsuario.confirmaContinuar();
-                    }
-                }
-            }
+        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_retiros_historicos()>=ConstantesFiscalesBancarias.LIMITE_RETIROS_POR_CUENTA){
+            outputProvider.println("\n"+Messages.get("alerta.limite.retiros.por.cuenta"));
+
+            contextoUsuario.confirmaContinuar();
+        } else if(contextoUsuario.getRetiros_por_sesion()>=ConstantesFiscalesBancarias.LIMITE_RETIROS_POR_SESION){
+            outputProvider.println("\n"+Messages.get("alerta.limite.retiros.por.sesion"));
+            contextoUsuario.confirmaContinuar();
+        } else {
+            contextoUsuario.cambiarEstado(new EstadoRetiro(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         }
     }
 
@@ -199,11 +184,17 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void transferirDinero(ContextoUsuario contextoUsuario) {
-        outputProvider.println("TRANSFERIR A CUENTA");
-        Optional<Usuario> usuarioDestino = manejarEntradaDeNumeroCuenta(contextoUsuario.getConsoleInputProvider());
-        if(usuarioDestino!=null && !usuarioDestino.isEmpty()){
-            operarSobreCuentaParaTransferir(contextoUsuario,usuarioDestino.get());
+        if(contextoUsuario.getUsuarioLogueado().crearCuentRegular().getCantidad_transferencias_historicas()>=ConstantesFiscalesBancarias.LIMITE_TRANSFERENCIAS_POR_CUENTA){
+            outputProvider.println("\n"+Messages.get("alerta.limite.transferencias.por.cuenta"));
+
+            contextoUsuario.confirmaContinuar();
+        } else if(contextoUsuario.getTransferencias_por_sesion()>=ConstantesFiscalesBancarias.LIMITE_TRANSFERENCIAS_POR_SESION){
+            outputProvider.println("\n"+Messages.get("alerta.limite.transferencias.por.sesion"));
+            contextoUsuario.confirmaContinuar();
+        } else {
+            contextoUsuario.cambiarEstado(new EstadoTransferencias(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         }
+
     }
 
     /**
@@ -232,7 +223,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void verHistorial(ContextoUsuario contextoUsuario) {
-        outputProvider.println("\nMostrando historial...");
+        outputProvider.println("\n"+Messages.get("mostrando.historial"));
         ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
         outputProvider.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
         operacionesHistoricas.forEach(t->outputProvider.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));
@@ -240,15 +231,37 @@ public class EstadoOperaciones extends EstadoUsuario {
     }
 
     /**
+     * Permite obtener el nombre del estado actual.
+     * @return {@code String} del nombre del estado.
+     */
+    @Override
+    public String getNombreEstado() {
+        return Messages.get("nombre.estado.operaciones");
+    }
+
+
+
+
+
+    /*
+    ------------------------->  FUNCIONES OBSOLETAS DESDE LA CREACION DEL ESTADO <EstadoTransferencias>    <--------------------
+
+     */
+
+
+    /**
+
      * Muestra a quien pertenece la cuenta. Si la cuenta obtenida por el N° Cuenta pertenece al mismo usuario, muestra un mensaje y se termina
      * la operación. Si no es el caso, pero aun así la cuenta no implementa la interfaz {@link Transferible}, se informa con un mensaje y se
      * termina la operación. Finalmente, de darse las condiciones necesarias, se elige el tipo de transferencia, se ingresa el monto de la misma.
      * Se {@code prevalida} la operación, luego se {@code ejecuta} y finalmente se {@code postvalida}. De ser exitoso el resultado final,
      * se procede a registrar la operacion mediante {@link RegistroOperacion}
-     *
      * @param contextoUsuario
      * @param usuarioDestino
+     *
+     * @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
+    @Deprecated
     private void operarSobreCuentaParaTransferir(ContextoUsuario contextoUsuario,Usuario usuarioDestino){
         outputProvider.println("La cuenta destino pertenece a: " + usuarioDestino.getNombreCompleto());
         CuentaRegular cuentaRegular =contextoUsuario.getUsuarioLogueado().getCuentaRegular();
@@ -294,7 +307,9 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param contextoUsuario
      * @param cuentaDestino
      * @return {@link TipoTransferencia} Enum que identifica el tipo de transferencia a realizar.
+     * @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
+    @Deprecated
     private TipoTransferencia obtenerTipoTransferencia(ContextoUsuario contextoUsuario,CuentaRegular cuentaDestino){
         CuentaRegular cuentaOrigen = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
         if(!cuentaDestino.getMonedaConvertible().getCodigo().equals(cuentaOrigen.getMonedaConvertible().getCodigo())){
@@ -320,8 +335,9 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param datosTransferencia
      * @param outputProvider
      * @return {@link OperacionTransferencia} que representa la operación de transferencia determinada por el {@link TipoTransferencia}
+     * @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
-
+    @Deprecated
     private OperacionTransferencia obtenerOperacionTransferenciaEspecífica(TipoTransferencia tipoTransferencia,DatosTransferencia datosTransferencia, OutputProvider outputProvider){
         switch (tipoTransferencia) {
             case TipoTransferencia.IGUAL_MONEDA -> {
@@ -346,7 +362,9 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param titulo
      * @param opciones
      * @return {@code int} que representa el índice de una determinada elección o un valor -1 para una operación particular no especificada en las opciones.
+     @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
+    @Deprecated
     private int seleccionMultipleGenerica(InputProvider consoleInputProvider,String titulo,String[] opciones){
         while(true) {
             outputProvider.println(titulo+" | ESC para salir.");
@@ -374,8 +392,10 @@ public class EstadoOperaciones extends EstadoUsuario {
      * @param consoleInputProvider
      * @return {@link Optional<Usuario>} si logra encontrar un usuario o {@code null} en caso contrario o si se
      * cancela la operación.
+     * @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
 
+    @Deprecated
     private Optional<Usuario> manejarEntradaDeNumeroCuenta(InputProvider consoleInputProvider){
         boolean cuentaValida = false;
         while(!cuentaValida){
@@ -398,8 +418,9 @@ public class EstadoOperaciones extends EstadoUsuario {
      * con la operación.
      * @param consoleInputProvider
      * @return {@link BigDecimal} que representa el monto ingresado por medio del {@link InputProvider}
+     * @deprecated Desde que se trasladó toda la funcionalidad de transferencias a su propio EstadoTransferencias
      */
-
+    @Deprecated
     private BigDecimal manejarEntradaDeCifraMonetaria(InputProvider consoleInputProvider) {
         boolean cantidadVálida = false;
         while(!cantidadVálida){
@@ -416,13 +437,6 @@ public class EstadoOperaciones extends EstadoUsuario {
     }
 
 
-    /**
-     * Permite obtener el nombre del estado actual.
-     * @return {@code String} del nombre del estado.
-     */
-    @Override
-    public String getNombreEstado() {
-        return "OPERACIONES";
-    }
+
 
 }

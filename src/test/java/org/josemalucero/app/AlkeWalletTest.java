@@ -2,6 +2,7 @@ package org.josemalucero.app;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.providers.ConsoleOutputProvider;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 import org.josemalucero.servicio.repositorios.RespositorioCuentas;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,10 +24,12 @@ class AlkeWalletTest {
 
     @BeforeEach
     void setUp(){
+        Locale locale =Locale.forLanguageTag("es");
+        Messages.init(locale);
         consoleInputStub = new ConsoleInputStub();
         consoleOutputProvider = new ConsoleOutputProvider();
         contextoUsuario = new ContextoUsuario(consoleInputStub,consoleOutputProvider);
-        alkeWalletFake = new AlkeWalletFake(contextoUsuario, false);
+        alkeWalletFake = new AlkeWalletFake(contextoUsuario, false,true);
     }
 
     @AfterEach
@@ -37,22 +41,21 @@ class AlkeWalletTest {
 
     @Test
     void alkeWalletTest_1() {
-        consoleInputStub.addProximaRespuestaInt(1);
+        consoleInputStub.addProximaRespuestaString("1");
         alkeWalletFake.run();
        assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
     void alkeWalletTest_2() {
-        consoleInputStub.addProximaRespuestaInt(2);
+        consoleInputStub.addProximaRespuestaString("2");
         alkeWalletFake.run();
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("REGISTRO DE NUEVO USUARIO"),"No coinciden la opcion elegida con el nombre de estado");
     }
 
     @Test
     void alkeWalletTest_Logueo() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1,1,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Jose","Lucero","Joselucero","\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1","Jose","Lucero","Joselucero","\n"});
         alkeWalletFake.runBySteps(3);
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
     }
@@ -60,56 +63,48 @@ class AlkeWalletTest {
     @Test
     void alkeWalletTest_CreacionCuenta_Logueo() {
         consoleInputStub.addSerieDeRespuestasInt(new int[]{2,1,1,4});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Carlos","Casas","CCasas","CCasas","Carlos","Casas","CCasas","\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"2","1","Carlos","Casas","CCasas","CCasas","1","Carlos","Casas","CCasas","4","\n"});
         alkeWalletFake.runBySteps(4);
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
 
     }
     @Test
     void alkeWalletTest_CreacionCuenta_Logueo2() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{2,1,1,4});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Berta","Arranz","BArranz","BArranz","Berta","Arranz","BArranz","\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"2","1","Berta","Arranz","BArranz","BArranz","1","Berta","Arranz","BArranz","4","\n"});
         alkeWalletFake.runBySteps(4);
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
-        consoleInputStub.addProximaRespuestaInt(9);
+        consoleInputStub.addProximaRespuestaString("9");
         alkeWalletFake.runBySteps(1);
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
     }
 
     @Test
     void alkeWalletTest_interaccion_transferencia() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{2,1,1,2,3});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Arturo","Amelio","AAmelio","AAmelio","Arturo","Amelio","AAmelio","\n","15000.00","\n"});
-        alkeWalletFake.runBySteps(5);
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"2","1","Arturo","Amelio","AAmelio","AAmelio","1","Arturo","Amelio","AAmelio","2","\n","3","15000.00","\n"});
+        alkeWalletFake.runBySteps(6);
         String serialCuenta = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta();
 
         assertEquals(contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance(),new BigDecimal("15000.00"));
-        consoleInputStub.addProximaRespuestaInt(9);
+        consoleInputStub.addProximaRespuestaString("9");
         alkeWalletFake.runBySteps(1);
 
 
         /* ESTADO LOGIN */
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1,3});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Jose","Lucero","Joselucero","15000.00","\n"});
-        alkeWalletFake.runBySteps(2);
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","Jose","Lucero","Joselucero","3","15000.00","\n"});
+        alkeWalletFake.runBySteps(3);
         assertEquals(new BigDecimal("15000.00"),contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance());
 
         /* ESTADO OPERACIONES PARA TRANSFERIR */
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{5,1,9});
-        consoleInputStub.setProximaRespuestaString(serialCuenta);
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"5",serialCuenta,"3000.00","\n","9"});
 
-        consoleInputStub.setProximaRespuestaString("3000.00");
-        consoleInputStub.setProximaRespuestaString("\n");
-        consoleInputStub.setProximaRespuestaString("\n");
-        alkeWalletFake.runBySteps(3);
+        alkeWalletFake.runBySteps(4);
 
 
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("LOGIN"),"No coinciden la opcion elegida con el nombre de estado");
         /* ESTADO LOGIN */
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1});
-        consoleInputStub.clearRespuestasString();
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"Arturo","Amelio","AAmelio","\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","Arturo","Amelio","AAmelio","\n"});
+        alkeWalletFake.runBySteps(2);
         assertEquals(new BigDecimal("18000.00"),contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance());
     }
 }

@@ -899,7 +899,7 @@
     <HasRelation name="conversorMoneda" source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaDestino" target="org.josemalucero.dominio.moneda.ConversorMoneda" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.servicio.formatters.FormateadorDeRegistroAImprimir" target="org.josemalucero.dominio.operacion.RegistroOperacion" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="org.josemalucero.servicio.repositorios.RespositorioCuentas" target="org.josemalucero.dominio.cuenta.CuentaRegular" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="org.josemalucero.dominio.estado.EstadoInicio" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Validable"/>
     <UseRelation source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
@@ -919,7 +919,7 @@
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionConsulta" target="org.josemalucero.dominio.operacion.Operacion"/>
     <IsRelation name="is" source="org.josemalucero.dominio.operacion.OperacionTransferencia" target="org.josemalucero.dominio.operacion.OperacionDeMonto"/>
     <UseRelation source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.usuario.Usuario" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoInicio" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.operacion.OperacionRetiro" target="org.josemalucero.dominio.operacion.Registrable"/>
     <UseRelation source="org.josemalucero.dominio.operacion.OperacionTransferenciaMonedaOrigen" target="org.josemalucero.dominio.moneda.MonedaConvertible" sourceCardinality="1..1" targetCardinality="1..1"/>
     <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="org.josemalucero.dominio.cuenta.CuentaRegular" target="org.josemalucero.dominio.cuenta.Convertible"/>

@@ -2,7 +2,10 @@ package org.josemalucero.servicio.repositorios;
 
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
+import org.josemalucero.dominio.usuario.Credencial;
 import org.josemalucero.dominio.usuario.Usuario;
+import org.josemalucero.servicio.passwords.BCryptPasswordEncoderService;
+import org.josemalucero.servicio.providers.Messages;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -65,9 +68,32 @@ public class RepositorioUsuarios {
         Usuario usuario = new Usuario(nombre, apellido, claveHasheada);
         MonedaConvertible moneda = RepositorioMonedas.encontrarMonedaPorCodigo(codigoMoneda);
         usuario.crearCuentRegular().setMoneda(moneda);
-        usuario.getCuentaRegular().registrarOperacion(new RegistroOperacion("Apertura Cuenta Regular en "+moneda.getNombre(), BigDecimal.ZERO,BigDecimal.ZERO));
+        usuario.getCuentaRegular().registrarOperacion(new RegistroOperacion(Messages.get("apertura.cuenta.regular.en") +" "+moneda.getNombre(), BigDecimal.ZERO,BigDecimal.ZERO));
         usuariosDB.add(usuario);
         return usuario;
+    }
+
+    public static Usuario agregarUsuarioYAsignarCuenta(Credencial credencial,String codigoMoneda) {
+
+        Usuario usuario = new Usuario(credencial.getNombre(), credencial.getApellido(), new BCryptPasswordEncoderService().hash(credencial.getClave()));
+        MonedaConvertible moneda = RepositorioMonedas.encontrarMonedaPorCodigo(codigoMoneda);
+        usuario.crearCuentRegular().setMoneda(moneda);
+        usuario.getCuentaRegular().registrarOperacion(new RegistroOperacion(Messages.get("apertura.cuenta.regular.en") +" "+moneda.getNombre(), BigDecimal.ZERO,BigDecimal.ZERO));
+        usuariosDB.add(usuario);
+        return usuario;
+    }
+
+    /**
+     * Genera algunos usuarios ficticios para poder
+     * hacer uso de la app con una base mínima.
+     * @author José Maria Lucero
+     */
+
+    public static void createSomeUsers() {
+        BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
+        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
+        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
+        RepositorioUsuarios.agregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
     }
 
     /**

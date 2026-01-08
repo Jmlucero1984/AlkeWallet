@@ -15,4 +15,5 @@ public interface OutputProvider {
     void println(int intNum);
     void print(Object object);
     void print(String string);
+    void printlnAlert(String alert);
 }

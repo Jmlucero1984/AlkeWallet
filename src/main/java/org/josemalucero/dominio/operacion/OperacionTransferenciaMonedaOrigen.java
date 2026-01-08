@@ -3,6 +3,7 @@ package org.josemalucero.dominio.operacion;
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.ConversorMoneda;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -39,7 +40,9 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
 
     @Override
     public String getNombreOperacion() {
-        return "TRANSFERENCIA A CUENTA DE DISTINTA MONEDA";
+
+        return Messages.get("operacion.transferencia.a.cuenta.distinta.moneda");
+
     }
 
     /**
@@ -47,16 +50,14 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
      * @return {@inheritDoc}
      */
     @Override
-    public String getNombreOperacionReciproca() {
-        return "TRANSFERENCIA DESDE CUENTA DE DISTINTA MONEDA";
-    }
+    public String getNombreOperacionReciproca(){ return Messages.get("operacion.transferencia.desde.cuenta.distinta.moneda");};
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void ejecutar() {
-        outputProvider.println("EJECUTANDO TRANSFERENCIA EN MONEDA DE ORIGEN");
+        outputProvider.println(Messages.get("ejecutando.transferencia.en.moneda.de.origem"));
         super.registrarEstadoPrevio();
         cuentaRegular.tranfiere(monto);
         cuentaDestino.recibeTransferencia(montoEfectivo);
@@ -82,14 +83,18 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
 
 
         if (monto.compareTo(BigDecimal.ZERO)==0) {
-            outputProvider.println("No se puede realizar transferencia por monto igual a 0");
+            outputProvider.println(Messages.get("alert.no.transferir.monto.nulo"));
             return false;
         }
         if(monto.compareTo(cuentaRegular.getBalance())<=0){
+            if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_TRANSFERENCIA)>0){
+                outputProvider.println(Messages.get("alerta.no.se.puede.transferir.cantidad.limite.sii"));
+                return false;
+            }
             return true;
 
         } else {
-            outputProvider.println("No se puede tranferir la cantidad solicitada. FONDOS INSUFICIENTES");
+            outputProvider.println(Messages.get("no.se.puede.transferir.cantidad")+". "+Messages.get("fondos.insuficientes"));
             return false;
         }
     }
@@ -105,7 +110,7 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
             return true;
 
         } else {
-            outputProvider.println("HA FALLADO LA TRANSFERENCIA");
+            outputProvider.println(Messages.get("ha.fallado.la.transferencia"));
             return false;
         }
     }
@@ -124,7 +129,7 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));
-        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" (C.N° "+cuentaRegular.getSerialCuenta()+")",montoEfectivo,cuentaDestino.getBalance()));
+        cuentaDestino.registrarOperacion(new RegistroOperacion(getNombreOperacionReciproca()+" ("+Messages.get("c.n")+" "+cuentaRegular.getSerialCuenta()+")",montoEfectivo,cuentaDestino.getBalance()));
     }
 }
 

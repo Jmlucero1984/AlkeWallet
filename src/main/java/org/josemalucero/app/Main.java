@@ -4,19 +4,29 @@ package org.josemalucero.app;
 
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
-import org.josemalucero.servicio.providers.ConsoleInputProvider;
-import org.josemalucero.servicio.providers.ConsoleOutputProvider;
-import org.josemalucero.servicio.providers.InputProvider;
-import org.josemalucero.servicio.providers.OutputProvider;
+import org.josemalucero.servicio.providers.*;
 
 import java.io.IOException;
+import java.util.Locale;
 
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        boolean isConsole = args.length > 0 && args[0].equalsIgnoreCase("console");
+        boolean isConsole=false;
+        boolean englishLanguage=false;
+        for(int i=0; i< args.length; i++){
+            switch (args[i]){
+                case "-c","console","Console","CONSOLE","consola","Consola","CONSOLA":
+                    isConsole=true;
+                case "EN","en","En","English","english","ENGLISH","ingles","Ingles","INGLES":
+                    englishLanguage=true;
+            }
+            
+        }
+        Locale locale =englishLanguage?Locale.forLanguageTag("en"):Locale.forLanguageTag("es");
+        Messages.init(locale);
          runApp(isConsole);
 
 
@@ -31,7 +41,7 @@ public class Main {
      * @author José Maria Lucero
      */
     private static void runApp(boolean runningOnConsole){
-        new AlkeWallet(new ContextoUsuario(new ConsoleInputProvider(), new ConsoleOutputProvider()),runningOnConsole).run();
+        new AlkeWallet(new ContextoUsuario(new ConsoleInputProvider(), new ConsoleOutputProvider()),runningOnConsole,true).run();
     }
 
 

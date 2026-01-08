@@ -1,6 +1,7 @@
 package org.josemalucero.servicio.formatters;
 
 import org.josemalucero.dominio.operacion.RegistroOperacion;
+import org.josemalucero.servicio.providers.Messages;
 
 
 /**
@@ -72,10 +73,10 @@ public class FormateadorDeRegistroAImprimir {
         for (int i = 0; i < guiones.length; i++) {
             guiones[i]='─';
         }
-        String formattedOutput = alinearTexto(MAX_DATE_CHARS,"FECHA Y HORA",alineado) +" │ "+
-                alinearTexto(MAX_DESCRIPTION_CHARS,"DESCRIPCIÓN",alineado) +" │ "+
-                alinearTexto(MAX_MONTO_CHARS,"MONTO",alineado) +" │ "+
-                alinearTexto(MAX_BALANCE_CHARS,"BALANCE",alineado)+"\n"+ new String(guiones);
+        String formattedOutput = alinearTexto(MAX_DATE_CHARS, Messages.get("formmatter.fecha.hora"),alineado) +" │ "+
+                alinearTexto(MAX_DESCRIPTION_CHARS,Messages.get("formmatter.descripcion") ,alineado) +" │ "+
+                alinearTexto(MAX_MONTO_CHARS,Messages.get("formmatter.monto"),alineado) +" │ "+
+                alinearTexto(MAX_BALANCE_CHARS,Messages.get("formmatter.balance"),alineado)+"\n"+ new String(guiones);
         return formattedOutput;
     }
 

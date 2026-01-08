@@ -12,44 +12,44 @@ public class Interacciones {
     }
 
     public EstadoUsuario crearUsuario(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{2, 1, 2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave,clave});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"2","1",nombre, apellido, clave,clave,"2"});
         alkeWalletFake.runBySteps(3);
         return alkeWalletFake.contextoUsuario.getEstadoActual();
     }
     public EstadoUsuario logInUsuarioYAsignarCuentaCLPAUsuario(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 1,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave,"\n"});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",nombre, apellido, clave,"1","\n","9","2"});
         alkeWalletFake.runBySteps(5);
         return  alkeWalletFake.contextoUsuario.getEstadoActual();
     }
     public EstadoUsuario logInUsuarioYAsignarCuentaARSAUsuario(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1, 1, 2,9,2});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave,"\n"});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",nombre, apellido, clave,"2","\n","9","2"});
         alkeWalletFake.runBySteps(5);
         return  alkeWalletFake.contextoUsuario.getEstadoActual();
     }
     public EstadoUsuario logInHastaOperacionesUsuarioExistenteYConCuenta(String nombre, String apellido, String clave) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{1,1});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{nombre, apellido, clave});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1",nombre, apellido, clave});
         alkeWalletFake.runBySteps(2);
         return alkeWalletFake.contextoUsuario.getEstadoActual();
     }
     public EstadoUsuario depositarEnCuenta(String cantidad) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{3});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{cantidad,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"3",cantidad,"\n"});
+        alkeWalletFake.runBySteps(2);
         return alkeWalletFake.contextoUsuario.getEstadoActual();
     }
 
     public EstadoUsuario retirarDeCuenta(String cantidad) {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{4});
-        consoleInputStub.addSerieDeRespuestasString(new String[]{cantidad,"\n"});
-        alkeWalletFake.runBySteps(1);
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"4",cantidad,"\n"});
+        alkeWalletFake.runBySteps(2);
         return alkeWalletFake.contextoUsuario.getEstadoActual();
     }
     public EstadoUsuario logOutDesdeOperaciones() {
-        consoleInputStub.addSerieDeRespuestasInt(new int[]{9,2});
+
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"9","2"});
         alkeWalletFake.runBySteps(2);
         return alkeWalletFake.contextoUsuario.getEstadoActual();
     }

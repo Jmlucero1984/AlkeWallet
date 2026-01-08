@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -24,16 +25,20 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
     }
     @Override
     public String getNombreOperacion() {
-        return "DEPÓSITO EN CUENTA";
+        return Messages.get("operacion.deposito") ;
     }
 
 
     @Override
     public boolean preValidar() {
         if(monto.compareTo(BigDecimal.ZERO)>=0){
+            if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_DEPOSITO)>0){
+                outputProvider.println(Messages.get("alerta.no.se.puede.depositar.cantidad.limite.bancario"));
+                return false;
+            }
             return true;
         } else {
-            outputProvider.println("No se pueden depositar cantidades negativas");
+            outputProvider.println(Messages.get("alerta.no.depositar.cantidades.negativas"));
             return  false;
         }
     }
@@ -50,7 +55,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
             return true;
 
         } else {
-            outputProvider.println("HA FALLADO EL DEPOSITO");
+            outputProvider.println(Messages.get("alerta.ha.fallado.deposito"));
             return false;
         }
     }
@@ -59,7 +64,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
      */
     @Override
     public void restaurarEstadoAnterior() {
-        outputProvider.println("ROLLBACK");
+        outputProvider.println(Messages.get("rollback"));
     }
 
     @Override

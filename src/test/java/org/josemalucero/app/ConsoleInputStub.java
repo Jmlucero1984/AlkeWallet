@@ -14,6 +14,7 @@ public class ConsoleInputStub implements InputProvider {
         respuestasInt.add(proximaRespuestaInt);
     }
 
+
     public void addSerieDeRespuestasInt(int[] serieDeRespuestas) {
         for (int i = 0; i < serieDeRespuestas.length; i++) {
             respuestasInt.add(serieDeRespuestas[i]);
@@ -34,7 +35,8 @@ public class ConsoleInputStub implements InputProvider {
         }
     }
 
-    public void setProximaRespuestaString(String proximaRespuestaString) {
+
+    public void addProximaRespuestaString(String proximaRespuestaString) {
         respuestasString.add(proximaRespuestaString);
     }
 

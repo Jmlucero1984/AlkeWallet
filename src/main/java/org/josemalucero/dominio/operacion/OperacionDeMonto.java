@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class OperacionDeMonto extends Operacion{
 
     @Override
     public String getNombreOperacion() {
-        return "OPERACION DE MONTO";
+        return Messages.get("operacion.de.monto");
     }
 
     @Override

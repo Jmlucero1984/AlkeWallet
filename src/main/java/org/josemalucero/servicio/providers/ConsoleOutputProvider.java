@@ -42,4 +42,9 @@ public class ConsoleOutputProvider implements OutputProvider{
     public void print(String string) {
         System.out.print(string);
     }
+
+    @Override
+    public void printlnAlert(String alert) {
+        System.out.println(alert);
+    }
 }

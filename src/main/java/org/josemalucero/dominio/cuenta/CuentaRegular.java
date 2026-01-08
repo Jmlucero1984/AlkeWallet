@@ -12,10 +12,40 @@ import java.math.BigDecimal;
 public class CuentaRegular extends Cuenta implements Depositable,Retirable,Consultable,Transferible,Convertible{
 
     BigDecimal cantidadDisponible = BigDecimal.valueOf(0);
+    private int cantidad_depositos_historicos=0;
+    private int cantidad_transferencias_historicas=0;
+    private int cantidad_retiros_historicos=0;
 
     public CuentaRegular() {
         super();
     }
+    public void incrementar_cantidad_depositos_historicos(){
+
+        cantidad_depositos_historicos+=1;
+
+    }
+
+    public void incrementar_cantidad_retiros_historicos(){
+        cantidad_retiros_historicos+=1;
+    }
+
+    public void incrementar_cantidad_transferencias_historicas(){
+        cantidad_transferencias_historicas+=1;
+    }
+
+    public int getCantidad_depositos_historicos() {
+        return cantidad_depositos_historicos;
+    }
+
+    public int getCantidad_transferencias_historicas() {
+        return cantidad_transferencias_historicas;
+    }
+
+    public int getCantidad_retiros_historicos() {
+        return cantidad_retiros_historicos;
+    }
+
+
 
     @Override
     public BigDecimal getBalance() {

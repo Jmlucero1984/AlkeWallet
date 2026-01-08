@@ -247,7 +247,7 @@
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSalir" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoCreacionCuenta" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
-    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoEntrada" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
+    <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoInicio" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoOperaciones" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoSignIn" target="org.josemalucero.dominio.estado.EstadoUsuario"/>
     <IsRelation name="is" source="org.josemalucero.dominio.estado.EstadoConversionMonedas" target="org.josemalucero.dominio.estado.EstadoUsuario"/>

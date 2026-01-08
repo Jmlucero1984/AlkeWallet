@@ -5,6 +5,7 @@ import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.OperacionDeConversionDeCuenta;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 /**
@@ -30,8 +31,8 @@ public class EstadoConversionCuenta extends EstadoUsuario{
      * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
-        outputProvider.println("Seleccione moneda a la que desea convertir su cuenta:");
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
+        outputProvider.println(Messages.get("seleccione.moneda.convertir.cuenta"));
         MonedaConvertible monedaConvertible = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible();
 
         for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {
@@ -40,35 +41,42 @@ public class EstadoConversionCuenta extends EstadoUsuario{
                         + " | " + RepositorioMonedas.getMonedasDB().get(i).getCodigo());
             }
         }
-        outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". CANCELAR");
+        outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". "+ Messages.get("cancelar"));
     }
 
     /**
      *  Verifica que la opción elegida, determinada por el valor numérico asociado, esté dentro del rango permitido,
      *  que no corresponda exactamente con el indice de la moneda actual de
      *  la cuenta, o que en última instancia, la elección corresponda a salir del estado actual.
-     * @param opcion
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
-        int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size()+1;
-        CuentaRegular cuantaDeUsuario = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
-        MonedaConvertible monedaActual = cuantaDeUsuario.getMonedaConvertible();
-        if (opcion <= 0 || opcion > cantidadDeOpciones || (opcion  ==RepositorioMonedas.getMonedasDB().indexOf(monedaActual)+1 )) {
-            outputProvider.println("Opción inválida");
-        } else if (opcion==cantidadDeOpciones){
-            contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
-        } else {
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
 
-            MonedaConvertible monedaDestino =RepositorioMonedas.getMonedasDB().get(opcion-1);
-            OperacionDeConversionDeCuenta operacionDeConversionDeCuenta = new OperacionDeConversionDeCuenta(cuantaDeUsuario,monedaDestino,outputProvider);
-            operacionDeConversionDeCuenta.ejecutar();
-            operacionDeConversionDeCuenta.registrar(cuantaDeUsuario);
-            outputProvider.println("CONVERSIÓN REALIZADA");
-            contextoUsuario.confirmaContinuar();
-            contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+        try{
+            int opcion=Integer.parseInt(opcionStr);
+            int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size()+1;
+            CuentaRegular cuantaDeUsuario = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
+            MonedaConvertible monedaActual = cuantaDeUsuario.getMonedaConvertible();
+            if (opcion <= 0 || opcion > cantidadDeOpciones || (opcion  ==RepositorioMonedas.getMonedasDB().indexOf(monedaActual)+1 )) {
+                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+            } else if (opcion==cantidadDeOpciones){
+                contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+            } else {
 
+                MonedaConvertible monedaDestino =RepositorioMonedas.getMonedasDB().get(opcion-1);
+                OperacionDeConversionDeCuenta operacionDeConversionDeCuenta = new OperacionDeConversionDeCuenta(cuantaDeUsuario,monedaDestino,outputProvider);
+                operacionDeConversionDeCuenta.ejecutar();
+                operacionDeConversionDeCuenta.registrar(cuantaDeUsuario);
+                outputProvider.printlnAlert(Messages.get("conversion.realizada"));
+                contextoUsuario.confirmaContinuar();
+                contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+
+            }
+
+        } catch (NumberFormatException e){
+            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
 
     }
@@ -80,6 +88,6 @@ public class EstadoConversionCuenta extends EstadoUsuario{
 
     @Override
     public String getNombreEstado() {
-        return "CONVERSIÓN DE CUENTA";
+        return Messages.get("nombre.estado.conversion.cuenta");
     }
 }

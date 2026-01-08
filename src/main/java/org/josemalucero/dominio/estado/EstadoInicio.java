@@ -2,6 +2,7 @@ package org.josemalucero.dominio.estado;
 
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.servicio.providers.InputProvider;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 /**
@@ -9,7 +10,7 @@ import org.josemalucero.servicio.providers.OutputProvider;
  * a lo largo de la actividad del usuario dentro de la aplicación.
  @author José Maria Lucero
  */
-public class EstadoEntrada extends EstadoUsuario{
+public class EstadoInicio extends EstadoUsuario{
 
 
     /**
@@ -17,7 +18,7 @@ public class EstadoEntrada extends EstadoUsuario{
      * @param inputProvider
      * @param outputProvider
      */
-    public EstadoEntrada(InputProvider inputProvider, OutputProvider outputProvider) {
+    public EstadoInicio(InputProvider inputProvider, OutputProvider outputProvider) {
         super(inputProvider, outputProvider);
     }
 
@@ -26,21 +27,24 @@ public class EstadoEntrada extends EstadoUsuario{
      * @param contextoUsuario
      */
     @Override
-    public void mostrarMenu(ContextoUsuario contextoUsuario) {
-        outputProvider.println("1. Iniciar sesión");
-        outputProvider.println("2. Registrarse (Sign In)");
-        outputProvider.println("3. Salir");
-        outputProvider.print("Seleccione una opción: ");
+    public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
+
+        outputProvider.println("1. "+Messages.get("opcion.iniciar.sesion"));
+        outputProvider.println("2. "+Messages.get("opcion.registrarse"));
+        outputProvider.println("3. "+Messages.get("salir"));
+        outputProvider.print(Messages.get("seleccione.opcion")+" ");
     }
 
     /**
      * Recibe la opción para derivar en los estados correspondientes.
-     * @param opcion
+     * @param opcionStr
      * @param contextoUsuario
      */
     @Override
-    public void procesarOpcion(int opcion, ContextoUsuario contextoUsuario) {
+    public void procesarOpcion(String opcionStr, ContextoUsuario contextoUsuario) {
 
+        try {
+            int opcion = Integer.parseInt(opcionStr);
             switch (opcion) {
                 case 1:
                     contextoUsuario.cambiarEstado(new EstadoLogin(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
@@ -51,13 +55,21 @@ public class EstadoEntrada extends EstadoUsuario{
                     break;
 
                 case 3:
-                    contextoUsuario.cambiarEstado(new EstadoSalir(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                    outputProvider.println("\n   "+Messages.get("esperamos.vuelva.pronto")+"\n");
+                    outputProvider.println("─────────────────────────────────");
+                    outputProvider.println(Messages.get("desarrollado.por"));
+                    System.exit(0);
                     break;
 
                 default:
-                    outputProvider.println("Opción inválida");
+                    outputProvider.printlnAlert(Messages.get("opcion.invalida"));
             }
+
+        } catch (NumberFormatException e) {
+            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
         }
+    }
+
 
     /**
      * Permite obtener el nombre del estado actual.
@@ -65,7 +77,7 @@ public class EstadoEntrada extends EstadoUsuario{
      */
     @Override
     public String getNombreEstado() {
-        return "BIENVENIDO A BILLETERA VIRTUAL ALKE WALLET";
+        return Messages.get("nombre.estado.inicio");
 
     }
 }

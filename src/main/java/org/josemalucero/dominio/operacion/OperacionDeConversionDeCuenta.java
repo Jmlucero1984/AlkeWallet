@@ -2,6 +2,7 @@ package org.josemalucero.dominio.operacion;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.moneda.MonedaConvertible;
+import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.providers.OutputProvider;
 
 import java.math.BigDecimal;
@@ -31,7 +32,7 @@ public class OperacionDeConversionDeCuenta extends Operacion implements Registra
     }
     @Override
     public String getNombreOperacion() {
-        return "CONVERSIÓN DE CUENTA DE "+monedaAntesDeConversion.getCodigo()+" A "+monedaDestino.getCodigo();
+        return Messages.get("conversion.de.cuenta.de")+" "+monedaAntesDeConversion.getCodigo()+" "+Messages.get("a")+" "+monedaDestino.getCodigo();
     }
 
 
