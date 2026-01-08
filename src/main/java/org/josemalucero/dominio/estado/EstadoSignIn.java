@@ -13,7 +13,7 @@ import java.io.Console;
 import java.util.Optional;
 /**
  La clase {@code EstadoSignIn} es una implmentación concreta de la clase abstracta {@code EstadoUsuario}.
-
+ @author José Maria Lucero
  */
 
 public class EstadoSignIn extends EstadoUsuario {
@@ -172,7 +172,6 @@ public class EstadoSignIn extends EstadoUsuario {
             apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
 
-
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
             outputProvider.println(Messages.get("ya.existe.usuario.con.nombre")+" "+usuarioExistente.get().getNombreCompleto());
@@ -180,7 +179,6 @@ public class EstadoSignIn extends EstadoUsuario {
             String clave =null;
             boolean coinciden = false;
             while(!coinciden){
-
                 while(clave==null){
                     outputProvider.println(Messages.get("ingrese.clave")+" ");
                     if(AlkeWallet.onConsole){
@@ -189,15 +187,10 @@ public class EstadoSignIn extends EstadoUsuario {
                             clave = new String(passwordArray);
                             // Limpiar el array de caracteres por seguridad
                             java.util.Arrays.fill(passwordArray, ' ');
-
                     } else {
-
                         clave = validarClavesDeUsuario(consoleInputProvider);
                     }
-
                 }
-
-
                 String confirmaClave=null;
                 while(confirmaClave==null){
                     outputProvider.print("Confirmar clave: ");
@@ -209,17 +202,14 @@ public class EstadoSignIn extends EstadoUsuario {
                         java.util.Arrays.fill(passwordArray, ' ');
 
                     } else {
-
                         confirmaClave = validarClavesDeUsuario(consoleInputProvider);
                     }
                 }
-
                 if(clave.equals(confirmaClave)) {
                     coinciden = true;
                 } else {
                     outputProvider.println(Messages.get("validacion.las.contrasenas.no.coinciden"));
                     clave=null;
-
                 }
             }
 

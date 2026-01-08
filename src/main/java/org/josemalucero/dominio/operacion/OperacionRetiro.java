@@ -17,6 +17,9 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
         super( cuenta, monto,outputProvider);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void ejecutar() {
         saldoAnteriorCuentaOrigen = cuentaRegular.getBalance();
@@ -24,14 +27,10 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
 
     }
 
-    @Override
-    public String getNombreOperacion() {
-        return Messages.get("operacion.retiro");
-    }
-
     /**
      * Antes de realizar un retiro de la cuenta, verifica que los fondos existentes sean suficientes como
-     * para esa operación.
+     * para esa operación. Asi mismo verifica que el monto no tenga restricciones
+     * bancarias o fiscales.
      * @return {@code bool} que indica la posibilidad de ejecutar el retiro de los fondos especificados.
      */
     @Override
@@ -65,6 +64,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
         }
     }
 
+
     /**
      * @TODO Implementar los pasos necesarios para revertir esta operación y devolver la cuenta a su estado anterior.
      */
@@ -75,6 +75,10 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
 
     }
 
+    /**
+     * {@inheritDoc}
+     * @param cuentaRegular
+     */
     @Override
     public void registrar(CuentaRegular cuentaRegular) {
         cuentaRegular.registrarOperacion(new RegistroOperacion(getNombreOperacion(),monto,cuentaRegular.getBalance()));

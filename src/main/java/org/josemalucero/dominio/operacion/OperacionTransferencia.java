@@ -76,7 +76,8 @@ public class OperacionTransferencia extends OperacionDeMonto implements Reversib
     /**
      *Realiza las comprobaciones necesarias para realizar una transferencia significativa y efectiva.
      * @return {@code bool} que indica la posibilidad de ejecutar la transferencia, sea por los fondos disponibles o
-     * por la introducción de una cifra monetario no trivial.
+     * por la introducción de una cifra monetario no trivial. Asi mismo verifica que el monto no tenga restricciones
+     * bancarias o fiscales.
      */
     @Override
     public boolean preValidar() {

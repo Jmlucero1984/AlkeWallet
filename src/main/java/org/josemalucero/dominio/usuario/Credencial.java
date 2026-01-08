@@ -1,5 +1,9 @@
 package org.josemalucero.dominio.usuario;
 
+/**
+ * Clase que permite empaquetar los datos básicos de usuario para manejo de sesión.
+ * @author José María Lucero
+ */
 public class Credencial {
     private String nombre;
     private String apellido;

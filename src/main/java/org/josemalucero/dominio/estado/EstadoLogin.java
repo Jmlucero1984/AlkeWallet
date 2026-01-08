@@ -109,9 +109,7 @@ public class EstadoLogin extends EstadoUsuario {
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
             outputProvider.println(Messages.get("ingrese.clave")+" ");
-
             String clave;
-
             if(AlkeWallet.onConsole){
                 Console console = System.console();
                 char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");
@@ -121,18 +119,15 @@ public class EstadoLogin extends EstadoUsuario {
             } else {
                 clave = consoleInputProvider.leerOpcionString();
             }
-
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){
                 outputProvider.println(Messages.get("logueo.exitoso"));
                 return  usuarioExistente.get();
             } else {
                 outputProvider.println(Messages.get("datos.inicio.sesion.no.validos"));
             }
-
         } else {
             outputProvider.println( Messages.get("el.usuario")+" "+nombre+" "+apellido+" "+Messages.get("no.existe.en.base.de.datos"));
         }
-
         return null;
     }
 

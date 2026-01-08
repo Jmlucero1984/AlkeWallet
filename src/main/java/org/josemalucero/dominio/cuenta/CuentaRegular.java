@@ -19,6 +19,7 @@ public class CuentaRegular extends Cuenta implements Depositable,Retirable,Consu
     public CuentaRegular() {
         super();
     }
+
     public void incrementar_cantidad_depositos_historicos(){
 
         cantidad_depositos_historicos++;

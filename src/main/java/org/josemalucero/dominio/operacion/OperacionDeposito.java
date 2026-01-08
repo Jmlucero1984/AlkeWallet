@@ -28,10 +28,14 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         return Messages.get("operacion.deposito") ;
     }
 
-
+    /**
+     *
+     * @return {@code boolean} que indica el si el depósito es mayor que 0 y si el monto está dentro de los límites
+     * establecidos por la entidad bancaria.
+     */
     @Override
     public boolean preValidar() {
-        if(monto.compareTo(BigDecimal.ZERO)>=0){
+        if(monto.compareTo(BigDecimal.ZERO)>0){
             if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_DEPOSITO)>0){
                 outputProvider.println(Messages.get("alerta.no.se.puede.depositar.cantidad.limite.bancario"));
                 return false;

@@ -73,6 +73,13 @@ public class RepositorioUsuarios {
         return usuario;
     }
 
+    /**
+     * Crea un nuevo usuario con nombre, apellido y clave hasheada, crea una moneda, una cuenta de usuario a la
+     * cual asignar a esta última, y finalmente agrega el usuario al {@code ArrayList<Usuario>}.
+     * @param credencial
+     * @param codigoMoneda
+     * @return {@link Usuario} que ha sido agregado.
+     */
     public static Usuario agregarUsuarioYAsignarCuenta(Credencial credencial,String codigoMoneda) {
 
         Usuario usuario = new Usuario(credencial.getNombre(), credencial.getApellido(), new BCryptPasswordEncoderService().hash(credencial.getClave()));
