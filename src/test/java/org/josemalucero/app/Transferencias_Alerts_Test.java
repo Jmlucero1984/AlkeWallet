@@ -57,6 +57,7 @@ public class Transferencias_Alerts_Test {
     @Test
     void alertaAutotrasnferenciaTest(){
         String numeroCuenta = usuario.getCuentaRegular().getNumeroCuenta();
+
         contextoUsuario.procesarOpcion(numeroCuenta);
         Assertions.assertAll(
                 ()-> assertEquals(Messages.get("alerta.autotransferencia"),consoleOutputStub.popAlert()),
