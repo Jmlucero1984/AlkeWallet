@@ -55,7 +55,7 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 
 | Requisito | Versión |
 |---------|--------|
-| Java JDK | 17 o superior |
+| Java JDK | 21 o superior |
 | IDE | IntelliJ, Eclipse, Apache NetBeans, VS Code |
 
 ---
@@ -138,12 +138,12 @@ Retorno al menú / salida
 - Registro de usuario en la DB interna
 - Asociación de cuenta
 
-### 🏦 Gestión de monedas
+### 💰​ Gestión de monedas
 - Creación de monedas
 - Registro de monedas en la DB interna
 - Definición de su ratio de convertibilidad respecto al USD
 
-### 🏦 Gestión de cuentas
+### 🗃️ Gestión de cuentas
 - Creación de cuentas
 - Asociación de monedas
 
@@ -153,7 +153,7 @@ Retorno al menú / salida
 - Transferencias entre cuentas
 - Conversión de cuenta a otra moneda
 
-### 💸 Operaciones de consulta
+### ​🧾 Operaciones de consulta
 - Datos de la cuenta
 - Saldo actual
 - Conversión de montos entre monedas
@@ -226,7 +226,7 @@ El diseño del sistema permite:
 
 ## 🛠️ Tecnologías utilizadas
 
-- Java 17+
+- Java 21+
 - Programación Orientada a Objetos
 - Java Collections
 - BigDecimal para manejo de montos
