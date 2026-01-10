@@ -57,7 +57,7 @@ public class EstadoSignIn extends EstadoUsuario {
                 contextoUsuario.cambiarEstado(new EstadoInicio(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
             }
         } catch (NumberFormatException e) {
-            outputProvider.println(Messages.get("introduzca.opcion.valida"));
+            outputProvider.println(Messages.get("alerta.introduzca.opcion.valida"));
         }
     }
 
@@ -74,22 +74,22 @@ public class EstadoSignIn extends EstadoUsuario {
 
         entrada = inputProvider.leerOpcionString().trim();
         if (entrada.length() == 0) {
-            outputProvider.println(Messages.get("validacion.no.puede.estar.vacio"));
+            outputProvider.println(Messages.get("alerta.validacion.no.puede.estar.vacio"));
             return null;
         }
 
         if (entrada.length() <6) {
-            outputProvider.println(Messages.get("validacion.tener.al.menos")+" "+6+" "+Messages.get("caracteres"));
+            outputProvider.println(Messages.get("alerta.validacion.tener.al.menos")+" "+6+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.length() > 10) {
-            outputProvider.println(Messages.get("validacion.tener.no.mas")+" "+10+" "+Messages.get("caracteres"));
+            outputProvider.println(Messages.get("alerta.validacion.tener.no.mas")+" "+10+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.contains(" ")) {
-            outputProvider.println(Messages.get("validacion.no.espacios.intermedios"));
+            outputProvider.println(Messages.get("alerta.validacion.no.espacios.intermedios"));
             return null;
         }
 
@@ -108,27 +108,27 @@ public class EstadoSignIn extends EstadoUsuario {
         String entrada;
         entrada = inputProvider.leerOpcionString().trim();
         if (entrada.length() == 0) {
-            outputProvider.println(Messages.get("validacion.no.puede.estar.vacio"));
+            outputProvider.println(Messages.get("alerta.validacion.no.puede.estar.vacio"));
             return null;
         }
 
         if (entrada.length() < 3) {
-            outputProvider.println(Messages.get("validacion.tener.al.menos")+" "+3+" "+Messages.get("caracteres"));
+            outputProvider.println(Messages.get("alerta.validacion.tener.al.menos")+" "+3+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (entrada.length() > 15) {
-            outputProvider.println(Messages.get("validacion.tener.no.mas")+" "+15+" "+Messages.get("caracteres"));
+            outputProvider.println(Messages.get("alerta.validacion.tener.no.mas")+" "+15+" "+Messages.get("caracteres"));
             return null;
         }
 
         if (!entrada.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$")) {
-            outputProvider.println(Messages.get("validacion.contrasena.solo.contener"));
+            outputProvider.println(Messages.get("alerta.validacion.contrasena.solo.contener"));
             return null;
         }
 
         if (!Character.isUpperCase(entrada.charAt(0))) {
-            outputProvider.println(Messages.get("validacion.debe.empezar.con.mayuscula"));
+            outputProvider.println(Messages.get("alerta.validacion.debe.empezar.con.mayuscula"));
             return null;
         }
 
@@ -165,16 +165,16 @@ public class EstadoSignIn extends EstadoUsuario {
         outputProvider.println("\n"+Messages.get("ingrese.sus.datos.personales"));
         while(nombre==null){
             outputProvider.print(Messages.get("nombre.usuario")+" ");
-            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);
+            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider).trim();
         }
         while(apellido==null){
             outputProvider.print(Messages.get("apellido.usuario")+" ");
-            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
+            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider).trim();
         }
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            outputProvider.println(Messages.get("ya.existe.usuario.con.nombre")+" "+usuarioExistente.get().getNombreCompleto());
+            outputProvider.println(Messages.get("alerta.ya.existe.usuario.con.nombre")+" "+usuarioExistente.get().getNombreCompleto());
         } else {
             String clave =null;
             boolean coinciden = false;
@@ -208,7 +208,7 @@ public class EstadoSignIn extends EstadoUsuario {
                 if(clave.equals(confirmaClave)) {
                     coinciden = true;
                 } else {
-                    outputProvider.println(Messages.get("validacion.las.contrasenas.no.coinciden"));
+                    outputProvider.println(Messages.get("alerta.validacion.las.contrasenas.no.coinciden"));
                     clave=null;
                 }
             }

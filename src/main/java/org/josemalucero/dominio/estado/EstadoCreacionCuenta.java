@@ -40,7 +40,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
             outputProvider.println(""+(i+1)+". "+Messages.get("cuenta.en")+" "+RepositorioMonedas.getMonedasDB()
                     .get(i).getNombre() +" | "+RepositorioMonedas.getMonedasDB().get(i).getCodigo());
         }
-        outputProvider.print(Messages.get("seleccione.opcion"));
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
 
     }
 
@@ -59,7 +59,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
         try{
             int opcion=Integer.parseInt(opcionStr);
             if(opcion<=0 || opcion>RepositorioMonedas.getMonedasDB().size()){
-                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+                outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             } else {
                 outputProvider.println(Messages.get("usted.ha.seleccionad.cuenta.en")+" "
                         +RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
@@ -72,7 +72,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
                         contextoUsuario.getOuputProvider()));
             }
         } catch (NumberFormatException e){
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
     }
 

@@ -86,18 +86,19 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
 
 
         if (monto.compareTo(BigDecimal.ZERO)==0) {
-            outputProvider.println(Messages.get("alert.no.transferir.monto.nulo"));
+            outputProvider.printlnAlert(Messages.get("alert.no.transferir.monto.nulo"));
             return false;
         }
         if(monto.compareTo(cuentaRegular.getBalance())<=0){
             if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_TRANSFERENCIA)>0){
-                outputProvider.println(Messages.get("alerta.no.se.puede.transferir.cantidad.limite.sii"));
+                outputProvider.printlnAlert(Messages.get("alerta.no.se.puede.transferir.cantidad.limite.sii"));
+                outputProvider.printInfoln(Messages.get("limite.transferencia.por.operacion")+": "+ConstantesFiscalesBancarias.LIMITE_MONTO_TRANSFERENCIA);
                 return false;
             }
             return true;
 
         } else {
-            outputProvider.println(Messages.get("no.se.puede.transferir.cantidad")+". "+Messages.get("fondos.insuficientes"));
+            outputProvider.printlnAlert(Messages.get("alerta.no.se.puede.transferir.cantidad")+". "+Messages.get("alerta.fondos.insuficientes"));
             return false;
         }
     }
@@ -113,7 +114,7 @@ public class OperacionTransferenciaMonedaOrigen extends OperacionTransferencia{
             return true;
 
         } else {
-            outputProvider.println(Messages.get("ha.fallado.la.transferencia"));
+            outputProvider.printlnAlert(Messages.get("alerta.ha.fallado.la.transferencia"));
             return false;
         }
     }

@@ -77,7 +77,7 @@ public class AlkeWallet_Interacciones_Alerts_Test {
 
         String depositoStr = "0";
         interacciones.depositarEnCuenta(depositoStr);
-        Assertions.assertEquals(Messages.get("cantidad.invalida"),consoleOutputStub.popAlert());
+        Assertions.assertEquals(Messages.get("alerta.cantidad.invalida"),consoleOutputStub.popAlert());
     }
 
     @Test

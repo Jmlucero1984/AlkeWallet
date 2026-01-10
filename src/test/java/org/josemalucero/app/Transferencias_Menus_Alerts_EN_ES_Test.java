@@ -10,6 +10,8 @@ import org.josemalucero.servicio.providers.Messages;
 import org.josemalucero.servicio.repositorios.RepositorioUsuarios;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 
@@ -113,6 +115,72 @@ public class Transferencias_Menus_Alerts_EN_ES_Test {
 
     }
     @TestTemplate
+    void estadoDetectaTransfEntreCuentasMismaMonedaCifraVaciaTest(){
+        contextoUsuario.setUsuarioLogueado(usuarioARS_a);
+        contextoUsuario.cambiarEstado(new EstadoOperaciones(consoleInputStub,consoleOutputStub));
+        contextoUsuario.mostrarInformacionContextual();
+        String opcion = MenuParser.getOptionNumber(Messages.get("opcion.transferir.dinero"),consoleOutputStub.popMenu());
+        contextoUsuario.procesarOpcion(opcion);
+        contextoUsuario.procesarOpcion(usuarioARS_b.getCuentaRegular().getNumeroCuenta());
+        contextoUsuario.procesarOpcion("");
+
+        Assertions.assertAll(
+                ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
+                ()->assertEquals(Messages.get("alerta.introduzca.cifra.valida"),consoleOutputStub.popAlert())
+        );
+    }
+
+    @TestTemplate
+    void estadoDetectaTransfEntreCuentasMismaMonedaCifraNulaTest(){
+        contextoUsuario.setUsuarioLogueado(usuarioARS_a);
+        contextoUsuario.cambiarEstado(new EstadoOperaciones(consoleInputStub,consoleOutputStub));
+        contextoUsuario.mostrarInformacionContextual();
+        String opcion = MenuParser.getOptionNumber(Messages.get("opcion.transferir.dinero"),consoleOutputStub.popMenu());
+        contextoUsuario.procesarOpcion(opcion);
+        contextoUsuario.procesarOpcion(usuarioARS_b.getCuentaRegular().getNumeroCuenta());
+        contextoUsuario.procesarOpcion("0.00");
+
+        Assertions.assertAll(
+                ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
+                ()->assertEquals(Messages.get("alert.no.transferir.monto.nulo"),consoleOutputStub.popAlert())
+        );
+    }
+
+    @TestTemplate
+    void estadoDetectaTransfEntreCuentasMismaMonedaCifraNegativaTest(){
+        contextoUsuario.setUsuarioLogueado(usuarioARS_a);
+        contextoUsuario.cambiarEstado(new EstadoOperaciones(consoleInputStub,consoleOutputStub));
+        contextoUsuario.mostrarInformacionContextual();
+        String opcion = MenuParser.getOptionNumber(Messages.get("opcion.transferir.dinero"),consoleOutputStub.popMenu());
+        contextoUsuario.procesarOpcion(opcion);
+        contextoUsuario.procesarOpcion(usuarioARS_b.getCuentaRegular().getNumeroCuenta());
+        contextoUsuario.procesarOpcion("-100.00");
+
+        Assertions.assertAll(
+                ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
+                ()->assertEquals(Messages.get("alerta.no.puede.ingresar.numeros.negativos") +". "+Messages.get("intente.nuevamente"),consoleOutputStub.popAlert())
+        );
+    }
+
+    @TestTemplate
+
+    void estadoDetectaTransfEntreCuentasMismaMonedaCifraIncompletaTest(){
+        contextoUsuario.setUsuarioLogueado(usuarioARS_a);
+
+        contextoUsuario.cambiarEstado(new EstadoOperaciones(consoleInputStub,consoleOutputStub));
+        contextoUsuario.mostrarInformacionContextual();
+        String opcion = MenuParser.getOptionNumber(Messages.get("opcion.transferir.dinero"),consoleOutputStub.popMenu());
+        contextoUsuario.procesarOpcion(opcion);
+        contextoUsuario.procesarOpcion(usuarioARS_b.getCuentaRegular().getNumeroCuenta());
+        contextoUsuario.procesarOpcion(".0");
+
+        Assertions.assertAll(
+                ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
+                ()->assertEquals(Messages.get("alerta.cantidad.invalida") +". "+Messages.get("intente.nuevamente"),consoleOutputStub.popAlert())
+        );
+    }
+
+    @TestTemplate
     void estadoDetectaTransfEntreCuentasMismaMonedaExitoTest(){
         contextoUsuario.setUsuarioLogueado(usuarioARS_a);
         contextoUsuario.cambiarEstado(new EstadoOperaciones(consoleInputStub,consoleOutputStub));
@@ -151,7 +219,7 @@ public class Transferencias_Menus_Alerts_EN_ES_Test {
         contextoUsuario.procesarOpcion("0000 0000");
         Assertions.assertAll(
                 ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.entre.cuentas"),contextoUsuario.getEstadoActual().getNombreEstado()),
-                ()->assertEquals(Messages.get("numero.cuenta.inexistente.intente.nuevamente"),consoleOutputStub.popAlert())
+                ()->assertEquals(Messages.get("alerta.numero.cuenta.inexistente.intente.nuevamente"),consoleOutputStub.popAlert())
         );
 
 
@@ -200,7 +268,7 @@ public class Transferencias_Menus_Alerts_EN_ES_Test {
         System.out.println();
         Assertions.assertAll(
                 ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.distinta.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
-                ()->assertEquals(Messages.get("introduzca.numero.entero.dentro.rango"),consoleOutputStub.popAlert())
+                ()->assertEquals(Messages.get("alerta.introduzca.numero.entero.dentro.rango"),consoleOutputStub.popAlert())
                 );
     }
     @TestTemplate
@@ -216,7 +284,7 @@ public class Transferencias_Menus_Alerts_EN_ES_Test {
         System.out.println();
         Assertions.assertAll(
                 ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.distinta.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
-                ()->assertEquals(Messages.get("introduzca.opcion.valida"),consoleOutputStub.popAlert())
+                ()->assertEquals(Messages.get("alerta.introduzca.opcion.valida"),consoleOutputStub.popAlert())
         );
     }
 

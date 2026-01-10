@@ -36,12 +36,16 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
     public boolean preValidar() {
         if(monto.compareTo(BigDecimal.ZERO)>0){
             if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_DEPOSITO)>0){
-                outputProvider.println(Messages.get("alerta.no.se.puede.depositar.cantidad.limite.bancario"));
+                outputProvider.printlnAlert(Messages.get("alerta.no.se.puede.depositar.cantidad.limite.bancario"));
+                outputProvider.printInfoln(Messages.get("limite.deposito.por.operacion")+": "+ConstantesFiscalesBancarias.LIMITE_MONTO_DEPOSITO);
                 return false;
             }
             return true;
+        } else if(monto.compareTo(BigDecimal.ZERO)<0) {
+            outputProvider.printlnAlert(Messages.get("alerta.no.depositar.cantidades.negativas"));
+            return  false;
         } else {
-            outputProvider.println(Messages.get("alerta.no.depositar.cantidades.negativas"));
+            outputProvider.printlnAlert(Messages.get("alerta.no.depositar.cantidad.nula"));
             return  false;
         }
     }
@@ -58,7 +62,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
             return true;
 
         } else {
-            outputProvider.println(Messages.get("alerta.ha.fallado.deposito"));
+            outputProvider.printlnAlert(Messages.get("alerta.ha.fallado.deposito"));
             return false;
         }
     }

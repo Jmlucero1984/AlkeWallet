@@ -68,11 +68,11 @@ public class EstadoInicio extends EstadoUsuario{
                     mostrarMensajeDespedida();
                     System.exit(0);
                 default:
-                    outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+                    outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             }
 
         } catch (NumberFormatException e) {
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
     }
 

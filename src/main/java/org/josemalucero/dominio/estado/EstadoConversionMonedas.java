@@ -57,7 +57,7 @@ public class EstadoConversionMonedas extends EstadoUsuario {
 
         }
         outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". "+Messages.get("cancelar"));
-        outputProvider.print(Messages.get("seleccione.opcion"+" "));
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
 
     }
 
@@ -75,11 +75,9 @@ public class EstadoConversionMonedas extends EstadoUsuario {
             int opcion=Integer.parseInt(opcionStr);
             if(opcion==RepositorioMonedas.getMonedasDB().size()+1)  contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
             int cantidadDeOpciones = RepositorioMonedas.getMonedasDB().size();
-            if (monedaDePartida != null) cantidadDeOpciones--;
+
             if (opcion <= 0 || opcion > cantidadDeOpciones || (monedaDePartida != null && opcion ==RepositorioMonedas.getMonedasDB().indexOf(monedaDePartida)+1 )) {
-                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
-            } else if (opcion==cantidadDeOpciones){
-                contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
+                outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             } else {
                 MonedaConvertible eleccion = RepositorioMonedas.getMonedasDB().get(opcion - 1);
                 outputProvider.println(Messages.get("selecciono")+" " + eleccion.getNombre());
@@ -101,7 +99,7 @@ public class EstadoConversionMonedas extends EstadoUsuario {
                 }
             }
         } catch (NumberFormatException e){
-            outputProvider.println(Messages.get("introduzca.opcion.valida"));
+            outputProvider.println(Messages.get("alerta.introduzca.opcion.valida"));
         }
     }
 
@@ -140,7 +138,7 @@ public class EstadoConversionMonedas extends EstadoUsuario {
             if (cantidadVálida) {
                 return new BigDecimal(cantidadIntroducida);
             }
-            outputProvider.printlnAlert(Messages.get("cantidad.invalida"));
+            outputProvider.printlnAlert(Messages.get("alerta.cantidad.invalida"));
         }
         return  null;
     }

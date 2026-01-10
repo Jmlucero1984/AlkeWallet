@@ -59,7 +59,7 @@ public class EstadoLogin extends EstadoUsuario {
                     contextoUsuario.setUsuarioLogueado(usuario);
                     contextoUsuario.reset_operaciones_por_sesion();
                     if (contextoUsuario.getUsuarioLogueado().getCuentaRegular() == null) {
-                        outputProvider.printlnAlert(Messages.get("aun.no.tiene.cuenta.asociada"));
+                        outputProvider.printlnAlert(Messages.get("alerta.aun.no.tiene.cuenta.asociada"));
                         contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(),
                                 contextoUsuario.getOuputProvider()));
                     } else {
@@ -74,7 +74,7 @@ public class EstadoLogin extends EstadoUsuario {
                 break;
             }
         } catch (NumberFormatException e) {
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
 
 
@@ -100,12 +100,12 @@ public class EstadoLogin extends EstadoUsuario {
 
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
-
+        outputProvider.println("\n"+Messages.get("ingrese.sus.datos.personales"));
 
         outputProvider.print(Messages.get("nombre.usuario")+" ");
-        String nombre = consoleInputProvider.leerOpcionString();
+        String nombre = consoleInputProvider.leerOpcionString().trim();
         outputProvider.print(Messages.get("apellido.usuario")+" ");
-        String apellido = consoleInputProvider.leerOpcionString();
+        String apellido = consoleInputProvider.leerOpcionString().trim();
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
             outputProvider.println(Messages.get("ingrese.clave")+" ");
@@ -123,10 +123,10 @@ public class EstadoLogin extends EstadoUsuario {
                 outputProvider.println(Messages.get("logueo.exitoso"));
                 return  usuarioExistente.get();
             } else {
-                outputProvider.println(Messages.get("datos.inicio.sesion.no.validos"));
+                outputProvider.println(Messages.get("alerta.datos.inicio.sesion.no.validos"));
             }
         } else {
-            outputProvider.println( Messages.get("el.usuario")+" "+nombre+" "+apellido+" "+Messages.get("no.existe.en.base.de.datos"));
+            outputProvider.println( Messages.get("el.usuario")+" "+nombre+" "+apellido+" "+Messages.get("alerta.no.existe.en.base.de.datos"));
         }
         return null;
     }

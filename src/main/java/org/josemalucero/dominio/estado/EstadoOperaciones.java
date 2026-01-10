@@ -107,10 +107,10 @@ public class EstadoOperaciones extends EstadoUsuario {
                     break;
 
                 default:
-                    outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+                    outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             }
         } catch (NumberFormatException e) {
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
     }
 
@@ -221,7 +221,7 @@ public class EstadoOperaciones extends EstadoUsuario {
      */
 
     private void verHistorial(ContextoUsuario contextoUsuario) {
-        outputProvider.println("\n"+Messages.get("mostrando.historial"));
+        outputProvider.println("\n"+Messages.get("mostrando.historial")+"\n");
         ArrayList<RegistroOperacion> operacionesHistoricas = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getHistorialOperaciones();
         outputProvider.println(FormateadorDeRegistroAImprimir.generarCabeceras(FormateadorDeRegistroAImprimir.Alineado.CENTRO));
         operacionesHistoricas.forEach(t->outputProvider.println(FormateadorDeRegistroAImprimir.formatearRegistro(t, FormateadorDeRegistroAImprimir.Alineado.CENTRO)));

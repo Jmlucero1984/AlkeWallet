@@ -14,9 +14,9 @@ public class FormateadorDeRegistroAImprimir {
      * determinar si la cadena de texto debe ser truncada.
      */
     private static final int MAX_DESCRIPTION_CHARS = 70;
-    private static final int MAX_BALANCE_CHARS = 30;
-    private static final int MAX_MONTO_CHARS = 30;
-    private static final int MAX_DATE_CHARS = 40;
+    private static final int MAX_BALANCE_CHARS = 25;
+    private static final int MAX_MONTO_CHARS = 25;
+    private static final int MAX_DATE_CHARS = 25;
     public enum Alineado {IZQUIERDA,CENTRO, DERECHA};
 
     /**

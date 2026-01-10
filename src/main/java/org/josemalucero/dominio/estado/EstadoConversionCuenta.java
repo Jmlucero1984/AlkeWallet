@@ -60,7 +60,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
             CuentaRegular cuantaDeUsuario = contextoUsuario.getUsuarioLogueado().getCuentaRegular();
             MonedaConvertible monedaActual = cuantaDeUsuario.getMonedaConvertible();
             if (opcion <= 0 || opcion > cantidadDeOpciones || (opcion  ==RepositorioMonedas.getMonedasDB().indexOf(monedaActual)+1 )) {
-                outputProvider.printlnAlert(Messages.get("opcion.invalida"));
+                outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             } else if (opcion==cantidadDeOpciones){
                 contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
             } else {
@@ -76,7 +76,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
             }
 
         } catch (NumberFormatException e){
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
 
     }

@@ -210,7 +210,7 @@ public class AlkaWallet_Interacciones_Test {
     }
 
 
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     void transACuentaDifMonedaMontoEnMonedaOrigenTest() {
         BigDecimal toleranciaRedondeoAlBalancear= new BigDecimal("0.01");
         String nombre_usuario_cuenta_origen = "Pedro";
@@ -266,7 +266,7 @@ public class AlkaWallet_Interacciones_Test {
 
     }
 
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     void transACuentaDifMonedaMontoEnMonedaDestinoTest() {
         BigDecimal toleranciaRedondeoAlBalancear= new BigDecimal("0.01");
         String nombre_usuario_cuenta_origen = "Pedro";

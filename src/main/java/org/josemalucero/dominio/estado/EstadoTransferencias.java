@@ -88,7 +88,7 @@ public class EstadoTransferencias extends EstadoUsuario {
                     tipoTransferencia = tipoTransferenciaRecibida;
                 }
             } else {
-                outputProvider.printlnAlert(Messages.get("numero.cuenta.inexistente.intente.nuevamente"));
+                outputProvider.printlnAlert(Messages.get("alerta.numero.cuenta.inexistente.intente.nuevamente"));
             }
         } else {
             if(tipoTransferencia==TipoTransferencia.DISTINTA_MONEDA){
@@ -102,8 +102,6 @@ public class EstadoTransferencias extends EstadoUsuario {
                     datosTransferencia= new DatosTransferencia(contextoUsuario.getUsuarioLogueado().getCuentaRegular(),usuarioDestino.getCuentaRegular(),cifraVerificada, new ConversorMoneda());
                     OperacionTransferencia operacionTransferencia = obtenerOperacionTransferenciaEspecífica(tipoTransferencia,datosTransferencia,outputProvider);
                     ejecutarTransferencia(operacionTransferencia,contextoUsuario);
-                }else{
-                    outputProvider.printlnAlert(Messages.get("introduzca.cifra.valida"));
                 }
             }
         }
@@ -153,11 +151,11 @@ public class EstadoTransferencias extends EstadoUsuario {
                 case 2:
                     return TipoTransferencia.MONEDA_DESTINO;
                 default:
-                    outputProvider.printlnAlert(Messages.get("introduzca.numero.entero.dentro.rango"));
+                    outputProvider.printlnAlert(Messages.get("alerta.introduzca.numero.entero.dentro.rango"));
                     return null;
             }
         } catch (NumberFormatException e) {
-            outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
+            outputProvider.printlnAlert(Messages.get("alerta.introduzca.opcion.valida"));
         }
         return null;
     }

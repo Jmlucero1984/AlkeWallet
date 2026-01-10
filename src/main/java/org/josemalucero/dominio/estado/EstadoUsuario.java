@@ -58,7 +58,7 @@ public abstract class EstadoUsuario  {
             return null;
 
         }
-        outputProvider.printlnAlert(Messages.get("cantidad.invalida"));
+        outputProvider.printlnAlert(Messages.get("alerta.cantidad.invalida")+". "+Messages.get("intente.nuevamente"));
 
        return null;
     }

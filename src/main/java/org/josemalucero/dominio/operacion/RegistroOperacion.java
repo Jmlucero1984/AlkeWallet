@@ -27,7 +27,7 @@ public class RegistroOperacion {
      */
     public String getFormattedDateTime(){
         return String.format("%02d",dateTimeOperacion.getDayOfMonth())+"."+
-                dateTimeOperacion.getMonth()+"."+
+                dateTimeOperacion.getMonth().toString().substring(0,3)+"."+
                 dateTimeOperacion.getYear()+" "+
                 String.format("%02d",dateTimeOperacion.getHour())+":"+
                 String.format("%02d",dateTimeOperacion.getMinute())+":"+
