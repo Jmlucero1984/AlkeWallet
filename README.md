@@ -1,0 +1,230 @@
+# 💰 AlkeWallet
+
+> **Billetera virtual por consola desarrollada en Java**
+
+---
+
+## 📌 Descripción general
+
+**AlkeWallet** es una aplicación de consola desarrollada en **Java** que permite simular el funcionamiento de una billetera virtual. El sistema posibilita la creación y gestión de usuarios, cuentas y monedas, así como la ejecución de operaciones financieras básicas como transferencias, depósitos, extracciones, simular conversiones de montos entre monedas, consultar el historial de operaciones e incluso convertir la cuenta de una moneda a otra. 
+
+El proyecto está diseñado siguiendo principios de **Programación Orientada a Objetos (POO)**, priorizando la extensibilidad, la claridad del dominio y la separación de responsabilidades.
+
+---
+
+## 🧠 Requerimientos generales
+
+### Administración de fondos 
+El programa debe permitir crear una cuenta, ver su saldo disponible, realizar ingreso y retiro de dinero
+(debe impactar sobre el saldo actual).
+### Conversión de moneda 
+El programa debe permitir convertir el saldo de un tipo de moneda a otra.
+
+## 🧠 Requerimientos técnicos/específicos:
+### Backend 
+Java implementando el paradigma orientado a objetos para desarrollar y gestionar la lógica del negocio. Utilizar interfaces
+para reutilización de código.
+### Diagramas de clase 
+Representar en un Diagrama de Clases el
+modelo de clases que da solución a los requerimientos.
+### Pruebas unitarias
+Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcionamiento de los componentes desarrollados.
+
+
+---
+
+## 🧠 Objetivos del proyecto
+
+- Aplicar conceptos de POO (herencia, polimorfismo, abstracción, encapsulamiento) así como el principio de diseño IoC (Inversion of Control) y el patrón de diseño ID (Inyección de dependencias)
+- Modelar un dominio financiero simple pero extensible
+- Centralizar la lógica de negocio
+- Practicar validaciones y manejo de errores
+
+---
+
+## 👥 Público objetivo
+
+- Estudiantes de Java
+- Desarrolladores junior
+- Evaluadores técnicos
+- Otros desarrolladores/programadores que desen extender y mantener las funcionalidades de la aplicación
+
+---
+
+## ⚙️ Requisitos del sistema
+
+| Requisito | Versión |
+|---------|--------|
+| Java JDK | 17 o superior |
+| IDE | IntelliJ, Eclipse, Apache NetBeans, VS Code |
+
+---
+
+## 🚀 Ejecución del proyecto
+
+1. Clonar el repositorio
+2. Compilar el proyecto
+3. Ejecutar la clase principal:
+
+```bash
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar console
+```
+
+---
+
+## 🏗️ Arquitectura general
+
+El sistema se organiza en capas lógicas:
+
+### 📦 Dominio
+- `cuenta`
+- `estado`
+- `moneda`
+- `operacion`
+- `usuario`
+
+### 🔧 Servicio
+- `formatters`
+- `passwords`
+- `providers`
+- `repositorios`
+
+### 🎛️ Control y flujo
+- `Main` (entry point)
+- `AlkeWallet` Ciclos y entrada de opciones por consola
+- `ContextoUsuario` Manejo de sesión y gestion de input y output
+
+---
+
+## 🔁 Flujo de ejecución
+
+```text
+Inicio
+  ↓
+Inicialización del sistema (se procesan comandos de linea si los hubiera)
+  ↓
+Se crean entidades básicas para la interacción
+  ↓
+Se comienza el ciclo de interacciones (while)
+  ↓
+Se muestra información contextual
+  ↓
+Lectura de opción
+  ↓
+Ejecución de funcionalidad
+  ↓
+Retorno al menú / salida
+```
+
+---
+
+## ✨ Funcionalidades principales
+
+### 👤 Gestión de usuarios
+- Creación de usuarios
+- Registro de usuario en la DB interna
+- Asociación de cuenta
+
+### 🏦 Gestión de monedas
+- Creación de monedas
+- Registro de monedas en la DB interna
+- Definición de su ratio de convertibilidad respecto al USD
+
+### 🏦 Gestión de cuentas
+- Creación de cuentas
+- Asociación de monedas
+
+### 💸 Operaciones financieras
+- Depósitos
+- Extracciones
+- Transferencias entre cuentas
+- Conversión de cuenta a otra moneda
+
+### 💸 Operaciones de consulta
+- Datos de la cuenta
+- Saldo actual
+- Conversión de montos entre monedas
+- Historial de transacciones
+
+
+> Todas las operaciones heredan de la clase abstracta `Operacion`, lo que permite agregar nuevos tipos sin modificar código existente.
+
+---
+
+## 🧪 Manejo de errores y validaciones
+
+El sistema contempla:
+
+- Validación de opciones de menú
+- Control de entradas inválidas por consola
+  - Valores negativos
+  - Formato erróneo de cantidad monetaria
+  - Entrada alfabéticas
+  - Ausencia de valor
+- Excepciones de negocio:
+  - Saldo insuficiente
+  - Moneda inexistente
+  - Cuenta inválida
+  - Usuario inexistente
+  - Límites de montos por operación
+  - Limites de operaciones por sesión y por cuenta
+- Uso de bloques `try-catch` para mantener la ejecución estable
+
+---
+
+## 📚 Casos de uso técnicos
+
+### Caso de uso: Transferencia entre cuentas
+
+📍 **Actor:** Usuario Origen, Usuario Destino
+
+📍 **Precondiciones:**
+- Ambas cuentas existen y tienen monedas asignadas
+- La cuenta origen posee saldo suficiente
+
+📍 **Flujo principal:**
+1. El usuario origen selecciona la opción *Transferir*
+2. Ingresa cuenta destino
+3. Selecciona tipo de transferencia
+  a. Ambas cuentas tienen las misma moneda?
+  b. Ambas cuentas tienen diferente moneda? 
+      - Seleccionar monto en moneda destino
+      - Seleccioanr monto en moneda cuenta propia
+4. Ingresa monto
+5. Se prevalida la operación
+6. Se ejecuta la transferencia
+7. Se postvalida la operación
+7. Se registra la operación
+
+---
+
+## 🔧 Extensibilidad y mantenimiento
+
+El diseño del sistema permite:
+
+- ➕ Agregar nuevas operaciones sin modificar código existente (Principio Open/Closed)
+- 🌍 Incorporar nuevas monedas
+- 🖥️ Sustituir la interfaz de consola por:
+  - Interfaz gráfica (InputProvider/OutputProvider)
+  - API REST (Repositorios)
+  - Persistencia en base de datos (Entidades que pueden serializarse)
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- Java 17+
+- Programación Orientada a Objetos
+- Java Collections
+- BigDecimal para manejo de montos
+
+---
+
+## 📄 Notas finales
+
+Este proyecto está orientado al **aprendizaje y demostración de conceptos**, por lo que prioriza la claridad del diseño por sobre la optimización extrema.
+
+---
+
+✨ *Documentación técnica – AlkeWallet*
+
