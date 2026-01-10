@@ -67,9 +67,18 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 3. Ejecutar la clase principal:
 
 ```bash
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar console
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
 ```
-
+4. Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) como así tambien especificar
+el idioma de partida de la aplicacion en entre inglés (en) y español (es).
+Variantes:
+```bash
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar en
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar console en
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar -c
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar -c en
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar en -c
+```
 ---
 
 ## 🏗️ Arquitectura general
@@ -119,6 +128,10 @@ Retorno al menú / salida
 ---
 
 ## ✨ Funcionalidades principales
+
+### 🔣​ Lenguaje de la app
+- Español
+- Inglés
 
 ### 👤 Gestión de usuarios
 - Creación de usuarios
