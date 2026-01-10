@@ -199,10 +199,10 @@ El sistema contempla:
 1. El usuario origen selecciona la opción *Transferir*
 2. Ingresa cuenta destino
 3. Selecciona tipo de transferencia
- a. Ambas cuentas tienen las misma moneda?
- b. Ambas cuentas tienen diferente moneda? 
-      - Seleccionar monto en moneda destino
-      - Seleccioanr monto en moneda cuenta propia
+ - Ambas cuentas tienen las misma moneda?
+ - Ambas cuentas tienen diferente moneda?
+   * Seleccionar monto en moneda destino
+   * Seleccioanr monto en moneda cuenta propia
 5. Ingresa monto
 6. Se prevalida la operación
 7. Se ejecuta la transferencia
