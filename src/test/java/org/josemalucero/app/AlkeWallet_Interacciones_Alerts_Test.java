@@ -62,7 +62,7 @@ public class AlkeWallet_Interacciones_Alerts_Test {
     @AfterEach
     void tearDown() {
         interacciones=null;
-        consoleOutputStub.clearStack();
+        consoleOutputStub.clearAlertStack();
     }
 
     @Test

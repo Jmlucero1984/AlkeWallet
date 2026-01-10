@@ -17,6 +17,17 @@ public class ConsoleOutputProvider implements OutputProvider{
     }
 
     @Override
+    public void printMenuln(String menu) {
+        System.out.println(menu);
+
+    }
+
+    @Override
+    public void printInfoln(String info) {
+        System.out.println(info);
+    }
+
+    @Override
     public void println(String string) {
         System.out.println(string);
     }
@@ -32,11 +43,7 @@ public class ConsoleOutputProvider implements OutputProvider{
     }
 
     @Override
-    public void print(Object object) {
-
-        System.out.print(object);
-
-    }
+    public void print(Object object) {System.out.print(object);}
 
     @Override
     public void print(String string) {

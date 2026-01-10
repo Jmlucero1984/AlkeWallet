@@ -47,6 +47,9 @@ public class ConsoleInputStub implements InputProvider {
 
     @Override
     public String leerOpcionString() {
-        return respuestasString.remove();
+        if(respuestasString.iterator().hasNext()){
+            return respuestasString.remove();
+        }
+        return null;
     }
 }

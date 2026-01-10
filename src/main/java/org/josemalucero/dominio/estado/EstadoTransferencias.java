@@ -50,8 +50,7 @@ public class EstadoTransferencias extends EstadoUsuario {
         } else {
             if(tipoTransferencia==TipoTransferencia.DISTINTA_MONEDA){
                 outputProvider.println(Messages.get("seleccione.tipo.transferencia")+" | "+Messages.get("escape.comando")+" para salir");
-                outputProvider.println("1. "+Messages.get("monto.moneda.cuenta.propia"));
-                outputProvider.println("2. "+Messages.get("monto.moneda.cuenta.destino"));
+                outputProvider.printMenuln("1. "+Messages.get("monto.moneda.cuenta.origen")+"\n"+"2. "+Messages.get("monto.moneda.cuenta.destino"));
             } else {
                 outputProvider.println(Messages.get("introduzca.el.monto.a.transferir")+" | "+Messages.get("escape.comando")+" para salir");
                 outputProvider.println(Messages.get("formato.esperado.enteros.centavos"));
@@ -93,7 +92,10 @@ public class EstadoTransferencias extends EstadoUsuario {
             }
         } else {
             if(tipoTransferencia==TipoTransferencia.DISTINTA_MONEDA){
-                tipoTransferencia= definirEntreSubtiposDeTransferenciaDeDistintaMoneda(opcion);
+                TipoTransferencia tipoTransferenciaRecibida= definirEntreSubtiposDeTransferenciaDeDistintaMoneda(opcion);
+                if(tipoTransferenciaRecibida!=null){
+                    tipoTransferencia=tipoTransferenciaRecibida;
+                }
             } else {
                 BigDecimal cifraVerificada = verificarCifraMonetaria(opcion);
                 if(cifraVerificada!=null){
@@ -152,6 +154,7 @@ public class EstadoTransferencias extends EstadoUsuario {
                     return TipoTransferencia.MONEDA_DESTINO;
                 default:
                     outputProvider.printlnAlert(Messages.get("introduzca.numero.entero.dentro.rango"));
+                    return null;
             }
         } catch (NumberFormatException e) {
             outputProvider.printlnAlert(Messages.get("introduzca.opcion.valida"));
@@ -170,11 +173,12 @@ public class EstadoTransferencias extends EstadoUsuario {
             operacionTransferencia.ejecutar();
             if(operacionTransferencia.postValidar()) {
                 operacionTransferencia.registrar(contextoUsuario.getUsuarioLogueado().getCuentaRegular());
-                contextoUsuario.getOuputProvider().println(Messages.get("transferencia.realizada"));
+                contextoUsuario.getOuputProvider().printInfoln(Messages.get("transferencia.realizada"));
                 incrementarTransferenciasConsumidas(contextoUsuario);
             } else {
                 operacionTransferencia.restaurarEstadoAnterior();
             }
+
             contextoUsuario.confirmaContinuar();
             contextoUsuario.cambiarEstado(new EstadoOperaciones(contextoUsuario.getConsoleInputProvider(), contextoUsuario.getOuputProvider()));
         } else {
@@ -241,17 +245,17 @@ public class EstadoTransferencias extends EstadoUsuario {
     public String getNombreEstado() {
         switch (tipoTransferencia){
             case TipoTransferencia.UNDEFINED:
-                return Messages.get("tipo.transferencia.entre.cuentas");
+                return Messages.get("nombre.estado.tipo.transferencia.entre.cuentas");
             case TipoTransferencia.DISTINTA_MONEDA:
-                return Messages.get("tipo.transferencia.a.cuenta.distinta.moneda");
+                return Messages.get("nombre.estado.tipo.transferencia.a.cuenta.distinta.moneda");
             case TipoTransferencia.MONEDA_DESTINO:
-                return Messages.get("tipo.transferencia.a.cdm.moneda.destino");
+                return Messages.get("nombre.estado.tipo.transferencia.a.cdm.moneda.destino");
             case TipoTransferencia.MONEDA_ORIGEN:
-                return Messages.get("tipo.transferencia.a.cdm.moneda.origen");
+                return Messages.get("nombre.estado.tipo.transferencia.a.cdm.moneda.origen");
             case TipoTransferencia.IGUAL_MONEDA:
-                return Messages.get("tipo.transferencia.a.cuenta.igual.moneda");
+                return Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda");
             default:
-                return Messages.get("transferencia");
+                return Messages.get("nombre.estado.transferencia");
         }
 
     }

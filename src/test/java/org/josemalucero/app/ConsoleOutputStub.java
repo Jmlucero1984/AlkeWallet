@@ -8,9 +8,25 @@ import java.util.Stack;
 public class ConsoleOutputStub implements OutputProvider {
 
     Stack<String> mensajesAlerta = new Stack<>();
+    Stack<String> mensajesMenu = new Stack<>();
+    Stack<String> mensajesInfo= new Stack<>();
     @Override
     public void println(Object object) {
 
+    }
+
+    @Override
+    public void printMenuln(String menu) {
+        System.out.println("---- new menu ----");
+        System.out.println(menu);
+        mensajesMenu.push(menu);
+    }
+
+    @Override
+    public void printInfoln(String info) {
+        System.out.println("---- new info ----");
+        System.out.println(info);
+        mensajesInfo.push(info);
     }
 
     @Override
@@ -40,7 +56,17 @@ public class ConsoleOutputStub implements OutputProvider {
 
     @Override
     public void printlnAlert(String alert) {
+        System.out.println("---- new alert ----");
+        System.out.println(alert);
         mensajesAlerta.push(alert);
+    }
+
+    public String popMenu(){
+        try {
+            return mensajesMenu.pop();
+        } catch (Exception e){
+            return "[ Sin Mensajes De Menú ]";
+        }
     }
 
     public String popAlert(){
@@ -50,9 +76,26 @@ public class ConsoleOutputStub implements OutputProvider {
             return "[ Sin Mensajes De Alerta ]";
         }
     }
+    public String popInfo(){
+        try {
+            return mensajesInfo.pop();
+        } catch (Exception e){
+            return "[ Sin Mensajes De Info ]";
+        }
+    }
 
-    public void clearStack() {
+    public void clearAlertStack() {
         mensajesAlerta.clear();
     }
+
+    public void clearMenuStack() {
+        mensajesMenu.clear();
+    }
+
+    public void clearInfotack() {
+        mensajesInfo.clear();
+    }
+
+
 
 }

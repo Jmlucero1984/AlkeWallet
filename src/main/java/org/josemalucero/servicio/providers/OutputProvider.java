@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 
 public interface OutputProvider {
     void println(Object object);
+    void printMenuln(String menu);
+    void printInfoln(String info);
     void println(String string);
     void println(BigDecimal bigDecimal);
     void println(int intNum);
