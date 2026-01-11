@@ -256,38 +256,36 @@ El diseño del sistema permite:
 ---
 <a id="memoria-del-testing"></a>
 ## 🔎 Memoria del Testing
+<p>
 A modo de DISCLAIMER, se reconoce una proceder respecto de la elaboración del paquete de test no tan ceñido a las buenas prácticas de la industria, si no más bien como un proceso de investigación, búsqueda personal por pura curiosidad y materializacion (o virtualizacion, en verdad) de ideas que iban surgiendo con cada necesidad.
 </p>
 
 ### Primera Fase
 <p>
- Los primeros tests realizados estuvieron enfocados simplemente a controlar y verificar los resultados de las funcionalidades de conversión de monedas, creacion de entidades de algunas entidades, y los procedimientos de transferencias (ConversorMonedaTest.class y TransferenciaEntreMonedasTest.class).
- Tambien se generarn test para comprobar el formateo de texto con los distintos alineados y colocación de elipsis cuando los espacios designados no resultaban suficientes para el texto indicado (FormateadorDeRegistroAImprimirTest.class)
- Como punto destacable, aunque luego no se preservara este proceder, se utilizó la Inyección de Mocks para simular errores en balances de las cuentas (TransferenciasTest.class).
- </p>
+Los primeros tests realizados estuvieron enfocados simplemente a controlar y verificar los resultados de las funcionalidades de conversión de monedas, creacion de entidades de algunas entidades, y los procedimientos de transferencias (ConversorMonedaTest.class y TransferenciaEntreMonedasTest.class).
+Tambien se generarn test para comprobar el formateo de texto con los distintos alineados y colocación de elipsis cuando los espacios designados no resultaban suficientes para el texto indicado (FormateadorDeRegistroAImprimirTest.class)
+Como punto destacable, aunque luego no se preservara este proceder, se utilizó la Inyección de Mocks para simular errores en balances de las cuentas (TransferenciasTest.class).
+</p>
  
 ### Segunda Fase
 <p>
- A medida que crecía la aplicación, y tratando de emular la filosofía BBD, junto con una búsqueda por integrar los distintos pasos que sigue el usuario potencial dentro de la app para lograr una determinada transacción, se creó la clase AlkeWalletTest, donde en cada test particular tiene una secuencia de entradas y la cantidad de ciclos que debería correr la app.
- Más tarde, y a modo de reutilización de código, se pensó en crear "interacciones" elementales (Interacciones.class), cuya secuencia estructuraría una hipotética experiencia particular, por ejemplo: Loguearse->Ir hasta Operaciones->Realizar una Transferencia->Volver a Operaciones->Logout. Esto implicó crear una clase AlkeWalletFake que hereda de la AlkeWallet, pero cuyos ciclos ya no son automáticos (ciclo while) si no que ahora son "triggered" desde el exterior. Así tambien fue necesario controlar la entrada por consola, por lo que toda la app debió incorporar un InputProvider, una interface que es implementada por ConsoleInputStub. De esta manera, se evitó tener que simular la entrada del Scanner. Esta clase, ConsoleInputStub, dispone de un Queue al que se le pueden ir
- cargando las distintas respuestas o datos introducidos que daría el usuario durante cada interacción completa. La necesidad de reducir la cantidad de código en cada test, y a su vez, poder detener selectivamente la ejecución de los ciclos para obtener cierta información para asserts intermedios (aunque no se considere una buena práctica) derivó en la creación de las "interacciones encadenables" (AlkeWallet_Interacciones_Test.class).
- Hasta este punto, se podía seguir visualizando toda la salida por consola en cada test o simplemente pasar una clase que implemente OutputProvider sin ninguna salida concreta por System.out.print p System.out.println.
- </p>
+A medida que crecía la aplicación, y tratando de emular la filosofía BBD, junto con una búsqueda por integrar los distintos pasos que sigue el usuario potencial dentro de la app para lograr una determinada transacción, se creó la clase AlkeWalletTest, donde en cada test particular tiene una secuencia de entradas y la cantidad de ciclos que debería correr la app.
+Más tarde, y a modo de reutilización de código, se pensó en crear "interacciones" elementales (Interacciones.class), cuya secuencia estructuraría una hipotética experiencia particular, por ejemplo: Loguearse->Ir hasta Operaciones->Realizar una Transferencia->Volver a Operaciones->Logout. Esto implicó crear una clase AlkeWalletFake que hereda de la AlkeWallet, pero cuyos ciclos ya no son automáticos (ciclo while) si no que ahora son "triggered" desde el exterior. Así tambien fue necesario controlar la entrada por consola, por lo que toda la app debió incorporar un InputProvider, una interface que es implementada por ConsoleInputStub. De esta manera, se evitó tener que simular la entrada del Scanner. Esta clase, ConsoleInputStub, dispone de un Queue al que se le pueden ir
+cargando las distintas respuestas o datos introducidos que daría el usuario durante cada interacción completa. La necesidad de reducir la cantidad de código en cada test, y a su vez, poder detener selectivamente la ejecución de los ciclos para obtener cierta información para asserts intermedios (aunque no se considere una buena práctica) derivó en la creación de las "interacciones encadenables" (AlkeWallet_Interacciones_Test.class).
+Hasta este punto, se podía seguir visualizando toda la salida por consola en cada test o simplemente pasar una clase que implemente OutputProvider sin ninguna salida concreta por System.out.print p System.out.println.
+</p>
  
 ### Tercera Fase
 <p>
- Si bien no se siguió un enfoque TDD desde el comienzo mismo del proceso, de alguna manera, a medida que la aplicación se hacía más compleja, para estos últimos tests se vió la necesidad de establecer primero las condiciones a cumplir, generar una forma de compatibilizar los mensajes emitidos por la app con los esperados en cada test, independientemente de si estos mismos variaban con el tiempo o con el lenguaje elegido por el usuario, y generar un medio para filtar aquellos que correspondian a "alertas", "menus" "info" y generales. Esto implicó que toda la app incorporara, a traves de una clase que implementara la interface OutputProvider, en particular, ConsoleOutputStub, una forma de filtrar selectivamente los mensajes según su intención y gravedad. Luego, de esta misma clase, y disponiendo de un Stack de "mensajes capturados", se podían recuperar y comparar estos con los esperados en cada assert.
- AlkeWallet_Interacciones_Alerts_Test.class ya hace uso de los Strings centralizados en los .properties, por lo que se pueden ejecutar los test en ambos idiomas, ingles y español, así como se evita hacer modificaciones particulares con el riesgo de la no coincidencia de lo esperado con lo actual en los test.
+Si bien no se siguió un enfoque TDD desde el comienzo mismo del proceso, de alguna manera, a medida que la aplicación se hacía más compleja, para estos últimos tests se vió la necesidad de establecer primero las condiciones a cumplir, generar una forma de compatibilizar los mensajes emitidos por la app con los esperados en cada test, independientemente de si estos mismos variaban con el tiempo o con el lenguaje elegido por el usuario, y generar un medio para filtar aquellos que correspondian a "alertas", "menus" "info" y generales. Esto implicó que toda la app incorporara, a traves de una clase que implementara la interface OutputProvider, en particular, ConsoleOutputStub, una forma de filtrar selectivamente los mensajes según su intención y gravedad. Luego, de esta misma clase, y disponiendo de un Stack de "mensajes capturados", se podían recuperar y comparar estos con los esperados en cada assert.
+AlkeWallet_Interacciones_Alerts_Test.class ya hace uso de los Strings centralizados en los .properties, por lo que se pueden ejecutar los test en ambos idiomas, ingles y español, así como se evita hacer modificaciones particulares con el riesgo de la no coincidencia de lo esperado con lo actual en los test.
 </p>
 
- ### Cuata Fase - Final
- <p>
- Para AlkeWallet_Interacciones_Alerts_EN_ES_Test.class y a modo experimental, se creó la clase MenuParser con la función estática getOptionNumber(), que trata de simular un proceso "visual" de búsqueda de opción requerida por un usuario y devolver el número de la misma que debería introducir para procesar esa opcion. Tambien se sintetizó el testeo de algunos estados simplemente instanciandolos sin tener que correr toda la app (que si bien debería haber sido el enfoque desde el principio, no se puede negar lo enriquecedor de toda la experiencia hasta este punto). Este último hace uso de @TestTemplate, que en forma similar a un RepeatedTest y a un ParameterizedTest, permite ejecutar la misma clase y cada uno de sus test, en dos oportunidades, con Locale en inglés y con Locale en español, corroborando todas las cadenas en ambos lenguajes.
- </p>
+### Cuarta Fase - Final
+<p>
+Para AlkeWallet_Interacciones_Alerts_EN_ES_Test.class y a modo experimental, se creó la clase MenuParser con la función estática getOptionNumber(), que trata de simular un proceso "visual" de búsqueda de opción requerida por un usuario y devolver el número de la misma que debería introducir para procesar esa opcion. Tambien se sintetizó el testeo de algunos estados simplemente instanciandolos sin tener que correr toda la app (que si bien debería haber sido el enfoque desde el principio, no se puede negar lo enriquecedor de toda la experiencia hasta este punto). Este último hace uso de @TestTemplate, que en forma similar a un RepeatedTest y a un ParameterizedTest, permite ejecutar la misma clase y cada uno de sus test, en dos oportunidades, con Locale en inglés y con Locale en español, corroborando todas las cadenas en ambos lenguajes.
+</p>
  
- 
-
-
 --- 
 
 ## 📄 Notas finales
