@@ -257,7 +257,7 @@ El diseño del sistema permite:
 <a id="memoria-del-testing"></a>
 ## 🔎 Memoria del Testing
 <p>
-A modo de DISCLAIMER, se reconoce una proceder respecto de la elaboración del paquete de test no tan ceñido a las buenas prácticas de la industria, si no más bien como un proceso de investigación, búsqueda personal por pura curiosidad y materializacion (o virtualizacion, en verdad) de ideas que iban surgiendo con cada necesidad.
+A modo de <b>DISCLAIMER</b>, se reconoce una proceder respecto de la elaboración del paquete de test no tan ceñido a las buenas prácticas de la industria, si no más bien como un proceso de investigación, búsqueda personal por pura curiosidad y materializacion (o virtualizacion, en verdad) de ideas que iban surgiendo con cada necesidad.
 </p>
 
 ### Primera Fase
@@ -283,7 +283,7 @@ AlkeWallet_Interacciones_Alerts_Test.class ya hace uso de los Strings centraliza
 
 ### Cuarta Fase - Final
 <p>
-Para AlkeWallet_Interacciones_Alerts_EN_ES_Test.class y a modo experimental, se creó la clase MenuParser con la función estática getOptionNumber(), que trata de simular un proceso "visual" de búsqueda de opción requerida por un usuario y devolver el número de la misma que debería introducir para procesar esa opcion. Tambien se sintetizó el testeo de algunos estados simplemente instanciandolos sin tener que correr toda la app (que si bien debería haber sido el enfoque desde el principio, no se puede negar lo enriquecedor de toda la experiencia hasta este punto). Este último hace uso de @TestTemplate, que en forma similar a un RepeatedTest y a un ParameterizedTest, permite ejecutar la misma clase y cada uno de sus test, en dos oportunidades, con Locale en inglés y con Locale en español, corroborando todas las cadenas en ambos lenguajes.
+Para AlkeWallet_Interacciones_Alerts_EN_ES_Test.class y a modo experimental, se creó la clase MenuParser con la función estática getOptionNumber(), que trata de simular un proceso "visual" de búsqueda de opción requerida por un usuario y devolver el número de la misma que debería introducir para procesar esa opción. Tambien se sintetizó el testeo de algunos estados simplemente instanciandolos sin tener que correr toda la app (que si bien debería haber sido el enfoque desde el principio, no se puede negar lo enriquecedor de toda la experiencia hasta este punto). Este último hace uso de @TestTemplate, que en forma similar a un RepeatedTest y a un ParameterizedTest, permite ejecutar la misma clase y cada uno de sus test, en dos oportunidades, con Locale en inglés y con Locale en español, corroborando todas las cadenas en ambos lenguajes.
 </p>
  
 --- 
