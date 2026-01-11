@@ -254,7 +254,7 @@ El diseño del sistema permite:
 
 ---
 <a id="memoria-del-testing"></a>
-## 🔎 Memoria del Testing
+## Memoria del Testing
 
 sdfsfds
 
