@@ -1,7 +1,8 @@
-package org.josemalucero.dominio.usuario;
+package org.josemalucero.operacion.transferencia;
 
 import org.josemalucero.dominio.cuenta.CuentaRegular;
 import org.josemalucero.dominio.operacion.OperacionTransferencia;
+import org.josemalucero.dominio.usuario.Usuario;
 import org.josemalucero.servicio.providers.ConsoleOutputProvider;
 import org.josemalucero.servicio.repositorios.RepositorioMonedas;
 import org.junit.jupiter.api.*;

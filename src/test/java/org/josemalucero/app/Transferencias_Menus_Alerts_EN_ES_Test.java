@@ -126,7 +126,7 @@ public class Transferencias_Menus_Alerts_EN_ES_Test {
 
         Assertions.assertAll(
                 ()->assertEquals(Messages.get("nombre.estado.tipo.transferencia.a.cuenta.igual.moneda"),contextoUsuario.getEstadoActual().getNombreEstado()),
-                ()->assertEquals(Messages.get("alerta.introduzca.cifra.valida"),consoleOutputStub.popAlert())
+                ()->assertEquals(Messages.get("alerta.cantidad.invalida")+". "+Messages.get("intente.nuevamente"),consoleOutputStub.popAlert())
         );
     }
 
