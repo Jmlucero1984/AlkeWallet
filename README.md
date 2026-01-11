@@ -1,7 +1,7 @@
 # 💰 AlkeWallet
 
 > **Billetera virtual por consola desarrollada en Java**
-- [VER Memoria del Testing](#memoria-del-testing)
+
 ---
 
 ## 📌 Descripción general
@@ -97,7 +97,7 @@ En un etapa más avanzada, ya con más de una semana de desarrollo, se decidió 
  </p>
  <p>
 Cabe mencionar la adición de otras funcionalidades auxiliares que resultaron de las necesidades de testeo, como la posibilidad de controlar los mensajes de alerta e información entregados por la aplicación, para controlar el correcto funcionamiento.
-
+[ VER Memoria del Testing ]  <a href="https://github.com/Jmlucero1984/AlkeWallet/edit/main/README.md#memoria-del-testing" target="_blank" rel="noreferrer">
  </p>
  
 
@@ -253,7 +253,7 @@ El diseño del sistema permite:
 - BigDecimal para manejo de montos
 
 ---
-<a id="memoria-del-testing"></a>
+
 ## Memoria del Testing
 
 sdfsfds
