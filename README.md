@@ -82,10 +82,16 @@ Variantes:
 ---
 
 ## 📝 Memoria del desarollo
-Si bien en una primera instancia estuvo pensada como una aplicación de pocas clases y una función principal que manejaba todas las operaciones, debido a los requerimientos descritos en la consigna, pronto se hizo evidente de que se debia generar una desagregación y desacoplamientos de los diferentes objetos y funcionalidades. Esto llevó a incorporar, en primera instancia un enfoque de "machine states", es decir un cambio de estado por cada tipo distinto de subactividad que el usuario realiza en la aplicación, pero que conservan todos el mismo principio: "mostrar información contextual", la mayoría de las veces un menú; y "procesar opción", una función que determina que efectos produce la entrada del usurio por consola.
+<p>
+Si bien en una primera instancia estuvo pensada como una aplicación de pocas clases y una función principal que manejaba todas las operaciones, debido a los requerimientos descritos en la consigna, pronto se hizo evidente de que se debia generar una desagregación y desacoplamientos de los diferentes objetos y funcionalidades. Esto llevó a incorporar, en primera instancia un enfoque de "machine states", es decir un cambio de estado por cada tipo distinto de subactividad que el usuario realiza en la aplicación, pero que conservan todos el mismo principio: "mostrar información contextual", la mayoría de las veces un menú; y "procesar opción", una función que determina que efectos produce la entrada del usuario por consola.
+</p>
+<p>
 Luego, al hacerse evidente que muchas de las, no todas, operaciones compartian las mismas caracteristicas, se decidió partir de la definición de una clase abstracta con la posterior implementación de diversas interfaces que iban dotando a las operaciones de cada vez más capacidades. El core de la aplicación estaba representado por un ciclo while sin una condición de salida específica (más que la eventual terminación del programa) y una lectura, en la fase rudimentaria, de un valor del tipo int. Luego debido a las necesidades de manejar más que la simple elección de opciones numeradas, sino además comandos de escape, cifras monetarias, credenciales de usuario, etc., se optó por leer toda entrada como un String, con la posterior conversión a int en los casos que así lo requirieran.
+ </p>
+ <p>
 En estapas posteriores se ageragon Enums para distinguier entre los distintos tipos de transferencias, validaciones previas y posteriores a la ejecución de las operaciones, repositorios a través de métodos staticos, la introducción de contraseñas en modo secreto, incorporaciones de registros para cada operacion, formateo de los datos entregados por estos para la generación de un historial, un simulador de conversiones de monedas y la posibilidad de convertir la cuenta a otra moneda.
 En un etapa más avanzada, ya con más de una semana de desarrollo, se decidió añadir una feature de cambio de idioma, tanto desde consola como a traves del menú inicial, lo que implico generar las .properties y externalizar todas la cadenas de texto que se mostraban por pantalla.
+</p>
 
 
 ## 🏗️ Arquitectura general
