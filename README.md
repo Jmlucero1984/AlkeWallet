@@ -92,6 +92,13 @@ Luego, al hacerse evidente que muchas de las, no todas, operaciones compartian l
 En estapas posteriores se ageragon Enums para distinguier entre los distintos tipos de transferencias, validaciones previas y posteriores a la ejecución de las operaciones, repositorios a través de métodos staticos, la introducción de contraseñas en modo secreto, incorporaciones de registros para cada operacion, formateo de los datos entregados por estos para la generación de un historial, un simulador de conversiones de monedas y la posibilidad de convertir la cuenta a otra moneda.
 En un etapa más avanzada, ya con más de una semana de desarrollo, se decidió añadir una feature de cambio de idioma, tanto desde consola como a traves del menú inicial, lo que implico generar las .properties y externalizar todas la cadenas de texto que se mostraban por pantalla.
 </p>
+ <p>
+ En las últimas fases del desarrollo, para darle un poco más de características cercanas a la realidad de un sistema de gestión de activos, se incorporaron algunas restricciones "fiscales" y "bancarias" para los retiros, depósitos y transferencias, tanto en sus montos, como en la cantiadad de operaciones disponibles por sesión y por cuenta de usuario.
+ </p>
+ <p>
+Cabe mencionar la adición de otras funcionalidades auxiliares que resultaron de las necesidades de testeo, como la posibilidad de controlar los mensajes de alerta e información entregados por la aplicación, para controlar el correcto funcionamiento.
+ [VER Memoria del Testing] (#Memoria-del-Testing)
+ </p>
 
 
 ## 🏗️ Arquitectura general
@@ -245,6 +252,13 @@ El diseño del sistema permite:
 - BigDecimal para manejo de montos
 
 ---
+
+## 🔎 Memoria del Testing
+
+sdfsfds
+
+
+--- 
 
 ## 📄 Notas finales
 
