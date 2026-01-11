@@ -294,7 +294,7 @@ Para <i>AlkeWallet_Interacciones_Alerts_EN_ES_Test.class</i> y a modo experiment
 
 ## 📄 Notas finales
 
-Este proyecto está orientado al **aprendizaje y demostración de conceptos**, por lo que para quien encuentre divertido dejarse llevar por la curiosidad y perderse en el mundo de posibilidades de Java, la OOP y los Tests, seguró reconocerá muchas direcciones posibles de experimentación que se han puesto sobre la mesa en este desarrollo.
+Este proyecto está orientado al **aprendizaje y demostración de conceptos**, por lo que para quien encuentre divertido dejarse llevar por la curiosidad y perderse en el mundo de posibilidades de Java, la OOP y los Tests, seguro reconocerá muchas direcciones posibles de experimentación que se han puesto sobre la mesa en este desarrollo.
 
 ---
 
