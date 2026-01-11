@@ -1,8 +1,8 @@
 # ​💳​ AlkeWallet
-<p>Por José María Lucero</p>
+
 
 > **Billetera virtual por consola desarrollada en Java**
-
+<p>Por José María Lucero</p>
 ---
 
 ## 📌 Descripción general
