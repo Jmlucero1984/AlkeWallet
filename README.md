@@ -242,7 +242,6 @@ El diseño del sistema permite:
 - 🌍 Incorporar nuevas monedas
 - 🖥️ Sustituir la interfaz de consola por:
   - Interfaz gráfica (InputProvider/OutputProvider)
-  - API REST (Repositorios)
   - Persistencia en base de datos (Entidades que pueden serializarse)
 
 ---
