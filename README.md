@@ -265,7 +265,7 @@ A modo de <b>DISCLAIMER</b>, se reconoce una proceder respecto de la elaboració
 ### Primera Fase
 <p>
 Los primeros tests realizados estuvieron enfocados simplemente en controlar y verificar los resultados de las funcionalidades de conversión de monedas, creación de algunas entidades, y los procedimientos de transferencias (ConversorMonedaTest.class y TransferenciaEntreMonedasTest.class).
-Tambien se generarn tests para comprobar el formateo de texto con los distintos alineados y colocación de elipsis cuando los espacios designados no resultaban suficientes para el texto indicado (***FormateadorDeRegistroAImprimirTest.class***).
+Tambien se generarn tests para comprobar el formateo de texto con los distintos alineados y colocación de elipsis cuando los espacios designados no resultaban suficientes para el texto indicado (<i>FormateadorDeRegistroAImprimirTest.class</i>).
 Como punto destacable, aunque luego no se preservara este proceder, se utilizó la Inyección de Mocks para simular errores en balances de las cuentas (TransferenciasTest.class).
 </p>
  
