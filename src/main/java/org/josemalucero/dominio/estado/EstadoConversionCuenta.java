@@ -42,6 +42,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
             }
         }
         outputProvider.println("" + (RepositorioMonedas.getMonedasDB().size()+1) + ". "+ Messages.get("cancelar"));
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
     }
 
     /**
@@ -66,6 +67,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
             } else {
 
                 MonedaConvertible monedaDestino =RepositorioMonedas.getMonedasDB().get(opcion-1);
+                outputProvider.println(Messages.get("selecciono")+" " + monedaDestino.getNombre());
                 OperacionDeConversionDeCuenta operacionDeConversionDeCuenta = new OperacionDeConversionDeCuenta(cuantaDeUsuario,monedaDestino,outputProvider);
                 operacionDeConversionDeCuenta.ejecutar();
                 operacionDeConversionDeCuenta.registrar(cuantaDeUsuario);
