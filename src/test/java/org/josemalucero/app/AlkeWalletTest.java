@@ -55,7 +55,7 @@ class AlkeWalletTest {
 
     @Test
     void alkeWalletTest_Logueo() {
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1","Jose","Lucero","Joselucero","\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","1","Juan","Lucero","Juanlucero","\n"});
         alkeWalletFake.runBySteps(3);
         assertTrue(alkeWalletFake.contextoUsuario.getEstadoActual().getNombreEstado().equals("OPERACIONES"),"No coinciden la opcion elegida con el nombre de estado");
     }
@@ -90,7 +90,7 @@ class AlkeWalletTest {
 
 
         /* ESTADO LOGIN */
-        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","Jose","Lucero","Joselucero","3","15000.00","\n"});
+        consoleInputStub.addSerieDeRespuestasString(new String[]{"1","Juan","Lucero","Juanlucero","3","15000.00","\n"});
         alkeWalletFake.runBySteps(3);
         assertEquals(new BigDecimal("15000.00"),contextoUsuario.getUsuarioLogueado().getCuentaRegular().getBalance());
 

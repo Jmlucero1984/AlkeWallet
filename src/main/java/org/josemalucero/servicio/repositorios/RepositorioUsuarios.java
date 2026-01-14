@@ -106,7 +106,7 @@ public class RepositorioUsuarios {
 
     public static void createSomeUsers() {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Jose", "Lucero", bCryptPasswordEncoderService.hash("Joselucero"),"ARS");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Juan", "Lucero", bCryptPasswordEncoderService.hash("Juanlucero"),"ARS");
         RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
         RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
     }
