@@ -46,7 +46,7 @@ public class EstadoOperaciones extends EstadoUsuario {
     public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
 
         outputProvider.println(Messages.get("bienvenido")+", " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
-        outputProvider.printMenuln(
+        outputProvider.printMenu(
             "1. "+Messages.get("opcion.consultar.datos.cuenta")+"\n"+
             "2. "+Messages.get("opcion.consultar.saldo")+"\n"+
             "3. "+Messages.get("opcion.depositar.dinero")+"\n"+
@@ -56,7 +56,7 @@ public class EstadoOperaciones extends EstadoUsuario {
             "7. "+Messages.get("opcion.convertir.cuenta")+"\n"+
             "8. "+Messages.get("opcion.ver.historial")+"\n"+
             "9. "+Messages.get("opcion.cerrar.sesion")+"\n"+
-                    Messages.get("seleccione.opcion")+" "
+                    Messages.get("seleccione.opcion")+": "
         );
     }
 
@@ -122,7 +122,7 @@ public class EstadoOperaciones extends EstadoUsuario {
     private void consultarDatosCuenta(ContextoUsuario contextoUsuario){
         outputProvider.println("\n"+contextoUsuario.getUsuarioLogueado().getNombreCompleto());
         outputProvider.println(Messages.get("cuenta.en")+" "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible().getNombre());
-        outputProvider.println(Messages.get("n.cuenta")+" "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
+        outputProvider.println(Messages.get("n.cuenta")+": "+contextoUsuario.getUsuarioLogueado().getCuentaRegular().getSerialCuenta());
         contextoUsuario.confirmaContinuar();
 
     }

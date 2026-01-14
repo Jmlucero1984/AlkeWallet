@@ -35,7 +35,11 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
      */
     @Override
     public boolean preValidar() {
-        if(monto.compareTo(cuentaRegular.getBalance())<=0){
+        if(monto.compareTo(new BigDecimal("0.00"))==0){
+            outputProvider.printlnAlert(Messages.get("alerta.retiro.cantidad.zero"));
+            return false;
+        }
+       else if(monto.compareTo(cuentaRegular.getBalance())<=0){
             if(monto.compareTo(ConstantesFiscalesBancarias.LIMITE_MONTO_RETIRO)>0){
                 outputProvider.printlnAlert(Messages.get("alerta.no.se.puede.retirar.cantidad.limite.bancario"));
                 outputProvider.printInfoln(Messages.get("limite.retiro.por.operacion")+": "+ConstantesFiscalesBancarias.LIMITE_MONTO_RETIRO);
@@ -44,7 +48,7 @@ public class OperacionRetiro extends OperacionDeMonto implements Validable,Rever
             return true;
 
         } else {
-            outputProvider.printlnAlert(Messages.get("alerta.no.se.puede.retirar.cantidad")+". "+Messages.get("alerta.fondos.insuficientes"));
+            outputProvider.printlnAlert(Messages.get("alerta.fondos.insuficientes"));
             return false;
         }
     }

@@ -23,6 +23,11 @@ public class ConsoleOutputProvider implements OutputProvider{
     }
 
     @Override
+    public void printMenu(String menu) {
+        System.out.print(menu);
+    }
+
+    @Override
     public void printInfoln(String info) {
         System.out.println(info);
     }

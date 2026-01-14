@@ -23,6 +23,13 @@ public class ConsoleOutputStub implements OutputProvider {
     }
 
     @Override
+    public void printMenu(String menu) {
+        System.out.println("---- new menu ----");
+        System.out.print(menu);
+        mensajesMenu.push(menu);
+    }
+
+    @Override
     public void printInfoln(String info) {
         System.out.println("---- new info ----");
         System.out.println(info);

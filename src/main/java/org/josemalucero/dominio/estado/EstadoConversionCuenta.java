@@ -32,7 +32,7 @@ public class EstadoConversionCuenta extends EstadoUsuario{
      */
     @Override
     public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
-        outputProvider.println(Messages.get("seleccione.moneda.convertir.cuenta"));
+        outputProvider.println(Messages.get("seleccione.moneda.convertir.cuenta")+": ");
         MonedaConvertible monedaConvertible = contextoUsuario.getUsuarioLogueado().getCuentaRegular().getMonedaConvertible();
 
         for (int i = 0; i < RepositorioMonedas.getMonedasDB().size(); i++) {

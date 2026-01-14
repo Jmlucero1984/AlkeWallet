@@ -37,7 +37,7 @@ public class EstadoSignIn extends EstadoUsuario {
         outputProvider.println(Messages.get("a.continuacion.creara.nuevo.usuario.desea.continuar")+"\n");
         outputProvider.println("1. "+Messages.get("si"));
         outputProvider.println("2. "+Messages.get("no.volver"));
-        outputProvider.print(Messages.get("seleccione.opcion"));
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
     }
 
     /**
@@ -88,10 +88,10 @@ public class EstadoSignIn extends EstadoUsuario {
             return null;
         }
 
-        if (entrada.contains(" ")) {
-            outputProvider.println(Messages.get("alerta.validacion.no.espacios.intermedios"));
-            return null;
-        }
+//        if (entrada.contains(" ")) {
+//            outputProvider.println(Messages.get("alerta.validacion.no.espacios.intermedios"));
+//            return null;
+//        }
 
         return entrada;
     }
@@ -165,16 +165,17 @@ public class EstadoSignIn extends EstadoUsuario {
         outputProvider.println("\n"+Messages.get("ingrese.sus.datos.personales"));
         while(nombre==null){
             outputProvider.print(Messages.get("nombre.usuario")+" ");
-            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider).trim();
+            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
+
         while(apellido==null){
             outputProvider.print(Messages.get("apellido.usuario")+" ");
-            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider).trim();
+            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
         }
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            outputProvider.println(Messages.get("alerta.ya.existe.usuario.con.nombre")+" "+usuarioExistente.get().getNombreCompleto());
+            outputProvider.println(Messages.get("alerta.ya.existe.usuario.con.nombre")+": "+usuarioExistente.get().getNombreCompleto());
         } else {
             String clave =null;
             boolean coinciden = false;
