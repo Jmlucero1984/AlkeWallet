@@ -63,6 +63,28 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 
 ## 🚀 Ejecución del proyecto
 
+- Ejecución directa
+
+👉 [Descargar última versión](https://github.com/usuario/proyecto/releases/latest)
+
+```bash
+ java -jar AlkeWallet.jar
+```
+
+Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
+el idioma de partida de la aplicacion en entre inglés (en) y español (es).
+Variantes:
+```bash
+ java -jar AlkeWallet.jar en
+ java -jar AlkeWallet.jar console en
+ java -jar AlkeWallet.jar -c
+ java -jar AlkeWallet.jar -c en
+ java -jar AlkeWallet.jar en -c
+```
+
+
+- Via clonación del proyecto
+
 1. Clonar el repositorio
 2. Compilar el proyecto
 3. Ejecutar la clase principal:
@@ -70,16 +92,8 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 ```bash
  java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
 ```
-4. Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
-el idioma de partida de la aplicacion en entre inglés (en) y español (es).
-Variantes:
-```bash
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar en
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar console en
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar -c
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar -c en
- java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar en -c
-```
+4. Comandos de línea opcionales idem Ejecución Directa
+
 ---
 
 ## 📝 Memoria del desarollo
