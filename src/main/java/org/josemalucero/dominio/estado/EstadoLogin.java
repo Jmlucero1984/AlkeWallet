@@ -39,7 +39,7 @@ public class EstadoLogin extends EstadoUsuario {
 
         outputProvider.println("1. "+Messages.get("opcion.iniciar.sesion"));
         outputProvider.println("2. "+Messages.get("volver"));
-        outputProvider.print(Messages.get("seleccione.opcion")+" ");
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
     }
 
     /**
@@ -116,15 +116,16 @@ public class EstadoLogin extends EstadoUsuario {
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
         if(usuarioExistente.isPresent()){
-            outputProvider.println(Messages.get("ingrese.clave")+" ");
+            outputProvider.print(Messages.get("ingrese.clave"));
             String clave;
             if(AlkeWallet.onConsole){
                 Console console = System.console();
-                char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");
+                char[] passwordArray = console.readPassword(" "+Messages.get("modo.secreto")+": ");
                 clave = new String(passwordArray);
                 // Limpiar el array de caracteres por seguridad
                 java.util.Arrays.fill(passwordArray, ' ');
             } else {
+                outputProvider.print(": ");
                 clave = consoleInputProvider.leerOpcionString();
             }
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){

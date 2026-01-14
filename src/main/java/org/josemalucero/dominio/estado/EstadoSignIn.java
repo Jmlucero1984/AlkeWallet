@@ -91,12 +91,12 @@ public class EstadoSignIn extends EstadoUsuario {
         String apellido=null;
         outputProvider.println("\n"+Messages.get("ingrese.sus.datos.personales"));
         while(nombre==null){
-            outputProvider.print(Messages.get("nombre.usuario")+" ");
+            outputProvider.print(Messages.get("nombre.usuario")+": ");
             nombre = validador.validaNombresOApellidosDeUsuario();
         }
 
         while(apellido==null){
-            outputProvider.print(Messages.get("apellido.usuario")+" ");
+            outputProvider.print(Messages.get("apellido.usuario")+": ");
             apellido = validador.validaNombresOApellidosDeUsuario();
         }
 
@@ -108,28 +108,30 @@ public class EstadoSignIn extends EstadoUsuario {
             boolean coinciden = false;
             while(!coinciden){
                 while(clave==null){
-                    outputProvider.print(Messages.get("ingrese.clave")+" ");
+                    outputProvider.print(Messages.get("ingrese.clave"));
                     if(AlkeWallet.onConsole){
                             Console console = System.console();
-                            char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");
+                            char[] passwordArray = console.readPassword(" "+Messages.get("modo.secreto")+": ");
                             clave = new String(passwordArray);
                             // Limpia el array de caracteres por seguridad
                             java.util.Arrays.fill(passwordArray, ' ');
                     } else {
+                        outputProvider.print(": ");
                         clave = validador.validarClavesDeUsuario();
                     }
                 }
                 String confirmaClave=null;
                 while(confirmaClave==null){
-                    outputProvider.print(Messages.get("confirme.clave")+" ");
+                    outputProvider.print(Messages.get("confirme.clave"));
                     if(AlkeWallet.onConsole){
                         Console console = System.console();
-                        char[] passwordArray = console.readPassword(Messages.get("modo.secreto")+" ");
+                        char[] passwordArray = console.readPassword(" "+Messages.get("modo.secreto")+": ");
                         confirmaClave = new String(passwordArray);
                         // Limpia el array de caracteres por seguridad
                         java.util.Arrays.fill(passwordArray, ' ');
 
                     } else {
+                        outputProvider.print(": ");
                         confirmaClave = validador.validarClavesDeUsuario();
                     }
                 }

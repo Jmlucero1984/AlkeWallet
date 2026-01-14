@@ -38,10 +38,10 @@ public class Validador {
             return null;
         }
 
-//        if (entrada.contains(" ")) {
-//            outputProvider.println(Messages.get("alerta.validacion.no.espacios.intermedios"));
-//            return null;
-//        }
+        if (entrada.contains(" ")) {
+            outputProvider.println(Messages.get("alerta.validacion.no.espacios.intermedios"));
+            return null;
+        }
 
         return entrada;
     }

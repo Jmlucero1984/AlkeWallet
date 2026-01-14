@@ -40,7 +40,7 @@ public class EstadoInicio extends EstadoUsuario{
             outputProvider.println("3. Change to english language");
         }
         outputProvider.println("4. "+Messages.get("salir"));
-        outputProvider.print(Messages.get("seleccione.opcion")+" ");
+        outputProvider.print(Messages.get("seleccione.opcion")+": ");
     }
 
     /**
