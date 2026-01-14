@@ -20,8 +20,10 @@ public class Main {
             switch (args[i]){
                 case "-c","console","Console","CONSOLE","consola","Consola","CONSOLA":
                     isConsole=true;
+                    break;
                 case "EN","en","En","English","english","ENGLISH","ingles","Ingles","INGLES":
                     englishLanguage=true;
+                    break;
             }
             
         }
