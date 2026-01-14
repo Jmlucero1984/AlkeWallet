@@ -70,7 +70,7 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 ```bash
  java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
 ```
-4. Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) como así tambien especificar
+4. Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
 el idioma de partida de la aplicacion en entre inglés (en) y español (es).
 Variantes:
 ```bash
