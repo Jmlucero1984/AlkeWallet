@@ -72,7 +72,7 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 ```
 
 Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
-el idioma de partida de la aplicacion en entre inglés (-en) y español (-es).
+el idioma de partida de la aplicacion en inglés (-en). Por defecto la app está en español.
 Variantes:
 ```bash
  java -jar AlkeWallet.jar -en
