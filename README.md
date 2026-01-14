@@ -1,0 +1,315 @@
+# ​💳​ AlkeWallet ###
+***Por José María Lucero***
+
+
+> **Billetera virtual por consola desarrollada en Java**
+---
+
+## 📌 Descripción general
+
+**AlkeWallet** es una aplicación de consola desarrollada en **Java** que permite simular el funcionamiento de una billetera virtual. El sistema posibilita la creación y gestión de usuarios, cuentas y monedas, así como la ejecución de operaciones financieras básicas como transferencias, depósitos, extracciones, simular conversiones de montos entre monedas, consultar el historial de operaciones e incluso convertir la cuenta de una moneda a otra. 
+
+El proyecto está diseñado siguiendo principios de **Programación Orientada a Objetos (POO)**, priorizando la extensibilidad, la claridad del dominio y la separación de responsabilidades.
+
+---
+
+## 🧠 Requerimientos generales
+
+### Administración de fondos 
+El programa debe permitir crear una cuenta, ver su saldo disponible, realizar ingreso y retiro de dinero
+(debe impactar sobre el saldo actual).
+### Conversión de moneda 
+El programa debe permitir convertir el saldo de un tipo de moneda a otra.
+
+## 🧠 Requerimientos técnicos/específicos:
+### Backend 
+Java implementando el paradigma orientado a objetos para desarrollar y gestionar la lógica del negocio. Utilizar interfaces
+para reutilización de código.
+### Diagramas de clase 
+Representar en un Diagrama de Clases el
+modelo de clases que da solución a los requerimientos.
+### Pruebas unitarias
+Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcionamiento de los componentes desarrollados.
+
+
+---
+
+## 🧠 Objetivos del proyecto
+
+- Aplicar conceptos de POO (herencia, polimorfismo, abstracción, encapsulamiento) así como el principio de diseño IoC (Inversion of Control) y el patrón de diseño ID (Inyección de dependencias)
+- Modelar un dominio financiero simple pero extensible
+- Centralizar la lógica de negocio
+- Practicar validaciones y manejo de errores
+
+---
+
+## 👥 Público objetivo
+
+- Estudiantes de Java
+- Desarrolladores junior
+- Evaluadores técnicos
+- Otros desarrolladores/programadores que desen extender y mantener las funcionalidades de la aplicación
+
+---
+
+## ⚙️ Requisitos del sistema
+
+| Requisito | Versión |
+|---------|--------|
+| Java JDK | 21 o superior |
+| IDE | IntelliJ, Eclipse, Apache NetBeans, VS Code |
+
+---
+
+## 🚀 Ejecución del proyecto
+
+- Ejecución directa
+
+👉 [Descargar última versión](https://github.com/Jmlucero1984/AlkeWallet/releases/latest) 
+
+```bash
+ java -jar AlkeWallet.jar
+```
+
+Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
+el idioma de partida de la aplicacion en inglés (-en). Por defecto la app está en español.
+Variantes:
+```bash
+ java -jar AlkeWallet.jar -en
+ java -jar AlkeWallet.jar -console -en
+ java -jar AlkeWallet.jar -c
+ java -jar AlkeWallet.jar -c -en
+ java -jar AlkeWallet.jar -en -c
+```
+
+
+- Via clonación del proyecto
+
+1. Clonar el repositorio
+2. Compilar el proyecto
+3. Ejecutar la clase principal:
+
+```bash
+ java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
+```
+4. Comandos de línea opcionales idem Ejecución Directa
+
+---
+
+## 📝 Memoria del desarollo
+<p>
+Si bien en una primera instancia estuvo pensada como una aplicación de pocas clases y una función principal que manejaba todas las operaciones, debido a los requerimientos descritos en la consigna, pronto se hizo evidente de que se debia generar una desagregación y desacoplamientos de los diferentes objetos y funcionalidades. Esto llevó a incorporar, en primera instancia un enfoque de "machine states", es decir un cambio de estado por cada tipo distinto de subactividad que el usuario realiza en la aplicación, pero que conservan todos el mismo principio: "mostrar información contextual", la mayoría de las veces un menú; y "procesar opción", una función que determina que efectos produce la entrada del usuario por consola.
+</p>
+<p>
+Luego, al hacerse evidente que muchas de las, no todas, operaciones compartian las mismas caracteristicas, se decidió partir de la definición de una clase abstracta con la posterior implementación de diversas interfaces que iban dotando a las operaciones de cada vez más capacidades. El core de la aplicación estaba representado por un ciclo while sin una condición de salida específica (más que la eventual terminación del programa) y una lectura, en la fase rudimentaria, de un valor del tipo int. Luego debido a las necesidades de manejar más que la simple elección de opciones numeradas, sino además comandos de escape, cifras monetarias, credenciales de usuario, etc., se optó por leer toda entrada como un String, con la posterior conversión a int en los casos que así lo requirieran.
+</p>
+<p>
+En estapas posteriores se ageragon Enums para distinguier entre los distintos tipos de transferencias, validaciones previas y posteriores a la ejecución de las operaciones, repositorios a través de métodos staticos, la introducción de contraseñas en modo secreto, incorporaciones de registros para cada operacion, formateo de los datos entregados por estos para la generación de un historial, un simulador de conversiones de monedas y la posibilidad de convertir la cuenta a otra moneda.
+En un etapa más avanzada, ya con más de una semana de desarrollo, se decidió añadir una feature de cambio de idioma, tanto desde consola como a traves del menú inicial, lo que implico generar las .properties y externalizar todas la cadenas de texto que se mostraban por pantalla.
+</p>
+<p>
+En las últimas fases del desarrollo, para darle un poco más de características cercanas a la realidad de un sistema de gestión de activos, se incorporaron algunas restricciones "fiscales" y "bancarias" para los retiros, depósitos y transferencias, tanto en sus montos, como en la cantiadad de operaciones disponibles por sesión y por cuenta de usuario.
+</p>
+<p>
+Cabe mencionar la adición de otras funcionalidades auxiliares que resultaron de las necesidades de testeo, como la posibilidad de controlar los mensajes de alerta e información entregados por la aplicación, para asegurar el correcto funcionamiento.
+<a href="https://github.com/Jmlucero1984/AlkeWallet/blob/main/README.md#-memoria-del-testing">[ VER Memoria del Testing ] </a>
+</p>
+ 
+ 
+
+
+## 🏗️ Arquitectura general
+
+El sistema se organiza en capas lógicas:
+
+### 📦 Dominio
+- `cuenta`
+- `estado`
+- `moneda`
+- `operacion`
+- `usuario`
+
+### 🔧 Servicio
+- `formatters`
+- `passwords`
+- `providers`
+- `repositorios`
+
+### 🎛️ Control y flujo
+- `Main` (entry point)
+- `AlkeWallet` Ciclos y entrada de opciones por consola
+- `ContextoUsuario` Manejo de sesión y gestion de input y output
+
+---
+
+## 🔁 Flujo de ejecución
+
+```text
+Inicio
+  ↓
+Inicialización del sistema (se procesan comandos de linea si los hubiera)
+  ↓
+Se crean entidades básicas para la interacción
+  ↓
+Se comienza el ciclo de interacciones (while)
+  ↓
+Se muestra información contextual
+  ↓
+Lectura de opción
+  ↓
+Ejecución de funcionalidad
+  ↓
+Retorno al menú / salida
+```
+
+---
+
+## ✨ Funcionalidades principales
+
+### 🔣​ Lenguaje de la app
+- Español
+- Inglés
+
+### 👤 Gestión de usuarios
+- Creación de usuarios
+- Registro de usuario en la DB interna
+- Asociación de cuenta
+
+### 💰​ Gestión de monedas
+- Creación de monedas
+- Registro de monedas en la DB interna
+- Definición de su ratio de convertibilidad respecto al USD
+
+### 🗃️ Gestión de cuentas
+- Creación de cuentas
+- Asociación de monedas
+
+### 💸 Operaciones financieras
+- Depósitos
+- Extracciones
+- Transferencias entre cuentas
+- Conversión de cuenta a otra moneda
+
+### ​🧾 Operaciones de consulta
+- Datos de la cuenta
+- Saldo actual
+- Conversión de montos entre monedas
+- Historial de transacciones
+
+
+> Todas las operaciones heredan de la clase abstracta `Operacion`, lo que permite agregar nuevos tipos sin modificar código existente.
+
+---
+
+## 🧪 Manejo de errores y validaciones
+
+El sistema contempla:
+
+- Validación de opciones de menú
+- Control de entradas inválidas por consola
+  - Valores negativos
+  - Formato erróneo de cantidad monetaria
+  - Entrada alfabéticas
+  - Ausencia de valor
+- Excepciones de negocio:
+  - Saldo insuficiente
+  - Moneda inexistente
+  - Cuenta inválida
+  - Usuario inexistente
+  - Límites de montos por operación
+  - Limites de operaciones por sesión y por cuenta
+- Uso de bloques `try-catch` para mantener la ejecución estable
+
+---
+
+## 📚 Casos de uso técnicos
+
+### Caso de uso: Transferencia entre cuentas
+
+📍 **Actor:** Usuario Origen, Usuario Destino
+
+📍 **Precondiciones:**
+- Ambas cuentas existen y tienen monedas asignadas
+- La cuenta origen posee saldo suficiente
+
+📍 **Flujo principal:**
+1. El usuario origen selecciona la opción *Transferir*
+2. Ingresa cuenta destino
+3. Selecciona tipo de transferencia
+ - Ambas cuentas tienen las misma moneda?
+ - Ambas cuentas tienen diferente moneda?
+   * Seleccionar monto en moneda destino
+   * Seleccioanr monto en moneda cuenta propia
+5. Ingresa monto
+6. Se prevalida la operación
+7. Se ejecuta la transferencia
+8. Se postvalida la operación
+7. Se registra la operación
+
+---
+
+## 🔧 Extensibilidad y mantenimiento
+
+El diseño del sistema permite:
+
+- ➕ Agregar nuevas operaciones sin modificar código existente (Principio Open/Closed)
+- 🌍 Incorporar nuevas monedas
+- 🖥️ Sustituir la interfaz de consola por:
+  - Interfaz gráfica (InputProvider/OutputProvider)
+  - Persistencia en base de datos (Entidades que pueden serializarse)
+
+---
+
+## 🛠️ Tecnologías utilizadas
+
+- Java 21+
+- Programación Orientada a Objetos
+- Java Collections
+- BigDecimal para manejo de montos
+
+---
+
+<a id="memoria-del-testing"></a>
+## 🔎 Memoria del Testing
+<p>
+A modo de <b>DISCLAIMER</b>, se reconoce una proceder respecto de la elaboración del paquete de test no tan ceñido a las buenas prácticas de la industria, si no más bien como un proceso de investigación, búsqueda personal por pura curiosidad y materialización (o virtualización, en verdad) de ideas que iban surgiendo con cada necesidad.
+</p>
+
+### Primera Fase
+<p>
+Los primeros tests realizados estuvieron enfocados simplemente en controlar y verificar los resultados de las funcionalidades de conversión de monedas, creación de algunas entidades, y los procedimientos de transferencias (<i>ConversorMonedaTest.class y TransferenciaEntreMonedasTest.class</i>).
+Tambien se generarn tests para comprobar el formateo de texto con los distintos alineados y colocación de elipsis cuando los espacios designados no resultaban suficientes para el texto indicado (<i>FormateadorDeRegistroAImprimirTest.class</i>).
+Como punto destacable, aunque luego no se preservara este proceder, se utilizó la Inyección de Mocks para simular errores en balances de las cuentas (<i>TransferenciasTest.class</i>).
+</p>
+ 
+### Segunda Fase
+<p>
+A medida que crecía la aplicación, y tratando de emular la filosofía <b>BBD</b>, junto con una búsqueda por integrar los distintos pasos que sigue el usuario potencial dentro de la app para lograr una determinada transacción, se creó la clase <b>AlkeWalletTest</b>, donde en cada test particular tiene una secuencia de entradas y la cantidad de ciclos que debería correr la app.
+Más tarde, y a modo de reutilización de código, se pensó en crear "interacciones" elementales (<i>Interacciones.class</i>), cuya secuencia estructuraría una hipotética experiencia particular, por ejemplo: 
+ 
+<p>Loguearse ▶️​ Ir hasta Operaciones ▶️​ Realizar una Transferencia ▶️​ Volver a Operaciones ▶️ ​Logout ​​✔️​</p>
+Esto implicó crear una clase <b>AlkeWalletFake</b> que hereda de la <b>AlkeWallet</b>, pero cuyos ciclos ya no son automáticos (prescindir de ciclo while) si no que ahora son "triggered" desde el exterior. Así tambien fue necesario controlar la entrada por consola, por lo que toda la app debió incorporar un <b>InputProvider</b>, una interface que es implementada por <b>ConsoleInputStub</b>. De esta manera, se evitó tener que simular la entrada del <b>Scanner</b>. Esta clase, <b>ConsoleInputStub</b>, dispone de un <b>Queue</b> al que se le pueden ir cargando las distintas respuestas o datos introducidos que daría el usuario durante cada interacción completa. La necesidad de reducir la cantidad de código en cada test, y a su vez, poder detener selectivamente la ejecución de los ciclos para obtener cierta información para asserts intermedios (aunque no se considere una buena práctica) derivó en la creación de las "interacciones encadenables" (empleadas en <i>AlkeWallet_Interacciones_Test.class</i>).
+Hasta este punto, se podía seguir visualizando toda la salida por consola en cada test o simplemente pasar una clase que implemente <b>OutputProvider</b> sin ninguna salida concreta por <b>System.out.print</b> o <b>System.out.println</b>.
+</p>
+ 
+### Tercera Fase
+<p>
+Si bien no se siguió un enfoque <b>TDD</b> desde el comienzo mismo del proceso, de alguna manera, a medida que la aplicación se hacía más compleja, para estos últimos tests se vió la necesidad de establecer primero las condiciones a cumplir, generar una forma de compatibilizar los mensajes emitidos por la app con los esperados en cada test, independientemente de si estos mismos variaban con el tiempo o con el lenguaje elegido por el usuario, y generar un medio para filtar aquellos que correspondian a "alertas", "menús" "info" y generales. Esto implicó que toda la app incorporara, a traves de una clase que implementara la interface <b>OutputProvider</b>, en particular, <b>ConsoleOutputStub</b>, una forma de filtrar selectivamente los mensajes según su intención y gravedad. Luego, de esta misma clase, y disponiendo de un <b>Stack</b> de "mensajes capturados", se podían recuperar y comparar estos con los esperados en cada assert.
+<i>AlkeWallet_Interacciones_Alerts_Test.class</i> ya hace uso de los Strings centralizados en los .properties, por lo que se pueden ejecutar los test en ambos idiomas, ingles y español, así como se evita hacer modificaciones particulares en puntos específicos de la aplicación con el consequente riesgo de la no coincidencia de lo esperado con lo actual en los test.
+</p>
+
+### Cuarta Fase - Final
+<p>
+Para <i>AlkeWallet_Interacciones_Alerts_EN_ES_Test.class</i> y a modo experimental, se creó la clase <b>MenuParser</b> con la función estática getOptionNumber(), que trata de simular un proceso "visual" de búsqueda de opción requerida por un usuario y devolver el número de la misma que debería introducir para procesar esa opción. Tambien se sintetizó el testeo de algunos estados simplemente instanciándolos sin tener que correr toda la app (que si bien debería haber sido el enfoque desde el principio, no se puede negar lo enriquecedor de toda la experiencia hasta este punto). Esta última clase hace uso de <b>@TestTemplate</b>, que en forma similar a un <b>@RepeatedTest</b> y a un <b>@ParameterizedTest</b>, permite ejecutar la misma clase y cada uno de sus test, en dos oportunidades, con Locale en inglés y con Locale en español, corroborando todas las cadenas en ambos lenguajes.
+</p>
+ 
+--- 
+
+## 📄 Notas finales
+
+Este proyecto está orientado al **aprendizaje y demostración de conceptos**, por lo que para quien encuentre divertido dejarse llevar por la curiosidad y perderse en el mundo de posibilidades de Java, la OOP y los Tests, seguro reconocerá muchas direcciones posibles de experimentación que se han puesto sobre la mesa en este desarrollo.
+
+---
+
+✨ *Documentación técnica – AlkeWallet*
+
