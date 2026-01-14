@@ -65,7 +65,7 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 
 - Ejecución directa
 
-👉 [Descargar última versión](https://github.com/usuario/proyecto/releases/latest)
+👉 [Descargar última versión](https://github.com/Jmlucero1984/AlkeWallet/releases/latest) 
 
 ```bash
  java -jar AlkeWallet.jar
