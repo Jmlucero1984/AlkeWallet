@@ -72,14 +72,14 @@ Se realizarán pruebas unitarias para garantizar la calidad y el correcto funcio
 ```
 
 Se pueden agregar comandos de linea para usar el Modo Secreto de introducción de claves (para no hacer visible los caracteres mientras se los introduce) con '-c', como así tambien especificar
-el idioma de partida de la aplicacion en entre inglés (en) y español (es).
+el idioma de partida de la aplicacion en entre inglés (-en) y español (-es).
 Variantes:
 ```bash
- java -jar AlkeWallet.jar en
- java -jar AlkeWallet.jar console en
+ java -jar AlkeWallet.jar -en
+ java -jar AlkeWallet.jar -console -en
  java -jar AlkeWallet.jar -c
- java -jar AlkeWallet.jar -c en
- java -jar AlkeWallet.jar en -c
+ java -jar AlkeWallet.jar -c -en
+ java -jar AlkeWallet.jar -en -c
 ```
 
 
