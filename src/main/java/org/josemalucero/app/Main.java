@@ -18,10 +18,10 @@ public class Main {
         boolean englishLanguage=false;
         for(int i=0; i< args.length; i++){
             switch (args[i]){
-                case "-c","console","Console","CONSOLE","consola","Consola","CONSOLA":
+                case "-c","-console","-Console","-CONSOLE","-consola","-Consola","-CONSOLA":
                     isConsole=true;
                     break;
-                case "EN","en","En","English","english","ENGLISH","ingles","Ingles","INGLES":
+                case "-EN","-en","-En","-English","-english","-ENGLISH","-ingles","-Ingles","-INGLES":
                     englishLanguage=true;
                     break;
             }
