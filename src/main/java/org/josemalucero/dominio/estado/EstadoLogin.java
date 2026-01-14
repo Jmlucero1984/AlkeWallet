@@ -1,6 +1,7 @@
 package org.josemalucero.dominio.estado;
 
 import org.josemalucero.app.AlkeWallet;
+import org.josemalucero.dominio.usuario.Validador;
 import org.josemalucero.servicio.providers.InputProvider;
 import org.josemalucero.dominio.usuario.ContextoUsuario;
 import org.josemalucero.dominio.usuario.Usuario;
@@ -97,6 +98,7 @@ public class EstadoLogin extends EstadoUsuario {
      * @return Usuario si las credenciales son auntenticadas, {@code null} en caso de no existir un usuario con tales credenciales.
      */
     private Usuario autenticarUsuario(ContextoUsuario contextoUsuario) {
+        Validador validador = new Validador(inputProvider,outputProvider);
 
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
         InputProvider consoleInputProvider = contextoUsuario.getConsoleInputProvider();
@@ -104,12 +106,12 @@ public class EstadoLogin extends EstadoUsuario {
         String nombre=null;
         while(nombre==null){
             outputProvider.print(Messages.get("nombre.usuario")+": ");
-            nombre = validarNombresOApellidosDeUsuario(consoleInputProvider);
+            nombre = validador.validaNombresOApellidosDeUsuario();
         }
         String apellido=null;
         while(apellido==null){
             outputProvider.print(Messages.get("apellido.usuario")+": ");
-            apellido = validarNombresOApellidosDeUsuario(consoleInputProvider);
+            apellido = validador.validaNombresOApellidosDeUsuario();
         }
 
         Optional<Usuario> usuarioExistente = RepositorioUsuarios.consultarUsuario(nombre,apellido);
@@ -137,32 +139,7 @@ public class EstadoLogin extends EstadoUsuario {
         return null;
     }
 
-    private String validarNombresOApellidosDeUsuario(InputProvider inputProvider){
-        String entrada;
-        entrada = inputProvider.leerOpcionString().trim();
-        if (entrada.length() == 0) {
-            outputProvider.println(Messages.get("alerta.validacion.no.puede.estar.vacio"));
-            return null;
-        }
 
-        if (entrada.length() < 3) {
-            outputProvider.println(Messages.get("alerta.validacion.tener.al.menos")+" "+3+" "+Messages.get("caracteres"));
-            return null;
-        }
-
-        if (entrada.length() > 15) {
-            outputProvider.println(Messages.get("alerta.validacion.tener.no.mas")+" "+15+" "+Messages.get("caracteres"));
-            return null;
-        }
-
-        if (!entrada.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$")) {
-            outputProvider.println(Messages.get("alerta.validacion.contrasena.solo.contener"));
-            return null;
-        }
-
-        return entrada;
-
-    }
 
     /**
      * Permite obtener el nombre del estado actual.
