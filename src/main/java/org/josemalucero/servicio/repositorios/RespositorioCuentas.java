@@ -21,16 +21,19 @@ public class RespositorioCuentas {
      * @return {@link CuentaRegular} que ha sido adherida a la base de datos.
      */
     public static CuentaRegular adherirCuenta(CuentaRegular cuentaRegular){
-        String serialNuevaCuenta;
-        while(true){
-            String tempSerialCuenta = generarSerial(3,4);
-            if(!cuentasDB.stream().anyMatch(c -> c.getSerialCuenta().equals(tempSerialCuenta))){
-                serialNuevaCuenta=tempSerialCuenta;
-                break;
-            };
-        }
+        if(cuentaRegular.getSerialCuenta()==null) {
+            String serialNuevaCuenta;
+            while (true) {
+                String tempSerialCuenta = generarSerial(3, 4);
+                if (!cuentasDB.stream().anyMatch(c -> c.getSerialCuenta().equals(tempSerialCuenta))) {
+                    serialNuevaCuenta = tempSerialCuenta;
+                    break;
+                }
+                ;
+            }
 
-        cuentaRegular.setSerialCuenta(serialNuevaCuenta);
+            cuentaRegular.setSerialCuenta(serialNuevaCuenta);
+        }
         cuentasDB.add(cuentaRegular);
         return cuentaRegular;
 

@@ -34,6 +34,18 @@ public class Usuario {
 
     }
 
+    /**
+     * Crea una {@link CuentaRegular} indispensable para que el usuario pueda hacer uso de la plataforma,
+     * permitiendo definir el número de la misma. Posteriormente la adhiere al {@link RepositorioUsuarios}.
+     * @param numeroCuenta
+     * @return {@link CuentaRegular} la cuenta recientemente creada y adherida.
+     */
+    public CuentaRegular crearCuentRegular(String numeroCuenta){
+        this.cuentaRegular = new CuentaRegular(numeroCuenta);
+        return RespositorioCuentas.adherirCuenta(this.cuentaRegular );
+
+    }
+
     public CuentaRegular getCuentaRegular(){
         return cuentaRegular;
     }

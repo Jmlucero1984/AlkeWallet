@@ -83,6 +83,27 @@ public class RepositorioUsuarios {
 
     /**
      * Crea un nuevo usuario con nombre, apellido y clave hasheada, crea una moneda, una cuenta de usuario a la
+     * cual asignar a esta última, definiendo además el número de cuenta y finalmente agrega el usuario al {@code ArrayList<Usuario>}.
+     * @param nombre
+     * @param apellido
+     * @param claveHasheada
+     * @param numeroCuenta
+     * @param codigoMoneda
+     * @return {@link Usuario} que ha sido agregado.
+     */
+    public static Usuario crearYAgregarUsuarioYAsignarCuenta(String nombre, String apellido, String claveHasheada, String numeroCuenta, String codigoMoneda) {
+        Usuario usuario = new Usuario(nombre, apellido, claveHasheada);
+        MonedaConvertible moneda = RepositorioMonedas.encontrarMonedaPorCodigo(codigoMoneda);
+        usuario.crearCuentRegular(numeroCuenta).setMoneda(moneda);
+        usuario.getCuentaRegular().registrarOperacion(new RegistroOperacion(Messages.get("apertura.cuenta.regular.en") +" "+moneda.getNombre(), BigDecimal.ZERO,BigDecimal.ZERO));
+        usuariosDB.add(usuario);
+        return usuario;
+    }
+
+
+
+    /**
+     * Crea un nuevo usuario con nombre, apellido y clave hasheada, crea una moneda, una cuenta de usuario a la
      * cual asignar a esta última, y finalmente agrega el usuario al {@code ArrayList<Usuario>}.
      * @param credencial
      * @param codigoMoneda
@@ -106,9 +127,9 @@ public class RepositorioUsuarios {
 
     public static void createSomeUsers() {
         BCryptPasswordEncoderService bCryptPasswordEncoderService = new BCryptPasswordEncoderService();
-        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Juan", "Lucero", bCryptPasswordEncoderService.hash("Juanlucero"),"ARS");
-        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"CLP");
-        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"CLP");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Juan", "Lucero", bCryptPasswordEncoderService.hash("Juanlucero"),"0000 0000 0001","ARS");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Mario", "Moya", bCryptPasswordEncoderService.hash("Mariomoya"),"0000 0000 0002","CLP");
+        RepositorioUsuarios.crearYAgregarUsuarioYAsignarCuenta("Javiera", "Rojas", bCryptPasswordEncoderService.hash("Javierarojas"),"0000 0000 0003","CLP");
     }
 
     /**

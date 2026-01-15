@@ -20,6 +20,11 @@ public class CuentaRegular extends Cuenta implements Depositable,Retirable,Consu
         super();
     }
 
+    public CuentaRegular(String numeroCuenta) {
+        super();
+        this.setSerialCuenta(numeroCuenta);
+    }
+
     public void incrementar_cantidad_depositos_historicos(){
 
         cantidad_depositos_historicos++;

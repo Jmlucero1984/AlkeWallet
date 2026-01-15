@@ -1,6 +1,6 @@
 package org.josemalucero.dominio.cuenta;
 
-import org.josemalucero.dominio.moneda.Moneda;
+
 import org.josemalucero.dominio.moneda.MonedaConvertible;
 import org.josemalucero.dominio.operacion.RegistroOperacion;
 
