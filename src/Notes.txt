@@ -1,5 +1,0 @@
-cd out/artifacts/AlkeWallet_jar/java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
-java -jar out/artifacts/AlkeWallet_jar/AlkeWallet.jar
-
-Controlar que las cifras ingresadas no superen una x cantidad e millones
-Controlar todas las posibles entradas, incluyendo solo salto de linea
