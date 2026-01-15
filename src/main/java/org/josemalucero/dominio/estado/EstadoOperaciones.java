@@ -46,6 +46,7 @@ public class EstadoOperaciones extends EstadoUsuario {
     public void mostrarInformaciónContextual(ContextoUsuario contextoUsuario) {
 
         outputProvider.println(Messages.get("bienvenido")+", " + contextoUsuario.getUsuarioLogueado().getNombreCompleto());
+        outputProvider.print("\n");
         outputProvider.printMenu(
             "1. "+Messages.get("opcion.consultar.datos.cuenta")+"\n"+
             "2. "+Messages.get("opcion.consultar.saldo")+"\n"+

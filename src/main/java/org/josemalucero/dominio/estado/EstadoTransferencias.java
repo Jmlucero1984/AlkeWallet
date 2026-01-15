@@ -51,6 +51,7 @@ public class EstadoTransferencias extends EstadoUsuario {
             if(tipoTransferencia==TipoTransferencia.DISTINTA_MONEDA){
                 outputProvider.println(Messages.get("seleccione.tipo.transferencia")+" | "+Messages.get("escape.comando")+" para salir");
                 outputProvider.printMenuln("1. "+Messages.get("monto.moneda.cuenta.origen")+"\n"+"2. "+Messages.get("monto.moneda.cuenta.destino"));
+                outputProvider.printMenuln(Messages.get("seleccione.opcion")+": ");
             } else {
                 outputProvider.println(Messages.get("introduzca.el.monto.a.transferir")+" | "+Messages.get("escape.comando")+" para salir");
                 outputProvider.println(Messages.get("formato.esperado.enteros.centavos"));

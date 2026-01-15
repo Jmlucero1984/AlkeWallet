@@ -60,6 +60,7 @@ public class EstadoLogin extends EstadoUsuario {
                     contextoUsuario.setUsuarioLogueado(usuario);
                     contextoUsuario.reset_operaciones_por_sesion();
                     if (contextoUsuario.getUsuarioLogueado().getCuentaRegular() == null) {
+                        outputProvider.print("\n");
                         outputProvider.printlnAlert(Messages.get("alerta.aun.no.tiene.cuenta.asociada"));
                         contextoUsuario.cambiarEstado(new EstadoCreacionCuenta(contextoUsuario.getConsoleInputProvider(),
                                 contextoUsuario.getOuputProvider()));
@@ -129,6 +130,7 @@ public class EstadoLogin extends EstadoUsuario {
                 clave = consoleInputProvider.leerOpcionString();
             }
             if(bCryptPasswordEncoderService.matches(clave, usuarioExistente.get().getClave())){
+                outputProvider.print("\n");
                 outputProvider.println(Messages.get("logueo.exitoso"));
                 return  usuarioExistente.get();
             } else {

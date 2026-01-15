@@ -61,7 +61,7 @@ public class EstadoCreacionCuenta extends EstadoUsuario implements Registrable {
             if(opcion<=0 || opcion>RepositorioMonedas.getMonedasDB().size()){
                 outputProvider.printlnAlert(Messages.get("alerta.opcion.invalida"));
             } else {
-                outputProvider.println(Messages.get("usted.ha.seleccionad.cuenta.en")+": "
+                outputProvider.println(Messages.get("usted.ha.seleccionad.cuenta.en")+" "
                         +RepositorioMonedas.getMonedasDB().get(opcion-1).getNombre());
                 contextoUsuario.getUsuarioLogueado().crearCuentRegular();
                 contextoUsuario.getUsuarioLogueado().getCuentaRegular().setMoneda(RepositorioMonedas
