@@ -231,6 +231,7 @@ El sistema contempla:
 📍 **Precondiciones:**
 - Ambas cuentas existen y tienen monedas asignadas
 - La cuenta origen posee saldo suficiente
+- El usuario origen conoce el número de cuenta destino ( N° #### #### #### ) que el usuario destino conoce gracias a la opción "Consultar datos cuenta"
 
 📍 **Flujo principal:**
 1. El usuario origen selecciona la opción *Transferir*
