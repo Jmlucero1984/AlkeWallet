@@ -224,6 +224,14 @@ El sistema contempla:
 
 ## 📚 Casos de uso técnicos
 
+### Usuarios Dummy (ya vienen con la app)
+| Nombre | Apellido | Clave | Número Cuenta | Moneda Cuenta|
+|---------|--------|--------|--------|--------|
+| Juan | Lucero | Juanlucero | 0000 0000 0001 | ARS |
+| Mario | Moya | Mariomoya | 0000 0000 0002 | CLP |
+| Javiera | Rojas | Javierarojas | 0000 0000 0003 | CLP |
+
+
 ### Caso de uso: Transferencia entre cuentas
 
 📍 **Actor:** Usuario Origen, Usuario Destino
