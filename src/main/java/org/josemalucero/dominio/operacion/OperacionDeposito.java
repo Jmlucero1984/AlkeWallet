@@ -67,7 +67,7 @@ public class OperacionDeposito extends OperacionDeMonto implements Validable,Rev
         }
     }
     /**
-     * @TODO Implementar los pasos necesarios para revertir esta operación y devolver la cuenta a su estado anterior.
+     * TODO Implementar los pasos necesarios para revertir esta operación y devolver la cuenta a su estado anterior.
      */
     @Override
     public void restaurarEstadoAnterior() {

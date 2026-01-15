@@ -20,10 +20,11 @@ public class FormateadorDeRegistroAImprimir {
     public enum Alineado {IZQUIERDA,CENTRO, DERECHA};
 
     /**
+     * <p>
      * Se encarga de realizar el alineado horizontal del texto dentro de una cierta cantidad de espacios de acuerdo al tipo
      * de elemento de la descripcion de un registro, para finalmente concatenarlo todo en una sola línea, con unos determinados
      * separadores de columnas.
-     * <p>
+     * </p>
      * Alineado.CENTRO
      *        <blockquote><pre>
      │   04.JANUARY.2026 19:17:58    │    DEPÓSITO EN CUENTA    │    10000.00    │  10000.00
@@ -36,7 +37,6 @@ public class FormateadorDeRegistroAImprimir {
      *        <blockquote><pre>
      │ 04.JANUARY.2026 19:17:58      │ DEPÓSITO EN CUENTA       │ 10000.00       │ 10000.00
      *        </pre></blockquote>
-     *        </p>
      * @param registroOperacion
      * @param alineado
      * @return {@link String} que representa toda una línea de registros tabulados y separados por un caracter específico.
@@ -57,14 +57,15 @@ public class FormateadorDeRegistroAImprimir {
 
 
     /**
+     * <p>
      * Genera una línea de texto con las cabeceras de cada columna para la confección de
      * una tabla y otra con unos caracteres especiales a modo de separador horizontal.
-     * <p>
+     * </p>
      *        <blockquote><pre>
      FECHA Y HORA    │   DESCRIPCIÓN   │    MONTO     │   BALANCE
      ────────────────────────────────────────────────────────────
      *        </pre></blockquote>
-     * </p>
+
      * @param alineado
      * @return {@link String} de dos líneas separadas por un salto de línea.
      */
