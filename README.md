@@ -248,7 +248,7 @@ El sistema contempla:
  - Ambas cuentas tienen las misma moneda?
  - Ambas cuentas tienen diferente moneda?
    * Seleccionar monto en moneda destino
-   * Seleccioanr monto en moneda cuenta propia
+   * Seleccionar monto en moneda cuenta propia
 5. Ingresa monto
 6. Se prevalida la operación
 7. Se ejecuta la transferencia
